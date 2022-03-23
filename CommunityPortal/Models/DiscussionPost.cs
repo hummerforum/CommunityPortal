@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CommunityPortal.Models
@@ -21,5 +22,9 @@ namespace CommunityPortal.Models
 
         [Required]
         public CommunityUser CommunityUser { get; set; }
+
+        public DiscussionPost DiscussionPostReply { get; set; }
+
+        public List<DiscussionPost> DiscussionPostReplies { get; set; }
     }
 }
