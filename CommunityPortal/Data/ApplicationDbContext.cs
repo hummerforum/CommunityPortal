@@ -14,9 +14,11 @@ namespace CommunityPortal.Data
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions) { }
 
-        public DbSet<CommunityUser> Users { get; set; }
+        public DbSet<CommunityUser> CommunityUsers { get; set; }
 
         public DbSet<DiscussionPost> DiscussionPosts { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<NewsPost> NewsPosts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

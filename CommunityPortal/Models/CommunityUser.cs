@@ -7,5 +7,6 @@ namespace CommunityPortal.Models
     {
         List<DiscussionPost> DiscussionPosts { get; set; }
 
+
     }
 }

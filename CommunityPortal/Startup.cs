@@ -1,6 +1,7 @@
 using CommunityPortal.Data;
 using CommunityPortal.Model.Services;
 using CommunityPortal.Models;
+using CommunityPortal.Models.Repos;
 using CommunityPortal.Models.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
@@ -42,6 +43,11 @@ namespace CommunityPortal
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddScoped<IUserservice, UserRepos>();
+
+
+
 
             //services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
