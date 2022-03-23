@@ -12,10 +12,13 @@ namespace CommunityPortal.Data
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<CommunityUser>
     {
+        public DbSet<CommunityUser> People { get; set; }
+
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
+            
         }
 
 
