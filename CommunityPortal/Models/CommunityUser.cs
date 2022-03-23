@@ -8,5 +8,8 @@ namespace CommunityPortal.Models
 {
     public class CommunityUser : IdentityUser
     {
+
+
+
     }
 }
