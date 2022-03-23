@@ -1,6 +1,9 @@
-﻿namespace CommunityPortal.Models.Services
+﻿using System.Collections.Generic;
+
+namespace CommunityPortal.Models.Services
 {
-    public class IUserservice
+    public interface IUserservice
     {
+        public List<string> GetAllUsers();
     }
 }

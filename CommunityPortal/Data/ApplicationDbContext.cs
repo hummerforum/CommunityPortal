@@ -13,7 +13,7 @@ namespace CommunityPortal.Data
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<CommunityUser>
     {
-        public DbSet<CommunityUser> People { get; set; }
+        public DbSet<CommunityUser> CommunityUsers { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,
@@ -51,11 +51,6 @@ namespace CommunityPortal.Data
 
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { UserId = accountId, RoleId = userRoleId });
 
-
-
-        }
-
-
-
         }
     }
+}
