@@ -5,24 +5,20 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CommunityPortal.Data
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<CommunityUser>
     {
-        public DbSet<CommunityUser> CommunityUsers { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<NewsPost> NewsPosts { get; set; }
-
         public ApplicationDbContext(
             DbContextOptions options,
-            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
-        {
-            
-        }
+            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions) { }
+
+        public DbSet<CommunityUser> CommunityUsers { get; set; }
+
+        public DbSet<DiscussionPost> DiscussionPosts { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<NewsPost> NewsPosts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -52,7 +48,6 @@ namespace CommunityPortal.Data
             });
 
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { UserId = accountId, RoleId = userRoleId });
-
         }
     }
 }

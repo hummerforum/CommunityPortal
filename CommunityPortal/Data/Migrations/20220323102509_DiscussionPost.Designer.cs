@@ -4,14 +4,16 @@ using CommunityPortal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CommunityPortal.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220323102509_DiscussionPost")]
+    partial class DiscussionPost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,24 +84,6 @@ namespace CommunityPortal.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "b8b5ad4e-87da-4daf-bc47-b8833be07d7b",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "d75f2ab2-de89-4fbb-b10c-fcd37857a7a8",
-                            Email = "a@b.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "A@B.COM",
-                            NormalizedUserName = "A@B.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEKg/+2dwmro8gYYy1TTkJwhTgTepF2oSrpdsPJ9nfxeQ8sRVJwrTC+lCaSgsZGbJA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "037b1191-08a8-49b8-9eed-958d688d747f",
-                            TwoFactorEnabled = false,
-                            UserName = "a@b.com"
-                        });
                 });
 
             modelBuilder.Entity("CommunityPortal.Models.DiscussionPost", b =>
@@ -119,9 +103,6 @@ namespace CommunityPortal.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DiscussionPostReplyDiscussionPostId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Heading")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -132,8 +113,6 @@ namespace CommunityPortal.Data.Migrations
                     b.HasKey("DiscussionPostId");
 
                     b.HasIndex("CommunityUserId");
-
-                    b.HasIndex("DiscussionPostReplyDiscussionPostId");
 
                     b.ToTable("DiscussionPosts");
                 });
@@ -266,29 +245,6 @@ namespace CommunityPortal.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "06178627-a0d4-44cc-8335-de572873424d",
-                            ConcurrencyStamp = "a3f5a127-4fe7-4926-8f38-c3474bdaa342",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "26dd96ed-80a9-4566-be77-b9e1c6dc5854",
-                            ConcurrencyStamp = "cda35c47-ee22-4e41-a6d1-8e652d193585",
-                            Name = "Moderator",
-                            NormalizedName = "MODERATOR"
-                        },
-                        new
-                        {
-                            Id = "3e98e936-2069-474d-ae5e-8cdb5a4a4f60",
-                            ConcurrencyStamp = "f1e77546-6811-4e06-a7b0-eba8171e1d36",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -376,13 +332,6 @@ namespace CommunityPortal.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "b8b5ad4e-87da-4daf-bc47-b8833be07d7b",
-                            RoleId = "3e98e936-2069-474d-ae5e-8cdb5a4a4f60"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -412,13 +361,7 @@ namespace CommunityPortal.Data.Migrations
                         .WithMany()
                         .HasForeignKey("CommunityUserId");
 
-                    b.HasOne("CommunityPortal.Models.DiscussionPost", "DiscussionPostReply")
-                        .WithMany("DiscussionPostReplies")
-                        .HasForeignKey("DiscussionPostReplyDiscussionPostId");
-
                     b.Navigation("CommunityUser");
-
-                    b.Navigation("DiscussionPostReply");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -470,11 +413,6 @@ namespace CommunityPortal.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("CommunityPortal.Models.DiscussionPost", b =>
-                {
-                    b.Navigation("DiscussionPostReplies");
                 });
 #pragma warning restore 612, 618
         }
