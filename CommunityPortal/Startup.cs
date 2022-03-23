@@ -1,5 +1,7 @@
 using CommunityPortal.Data;
+using CommunityPortal.Model.Services;
 using CommunityPortal.Models;
+using CommunityPortal.Models.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,6 +45,9 @@ namespace CommunityPortal
 
             //services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+
+            services.AddScoped<IDiscussionPostsService, DiscussionPostsService>();
+
             services.AddRazorPages();
 
             // In production, the React files will be served from this directory
