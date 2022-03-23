@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CommunityPortal.Models
 {
-    public class ApplicationUser : IdentityUser
+    public class CommunityUser : IdentityUser
     {
     }
 }

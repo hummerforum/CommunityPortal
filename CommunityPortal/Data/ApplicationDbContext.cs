@@ -10,12 +10,17 @@ using System.Threading.Tasks;
 
 namespace CommunityPortal.Data
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
+    public class ApplicationDbContext : ApiAuthorizationDbContext<CommunityUser>
     {
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+
+
+
+
+
     }
 }
