@@ -14,6 +14,8 @@ namespace CommunityPortal.Data
     public class ApplicationDbContext : ApiAuthorizationDbContext<CommunityUser>
     {
         public DbSet<CommunityUser> CommunityUsers { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<NewsPost> NewsPosts { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,
