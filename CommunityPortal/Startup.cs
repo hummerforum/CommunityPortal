@@ -54,6 +54,8 @@ namespace CommunityPortal
 
             services.AddScoped<IDiscussionPostsService, DiscussionPostsService>();
             services.AddScoped<IDiscussionGroupsService, DiscussionGroupsService>();
+            services.AddScoped<INewsPostsService, NewsPostsService>();
+            services.AddScoped<ICategoryService, CategoryService>();
 
             services.AddRazorPages();
 
