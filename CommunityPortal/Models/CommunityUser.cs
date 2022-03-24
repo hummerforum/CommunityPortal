@@ -7,8 +7,7 @@ namespace CommunityPortal.Models
     {
         List<DiscussionPost> DiscussionPosts { get; set; }
 
-        List<DiscussionGroup> DiscussionGroups { get; set; }
-
+        List<DiscussionGroupMembership> DiscussionGroupMemberships { get; set; }
 
     }
 }

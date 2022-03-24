@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CommunityPortal.Models
 {
@@ -16,6 +13,8 @@ namespace CommunityPortal.Models
 
         public string Description { get; set; }
 
-        public List<CommunityUser> DiscussionGroupMembers { get; set; }
+        List<DiscussionGroupMembership> DiscussionGroupMemberships { get; set; }
+
+        public List<SubForum> SubForum { get; set; }
     }
 }
