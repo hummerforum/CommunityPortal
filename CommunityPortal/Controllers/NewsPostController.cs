@@ -18,11 +18,20 @@ namespace CommunityPortal.Controllers
             _dbContext = dbContext;
         }
 
-        [HttpGet("Get")]
+        [HttpGet]
         public string Get()
         {
             List<NewsPost> NewsPosts = _dbContext.NewsPosts.ToList();
             string JsonData = JsonSerializer.Serialize(NewsPosts);
+            return JsonData;
+        }
+
+        [HttpGet("{id}")]
+        public string Get(int id)
+        {
+            List<NewsPost> NewsPosts = _dbContext.NewsPosts.ToList();
+            NewsPost newsPost = NewsPosts.Where(np => np.NewsPostId == id).SingleOrDefault();
+            string JsonData = JsonSerializer.Serialize(newsPost);
             return JsonData;
         }
     }
