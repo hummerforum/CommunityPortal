@@ -22,7 +22,7 @@ namespace CommunityPortal.Controllers
         #region Read
 
         [HttpGet("GetDiscussionPosts")]
-        public string GetPeople()
+        public string GetDiscussionPosts()
         {
             List<DiscussionPost> discussionPosts = this.discussionPostsService.Read();
 
