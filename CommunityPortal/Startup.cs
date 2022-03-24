@@ -53,6 +53,7 @@ namespace CommunityPortal
             services.AddControllersWithViews();
 
             services.AddScoped<IDiscussionPostsService, DiscussionPostsService>();
+            services.AddScoped<IDiscussionGroupsService, DiscussionGroupsService>();
 
             services.AddRazorPages();
 
