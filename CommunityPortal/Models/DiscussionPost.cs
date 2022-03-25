@@ -15,8 +15,6 @@ namespace CommunityPortal.Models
         [Required]
         public string Content { get; set; }
 
-        public string Category { get; set; }
-
         [Required]
         public DateTime Time { get; set; }
 
@@ -24,5 +22,7 @@ namespace CommunityPortal.Models
         public CommunityUser CommunityUser { get; set; }
 
         public DiscussionPost DiscussionPostReply { get; set; }
+
+        public Category Category { get; set; }
     }
 }
