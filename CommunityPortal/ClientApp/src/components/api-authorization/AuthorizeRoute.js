@@ -1,11 +1,18 @@
 import React from "react";
 import { Component } from "react";
-import { Route, Navigate, Routes } from "react-router-dom";
+import {
+  Route,
+  Navigate,
+  Routes,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import {
   ApplicationPaths,
   QueryParameterNames,
 } from "./ApiAuthorizationConstants";
 import authService from "./AuthorizeService";
+import { FetchData } from "../FetchData";
 
 export default class AuthorizeRoute extends Component {
   constructor(props) {
@@ -30,29 +37,20 @@ export default class AuthorizeRoute extends Component {
 
   render() {
     const { ready, authenticated } = this.state;
-    var link = document.createElement("a");
-    link.href = this.props.path;
-    const returnUrl = `${link.protocol}//${link.host}${link.pathname}${link.search}${link.hash}`;
+    // should probably convert this whole to a functional one so we can take advantage of more react router hooks..
+    const returnUrl = window.location.href;
     const redirectUrl = `${ApplicationPaths.Login}?${
       QueryParameterNames.ReturnUrl
     }=${encodeURIComponent(returnUrl)}`;
     if (!ready) {
-      return <div></div>;
+      return <div>?</div>;
     } else {
-      const { component: Component, ...rest } = this.props;
+      const { component: Component } = this.props;
+      console.log(authenticated)
       return (
-        <Routes>
-          <Route
-            {...rest}
-            render={(props) => {
-              if (authenticated) {
-                return <Component {...props} />;
-              } else {
-                return <Navigate to={redirectUrl} />;
-              }
-            }}
-          />
-        </Routes>
+        <>
+          {authenticated ? Component : <Navigate replace to={redirectUrl} />}
+        </>
       );
     }
   }

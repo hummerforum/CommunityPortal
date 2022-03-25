@@ -4,9 +4,6 @@ import authService from './AuthorizeService';
 import { AuthenticationResultStatus } from './AuthorizeService';
 import { QueryParameterNames, LogoutActions, ApplicationPaths } from './ApiAuthorizationConstants';
 
-// The main responsibility of this component is to handle the user's logout process.
-// This is the starting point for the logout process, which is usually initiated when a
-// user clicks on the logout button on the LoginMenu component.
 export class Logout extends Component {
     constructor(props) {
         super(props);
@@ -20,14 +17,10 @@ export class Logout extends Component {
 
     componentDidMount() {
         const action = this.props.action;
+        console.log(this.props);
         switch (action) {
             case LogoutActions.Logout:
-                if (!!window.history.state.state.local) {
                     this.logout(this.getReturnUrl());
-                } else {
-                    // This prevents regular links to <app>/authentication/logout from triggering a logout
-                    this.setState({ isReady: true, message: "The logout was not initiated from within the page." });
-                }
                 break;
             case LogoutActions.LogoutCallback:
                 this.processLogoutCallback();
@@ -43,6 +36,7 @@ export class Logout extends Component {
     }
 
     render() {
+        console.log(this.state)
         const { isReady, message } = this.state;
         if (!isReady) {
             return <div></div>

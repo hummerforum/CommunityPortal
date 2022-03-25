@@ -1,79 +1,58 @@
-import React, { Component } from "react";
-import Link from "@mui/material/Link";
-import { LoginMenu } from "./api-authorization/LoginMenu";
-import { Link as RouterLink } from "react-router-dom";
+import * as React from "react";
 import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
+import { LoginMenu } from "../components/api-authorization/LoginMenu";
+import Link from "@mui/material/Link";
+import { Link as RouterLink } from "react-router-dom";
 
-export class NavMenu extends Component {
-  static displayName = NavMenu.name;
-
-  constructor(props) {
-    super(props);
-
-    this.toggleNavbar = this.toggleNavbar.bind(this);
-    this.state = {
-      collapsed: true,
-    };
-  }
-
-  toggleNavbar() {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  }
-
-  render() {
-    return (
-      <header>
-        <AppBar
-          position="static"
-          color="default"
-          elevation={0}
-          sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
+const NavMenu = () => {
+  return (
+    <AppBar position="static">
+      <Container
+        maxWidth="xl"
+        sx={{
+          bgcolor: "#70163C",
+        }}
+      >
+        <Toolbar
+          disableGutters
+          sx={{
+            bgcolor: "#70163C",
+          }}
         >
-          <Toolbar sx={{ flexWrap: "wrap" }}>
-            <Link
-              component={RouterLink}
-              to="/"
-              variant="h5"
-              color="#fb551c"
-              underline="none"
+          <Link component={RouterLink} to="/" underline="none">
+            <Typography
+              variant="h6"
               noWrap
-              sx={{ flexGrow: 1 }}
+              component="div"
+              sx={{ mr: 2, display: { xs: "none", md: "flex" }, color: "#FFF" }}
             >
               Hummer
-            </Link>
-            <nav>
-              <Button component={RouterLink} variant="text" to="/forum">
-                Forum
-              </Button>
-              <Button component={RouterLink} variant="text" to="/news">
-                News
-              </Button>
-              {/*               <Link
-                component={RouterLink}
-                variant="button"
-                to="/counter"
-                sx={{ my: 1, mx: 1.5 }}
-              >
-                Counter
-              </Link>
-              <Link
-                component={RouterLink}
-                variant="button"
-                to="/fetch-data"
-                sx={{ my: 1, mx: 1.5 }}
-              >
-                Fetch Data
-              </Link> */}
-              <LoginMenu />
-            </nav>
-          </Toolbar>
-        </AppBar>
-      </header>
-    );
-  }
-}
+            </Typography>
+          </Link>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/news">
+              News
+            </Button>
+            <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/forum">
+              Forum
+            </Button>
+            <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/fetch-data">
+              Fetch-data (AUTH CHECK)
+            </Button>
+          </Box>
+          <LoginMenu />
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
+};
+
+export default NavMenu;
