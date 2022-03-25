@@ -35,14 +35,17 @@ export class NavMenu extends Component {
           sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
         >
           <Toolbar sx={{ flexWrap: "wrap" }}>
-            <Typography
-              variant="h6"
-              color="inherit"
+            <Link
+              component={RouterLink}
+              to="/"
+              variant="h5"
+              color="#fb551c"
+              underline="none"
               noWrap
               sx={{ flexGrow: 1 }}
             >
               Hummer
-            </Typography>
+            </Link>
             <nav>
               <Button component={RouterLink} variant="text" to="/forum">
                 Forum

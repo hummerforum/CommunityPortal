@@ -6,7 +6,6 @@
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@mui/material": "^5.5.2",
-    "lorem-ipsum": "^2.0.4",
     "merge": "^2.1.1",
     "oidc-client": "~1.11.5",
     "react": "^17.0.2",
