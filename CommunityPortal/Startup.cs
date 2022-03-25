@@ -52,6 +52,7 @@ namespace CommunityPortal
             //services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
 
+            services.AddScoped<IPrivateMessageService, PrivateMessageService>();
             services.AddScoped<IDiscussionPostsService, DiscussionPostsService>();
             services.AddScoped<IDiscussionGroupsService, DiscussionGroupsService>();
             services.AddScoped<IDiscussionGroupMembershipsService, DiscussionGroupMembershipsService>();
