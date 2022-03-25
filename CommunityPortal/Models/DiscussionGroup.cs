@@ -14,7 +14,5 @@ namespace CommunityPortal.Models
         public string Description { get; set; }
 
         List<DiscussionGroupMembership> DiscussionGroupMemberships { get; set; }
-
-        public List<SubForum> SubForum { get; set; }
     }
 }
