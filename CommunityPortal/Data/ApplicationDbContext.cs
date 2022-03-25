@@ -17,6 +17,9 @@ namespace CommunityPortal.Data
         public DbSet<CommunityUser> CommunityUsers { get; set; }
 
         public DbSet<DiscussionPost> DiscussionPosts { get; set; }
+        public DbSet<DiscussionGroupMembership> DiscussionGroupMemberships { get; set; }
+        public DbSet<DiscussionGroup> DiscussionGroups { get; set; }
+        public DbSet<SubForum> SubForum { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<NewsPost> NewsPosts { get; set; }
 

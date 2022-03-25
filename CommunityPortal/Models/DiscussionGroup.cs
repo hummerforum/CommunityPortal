@@ -3,19 +3,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CommunityPortal.Models
 {
-    public class SubForum
+    public class DiscussionGroup
     {
         [Key]
-        public int SubForumId { get; set; }
+        public int DiscussionGroupId { get; set; }
 
         [Required]
         public string Name { get; set; }
 
         public string Description { get; set; }
 
-        [Required]
-        public DiscussionGroup DiscussionGroup { get; set; }
+        List<DiscussionGroupMembership> DiscussionGroupMemberships { get; set; }
 
-        public List<DiscussionPost> DiscussionPosts { get; set; }
+        public List<SubForum> SubForum { get; set; }
     }
 }
