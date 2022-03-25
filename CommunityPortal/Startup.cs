@@ -106,6 +106,7 @@ namespace CommunityPortal
 
                 if (env.IsDevelopment())
                 {
+                    spa.Options.DevServerPort = 3000;
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
