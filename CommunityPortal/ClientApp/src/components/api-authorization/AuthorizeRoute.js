@@ -1,23 +1,15 @@
 import React from "react";
 import { Component } from "react";
-import {
-  Route,
-  Navigate,
-  Routes,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import {
   ApplicationPaths,
   QueryParameterNames,
 } from "./ApiAuthorizationConstants";
 import authService from "./AuthorizeService";
-import { FetchData } from "../FetchData";
 
 export default class AuthorizeRoute extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       ready: false,
       authenticated: false,
@@ -46,11 +38,8 @@ export default class AuthorizeRoute extends Component {
       return <div>?</div>;
     } else {
       const { component: Component } = this.props;
-      console.log(authenticated)
       return (
-        <>
-          {authenticated ? Component : <Navigate replace to={redirectUrl} />}
-        </>
+        <>{authenticated ? Component : <Navigate replace to={redirectUrl} />}</>
       );
     }
   }
