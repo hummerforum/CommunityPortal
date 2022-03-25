@@ -19,6 +19,7 @@ namespace CommunityPortal.Models.Services
             PrivateMessage newPrivateMessage = new PrivateMessage();
             newPrivateMessage = privateMessage;
             _appDbContext.PrivateMessages.Add(newPrivateMessage);
+            _appDbContext.SaveChanges();
             return newPrivateMessage;
         }
 
@@ -42,6 +43,7 @@ namespace CommunityPortal.Models.Services
             privateMessageToUpdate = privateMessage;
             privateMessageToUpdate.PrivateMessageId = id;
             _appDbContext.PrivateMessages.Update(privateMessageToUpdate);
+            _appDbContext.SaveChanges();
             return privateMessageToUpdate;
         }
 
@@ -52,6 +54,7 @@ namespace CommunityPortal.Models.Services
                 return false;
 
             _appDbContext.PrivateMessages.Remove(privateMessageToDelete);
+            _appDbContext.SaveChanges();
             return true;
         }
     }

@@ -19,6 +19,7 @@ namespace CommunityPortal.Models.Services
             Category newCategory = new Category();
             newCategory = category;
             _appDbContext.Categories.Add(newCategory);
+            _appDbContext.SaveChanges();
             return newCategory;
         }
 
@@ -42,6 +43,7 @@ namespace CommunityPortal.Models.Services
             categoryToUpdate = category;
             categoryToUpdate.CategoryId = id;
             _appDbContext.Categories.Update(categoryToUpdate);
+            _appDbContext.SaveChanges();
             return categoryToUpdate;
         }
 
@@ -52,6 +54,7 @@ namespace CommunityPortal.Models.Services
                 return false;
 
             _appDbContext.Categories.Remove(categoryToDelete);
+            _appDbContext.SaveChanges();
             return true;
         }
     }

@@ -19,6 +19,7 @@ namespace CommunityPortal.Models.Services
             NewsPost newNewsPost = new NewsPost();
             newNewsPost = newsPost;
             _appDbContext.NewsPosts.Add(newNewsPost);
+            _appDbContext.SaveChanges();
             return newNewsPost;
         }
 
@@ -42,6 +43,7 @@ namespace CommunityPortal.Models.Services
             newsPostToUpdate = newsPost;
             newsPostToUpdate.NewsPostId = id;
             _appDbContext.NewsPosts.Update(newsPostToUpdate);
+            _appDbContext.SaveChanges();
             return newsPostToUpdate;
         }
 
@@ -108,6 +110,7 @@ namespace CommunityPortal.Models.Services
                 return false;
 
             _appDbContext.NewsPosts.Remove(newsPostToDelete);
+            _appDbContext.SaveChanges();
             return true;
         }
     }
