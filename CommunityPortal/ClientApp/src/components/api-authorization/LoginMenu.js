@@ -53,34 +53,10 @@ export class LoginMenu extends Component {
   }
 
 
-  // TODO: move these to it's own Avatar component later
-  stringToColor(string) {
-    let hash = 0;
-    let i;
-    for (i = 0; i < string.length; i += 1) {
-      hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    let color = "#";
-    for (i = 0; i < 3; i += 1) {
-      const value = (hash >> (i * 8)) & 0xff;
-      color += `00${value.toString(16)}`.slice(-2);
-    }
-    return color;
-  }
-
-  stringAvatar(name) {
-    return {
-      sx: {
-        bgcolor: this.stringToColor(name),
-      },
-      children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
-    };
-  }
-
   authenticatedView(userName, profilePath, logoutPath) {
     return (
       <Fragment>
-        <Chip avatar={<Avatar {...this.stringAvatar(userName)} />} label={userName} />
+        <Chip avatar={<Avatar/>} label={userName} />
         <Button 
           component={RouterLink}
           variant="text"

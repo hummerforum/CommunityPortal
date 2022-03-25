@@ -8,7 +8,13 @@ import { FetchData } from "./components/FetchData";
 import { Counter } from "./components/Counter";
 import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
 import ApiAuthorizationRoutes from "./components/api-authorization/ApiAuthorizationRoutes";
-import { ApplicationPaths } from "./components/api-authorization/ApiAuthorizationConstants";
+import {
+  ApplicationPaths,
+  LoginActions,
+  LogoutActions,
+} from "./components/api-authorization/ApiAuthorizationConstants";
+import { Login } from "./components/api-authorization/Login";
+import { Logout } from "./components/api-authorization/Logout";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -27,10 +33,42 @@ export default class App extends Component {
               <AuthorizeRoute path="/fetch-data" component={<FetchData/>} />
             }
           />
-          <Route
-            path={`${ApplicationPaths.ApiAuthorizationPrefix}/*`}
-            element={<ApiAuthorizationRoutes />}
-          />
+        <Route
+          path={ApplicationPaths.Login}
+          element={<Login action={LoginActions.Login}/>}
+        />
+                <Route
+          path={ApplicationPaths.Login}
+          element={<Login action={LoginActions.Login}/>}
+        />
+        <Route
+          path={ApplicationPaths.LoginFailed}
+          element={<Logout action={LoginActions.LoginFailed} />}
+        />
+        <Route
+          path={ApplicationPaths.LoginCallback}
+          element={<Login action={LoginActions.LoginCallback} />}
+        />
+        <Route
+          path={ApplicationPaths.Profile}
+          element={<Login action={LoginActions.Profile} />}
+        />
+        <Route
+          path={ApplicationPaths.Register}
+          element={<Login action={LoginActions.Register} />}
+        />
+        <Route
+          path={ApplicationPaths.LogOut}
+          element={<Logout action={LogoutActions.Logout} />}
+        />
+        <Route
+          path={ApplicationPaths.LogOutCallback}
+          element={<Logout action={LogoutActions.LogoutCallback} />}
+        />
+        <Route
+          path={ApplicationPaths.LoggedOut}
+          element={<Logout action={LogoutActions.LoggedOut} />}
+        />
         </Routes>
       </Layout>
     );
