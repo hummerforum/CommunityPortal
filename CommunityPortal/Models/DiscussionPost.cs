@@ -24,9 +24,5 @@ namespace CommunityPortal.Models
         public CommunityUser CommunityUser { get; set; }
 
         public DiscussionPost DiscussionPostReply { get; set; }
-
-        public SubForum SubForum { get; set; }
-
-        public List<DiscussionPost> DiscussionPostReplies { get; set; }
     }
 }
