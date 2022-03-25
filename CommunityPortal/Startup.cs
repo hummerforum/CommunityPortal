@@ -104,11 +104,9 @@ namespace CommunityPortal
             {
                 spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.Options.DevServerPort = 3000;
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                }
+                if (!env.IsDevelopment()) return;
+                spa.Options.DevServerPort = 3000;
+                spa.UseReactDevelopmentServer(npmScript: "start");
             });
         }
     }
