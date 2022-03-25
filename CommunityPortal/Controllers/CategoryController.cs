@@ -8,7 +8,7 @@ namespace CommunityPortal.Controllers
 {
 
     [Route("api/[controller]")]
-    public class CategoryController : Controller
+    public class CategoryController : ControllerBase
     {
         private readonly CategoryService _categoryService;
 
@@ -33,21 +33,23 @@ namespace CommunityPortal.Controllers
             return JsonData;
         }
 
-        /*[HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost]
+        public void Post([FromBody] Category category)
         {
+            _categoryService.Add(category);
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public void Put([FromBody] Category category)
         {
+            _categoryService.Update(category);
         }
 
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _categoryService.Delete(id);
         }
-        */
     }
 
 }

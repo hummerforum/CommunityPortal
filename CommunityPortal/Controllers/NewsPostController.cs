@@ -8,7 +8,7 @@ namespace CommunityPortal.Controllers
 {
 
     [Route("api/[controller]")]
-    public class NewsPostController : Controller
+    public class NewsPostController : ControllerBase
     {
         private readonly NewsPostService _newsPostService;
 
@@ -33,21 +33,23 @@ namespace CommunityPortal.Controllers
             return JsonData;
         }
 
-        /*[HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost]
+        public void Post([FromBody] NewsPost newsPost)
         {
+            _newsPostService.Add(newsPost);
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public void Put([FromBody] NewsPost newsPost)
         {
+            _newsPostService.Update(newsPost);
         }
 
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _newsPostService.Delete(id);
         }
-        */
     }
 
 }

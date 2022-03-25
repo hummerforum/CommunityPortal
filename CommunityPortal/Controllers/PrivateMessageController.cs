@@ -8,7 +8,7 @@ namespace CommunityPortal.Controllers
 {
 
     [Route("api/[controller]")]
-    public class PrivateMessageController : Controller
+    public class PrivateMessageController : ControllerBase
     {
         private readonly PrivateMessageService _privateMessageService;
 
@@ -33,21 +33,23 @@ namespace CommunityPortal.Controllers
             return JsonData;
         }
 
-        /*[HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost]
+        public void Post([FromBody] PrivateMessage privateMessage)
         {
+            _privateMessageService.Add(privateMessage);
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public void Put([FromBody] PrivateMessage privateMessage)
         {
+            _privateMessageService.Update(privateMessage);
         }
 
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _privateMessageService.Delete(id);
         }
-        */
     }
 
 }
