@@ -84,13 +84,13 @@ export class LoginMenu extends Component {
       <Fragment>
         <Button
           component={RouterLink}
-          variant="contained"
+          variant="outline"
           to={registerPath}
           sx={{ my: 1, mx: 1.5 }}
         >
           Register
         </Button>
-        <Button component={RouterLink} variant="contained" to={loginPath}>
+        <Button component={RouterLink} variant="outline" to={loginPath}>
           Login
         </Button>
       </Fragment>
