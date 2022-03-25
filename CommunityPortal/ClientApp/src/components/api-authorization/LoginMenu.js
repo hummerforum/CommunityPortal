@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Button from "@mui/material/Button";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
 import authService from "./AuthorizeService";
@@ -57,9 +57,9 @@ export class LoginMenu extends Component {
     return (
       <Fragment>
         <Chip
-        sx={{color: "#FFF"}}
+          sx={{ color: "#FFF" }}
           avatar={
-            <Avatar alt={userName} sx={{ bgcolor: "#95B2B8", color:"#FFF" }}>
+            <Avatar alt={userName} sx={{ bgcolor: "#95B2B8", color: "#FFF" }}>
               {userName.charAt(0)}
             </Avatar>
           }
@@ -84,13 +84,13 @@ export class LoginMenu extends Component {
       <Fragment>
         <Button
           component={RouterLink}
-          variant="contained"
+          variant="outline"
           to={registerPath}
           sx={{ my: 1, mx: 1.5 }}
         >
           Register
         </Button>
-        <Button component={RouterLink} variant="contained" to={loginPath}>
+        <Button component={RouterLink} variant="outline" to={loginPath}>
           Login
         </Button>
       </Fragment>

@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { Route, Routes, useLocation } from "react-router";
+import { Route, Routes } from "react-router";
 import { Layout } from "./components/Layout";
 import { Home } from "./components/Home";
 import { Forum } from "./components/Forum";
 import { News } from "./components/News";
 import { FetchData } from "./components/FetchData";
-import { Counter } from "./components/Counter";
 import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
 import {
   ApplicationPaths,
@@ -23,9 +22,13 @@ export default class App extends Component {
       <Layout>
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="/counter" element={<Counter />} />
           <Route path="/forum" element={<Forum />} />
           <Route path="/news" element={<News />} />
+          {/* 
+          this is how you do a privileged route
+          path is the url
+          component is the react component that loads
+          */}
           <Route
             path="/fetch-data"
             element={
