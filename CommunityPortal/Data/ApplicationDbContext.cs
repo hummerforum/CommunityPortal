@@ -44,7 +44,7 @@ namespace CommunityPortal.Data
                 NormalizedEmail = "A@B.COM",
                 UserName = "a@b.com",
                 NormalizedUserName = "A@B.COM",
-                PasswordHash = passwordHasher.HashPassword(null, "1234"),
+                PasswordHash = passwordHasher.HashPassword(null, "123456"),
             });
 
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { UserId = accountId, RoleId = userRoleId });

@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace CommunityPortal
 {
@@ -35,8 +36,17 @@ namespace CommunityPortal
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<CommunityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddIdentity<CommunityUser, IdentityRole>( options => { 
+                options.SignIn.RequireConfirmedAccount = false; 
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 4;
+            })
+            .AddDefaultUI()
+            .AddDefaultTokenProviders()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            
 
             services.AddIdentityServer()
                 .AddApiAuthorization<CommunityUser, ApplicationDbContext>();
@@ -44,12 +54,10 @@ namespace CommunityPortal
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
-            services.AddScoped<IUserservice, UserRepos>();
+            services.AddScoped<IUserService, UserService>();
 
 
 
-
-            //services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
 
             services.AddScoped<IDiscussionPostsService, DiscussionPostsService>();
