@@ -10,9 +10,14 @@ namespace CommunityPortal.Models
         public int CategoryId { get; set; }
 
         [Required]
-        [Display(Name = "Category")]
-        public string CategoryName { get; set; }
+        [Display(Name = "Title")]
+        public string Title { get; set; }
 
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+
+        public int ParentId { get; set; }
+      
         List<DiscussionGroupCategory> DiscussionGroupCategories { get; set; }
 
         List<DiscussionPost> DiscussionPosts { get; set; }
