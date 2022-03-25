@@ -60,6 +60,7 @@ namespace CommunityPortal
 
             services.AddControllersWithViews();
 
+            services.AddScoped<IPrivateMessageService, PrivateMessageService>();
             services.AddScoped<IDiscussionPostsService, DiscussionPostsService>();
             services.AddScoped<IDiscussionGroupsService, DiscussionGroupsService>();
             services.AddScoped<IDiscussionGroupMembershipsService, DiscussionGroupMembershipsService>();
@@ -111,10 +112,9 @@ namespace CommunityPortal
             {
                 spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                }
+                if (!env.IsDevelopment()) return;
+                spa.Options.DevServerPort = 3000;
+                spa.UseReactDevelopmentServer(npmScript: "start");
             });
         }
     }

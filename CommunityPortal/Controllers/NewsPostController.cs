@@ -1,27 +1,26 @@
 using CommunityPortal.Models;
-using CommunityPortal.Data;
+using CommunityPortal.Models.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 
 namespace CommunityPortal.Controllers
 {
 
     [Route("api/[controller]")]
-    public class NewsPostController : Controller
+    public class NewsPostController : ControllerBase
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly NewsPostService _newsPostService;
 
-        public NewsPostController(ApplicationDbContext dbContext)
+        public NewsPostController(NewsPostService newsPostService)
         {
-            _dbContext = dbContext;
+            _newsPostService = newsPostService;
         }
 
         [HttpGet]
         public string Get()
         {
-            List<NewsPost> NewsPosts = _dbContext.NewsPosts.ToList();
+            List<NewsPost> NewsPosts = _newsPostService.GetList();
             string JsonData = JsonSerializer.Serialize(NewsPosts);
             return JsonData;
         }
@@ -29,10 +28,27 @@ namespace CommunityPortal.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            List<NewsPost> NewsPosts = _dbContext.NewsPosts.ToList();
-            NewsPost newsPost = NewsPosts.Where(np => np.NewsPostId == id).SingleOrDefault();
+            NewsPost newsPost = _newsPostService.GetById(id);
             string JsonData = JsonSerializer.Serialize(newsPost);
             return JsonData;
+        }
+
+        [HttpPost]
+        public void Post([FromBody] NewsPost newsPost)
+        {
+            _newsPostService.Add(newsPost);
+        }
+
+        [HttpPut]
+        public void Put([FromBody] NewsPost newsPost)
+        {
+            _newsPostService.Update(newsPost);
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _newsPostService.Delete(id);
         }
     }
 

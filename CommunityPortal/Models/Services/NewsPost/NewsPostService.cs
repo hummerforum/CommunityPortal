@@ -1,36 +1,55 @@
 using System.Collections.Generic;
-using CommunityPortal.Models.Repos;
+using System.Linq;
+using CommunityPortal.Data;
 
 namespace CommunityPortal.Models.Services
 {
 
     public class NewsPostService : INewsPostService
     {
-        private readonly INewsPostRepository _newsPostRepository;
+        private readonly ApplicationDbContext _appDbContext;
 
-        public NewsPostService()
+        public NewsPostService(ApplicationDbContext appDbContext)
         {
-            _newsPostRepository = new NewsPostRepository();
+            _appDbContext = appDbContext;
         }
 
         public NewsPost Add(NewsPost newsPost)
         {
-            return _newsPostRepository.Create(newsPost);
+            NewsPost newNewsPost = new NewsPost();
+            newNewsPost = newsPost;
+            _appDbContext.NewsPosts.Add(newNewsPost);
+            _appDbContext.SaveChanges();
+            return newNewsPost;
         }
 
         public NewsPost GetById(int newsPostId)
         {
-            return _newsPostRepository.Read(newsPostId);
+            return _appDbContext.NewsPosts.Where(np => np.NewsPostId == newsPostId).SingleOrDefault();
         }
 
         public List<NewsPost> GetList()
         {
-            return _newsPostRepository.Read();
+            return _appDbContext.NewsPosts.ToList();
+        }
+
+        public NewsPost Update(NewsPost newsPost)
+        {
+            int id = newsPost.NewsPostId;
+            NewsPost newsPostToUpdate = GetById(id);
+            if (newsPostToUpdate == null)
+                return null;
+
+            newsPostToUpdate = newsPost;
+            newsPostToUpdate.NewsPostId = id;
+            _appDbContext.NewsPosts.Update(newsPostToUpdate);
+            _appDbContext.SaveChanges();
+            return newsPostToUpdate;
         }
 
         public List<NewsPost> SearchOR(string searchString)
         {
-            List<NewsPost> newsPosts = _newsPostRepository.Read();
+            List<NewsPost> newsPosts = _appDbContext.NewsPosts.ToList();
             List<NewsPost> matches = new List<NewsPost>();
             if (string.IsNullOrWhiteSpace(searchString))
                 return newsPosts;
@@ -57,7 +76,7 @@ namespace CommunityPortal.Models.Services
 
         public List<NewsPost> SearchAND(string searchString)
         {
-            List<NewsPost> newsPosts = _newsPostRepository.Read();
+            List<NewsPost> newsPosts = _appDbContext.NewsPosts.ToList();
             List<NewsPost> matches = new List<NewsPost>();
             if (string.IsNullOrWhiteSpace(searchString))
                 return newsPosts;//
@@ -86,7 +105,13 @@ namespace CommunityPortal.Models.Services
 
         public bool Delete(int newsPostId)
         {
-            return _newsPostRepository.Delete(newsPostId);
+            NewsPost newsPostToDelete = GetById(newsPostId);
+            if (newsPostToDelete == null)
+                return false;
+
+            _appDbContext.NewsPosts.Remove(newsPostToDelete);
+            _appDbContext.SaveChanges();
+            return true;
         }
     }
 

@@ -1,52 +1,58 @@
-import React, { Component } from 'react';
-import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import { LoginMenu } from './api-authorization/LoginMenu';
-import './NavMenu.css';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import { LoginMenu } from "../components/api-authorization/LoginMenu";
+import Link from "@mui/material/Link";
+import { Link as RouterLink } from "react-router-dom";
 
-export class NavMenu extends Component {
-  static displayName = NavMenu.name;
+const NavMenu = () => {
+  return (
+    <AppBar position="static">
+      <Container
+        maxWidth="xl"
+        sx={{
+          bgcolor: "#70163C",
+        }}
+      >
+        <Toolbar
+          disableGutters
+          sx={{
+            bgcolor: "#70163C",
+          }}
+        >
+          <Link component={RouterLink} to="/" underline="none">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ mr: 2, display: { xs: "none", md: "flex" }, color: "#FFF" }}
+            >
+              Hummer
+            </Typography>
+          </Link>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/news">
+              News
+            </Button>
+            <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/forum">
+              Forum
+            </Button>
+            <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/fetch-data">
+              Fetch-data (AUTH CHECK)
+            </Button>
+          </Box>
+          <LoginMenu />
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
+};
 
-  constructor (props) {
-    super(props);
-
-    this.toggleNavbar = this.toggleNavbar.bind(this);
-    this.state = {
-      collapsed: true
-    };
-  }
-
-  toggleNavbar () {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
-  }
-
-  render () {
-    return (
-      <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
-          <Container>
-            <NavbarBrand tag={Link} to="/">CommunityPortal</NavbarBrand>
-            <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-            <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
-              <ul className="navbar-nav flex-grow">
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
-                </NavItem>
-                <LoginMenu>
-                </LoginMenu>
-              </ul>
-            </Collapse>
-          </Container>
-        </Navbar>
-      </header>
-    );
-  }
-}
+export default NavMenu;
