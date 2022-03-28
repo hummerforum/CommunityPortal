@@ -1,12 +1,14 @@
 ﻿using CommunityPortal.Models;
 using CommunityPortal.Models.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace CommunityPortal.Controllers
 {
-
+    [Authorize]
     [Route("api/[controller]")]
     public class UserController : Controller
     {
@@ -27,20 +29,24 @@ namespace CommunityPortal.Controllers
         [HttpGet("GetMe")]
         public string GetMe()
         {
-            int i = 0;
-            var  x = roleManager.Roles;
-
             return ("Makrillen simmar i havet ");
         }
-        
-        
+
+        [Authorize(Roles = "Admin")]
         [HttpGet("GetAllUsers")]
-        public List<CommunityUser> GetAllUsers()
+        public string GetAllUsers()
         {
+            // lägg till roller....
 
-
-            return userService.GetAllUsers();
+            // if(roleManager.Roles()
+            return JsonSerializer.Serialize(userService.GetAllUsers());
         }
 
+        [HttpPost]
+        public bool UpdateUser(string user)
+        {
+            return true;
+        
+        }
     }
 }

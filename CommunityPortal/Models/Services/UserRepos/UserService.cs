@@ -17,12 +17,19 @@ namespace CommunityPortal.Models.Repos
         public List<CommunityUser> GetAllUsers()
         {
             return  appDbContext.CommunityUsers.ToList();
-
         }
+
+
+        public bool UpdateUser(string userInfo)
+        {
+            // vilken info skall kunna uppdateras, tommy behöver säga vad. 
+
+            return false;
+        }
+
 
         public bool RemoveUser(string Id)
         {
-            
             CommunityUser user  = appDbContext.CommunityUsers.FirstOrDefault(x => x.Id == Id);
             if(user == null)
                 return false;
@@ -36,6 +43,5 @@ namespace CommunityPortal.Models.Repos
             }
             return true;
         }
-
     }
 }
