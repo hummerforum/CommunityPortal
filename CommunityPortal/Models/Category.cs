@@ -17,8 +17,8 @@ namespace CommunityPortal.Models
         public string Description { get; set; }
 
         public int ParentId { get; set; }
-      
-        List<DiscussionGroupCategory> DiscussionGroupCategories { get; set; }
+
+        DiscussionGroup DiscussionGroup { get; set; }
 
         List<DiscussionPost> DiscussionPosts { get; set; }
     }

@@ -15,6 +15,6 @@ namespace CommunityPortal.Models
 
         List<DiscussionGroupMembership> DiscussionGroupMemberships { get; set; }
 
-        List<DiscussionGroupCategory> DiscussionGroupCategories { get; set; }
+        List<Category> Categories { get; set; }
     }
 }
