@@ -20,7 +20,6 @@ namespace CommunityPortal.Data
         public DbSet<DiscussionPost> DiscussionPosts { get; set; }
         public DbSet<DiscussionGroupMembership> DiscussionGroupMemberships { get; set; }
         public DbSet<DiscussionGroup> DiscussionGroups { get; set; }
-        public DbSet<DiscussionGroupCategory> DiscussionGroupCategories { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<NewsPost> NewsPosts { get; set; }
 
