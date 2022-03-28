@@ -6,7 +6,8 @@ using System.Text.Json;
 
 namespace CommunityPortal.Controllers
 {
-
+    
+    [ApiController]
     [Route("api/[controller]")]
     public class PrivateMessageController : ControllerBase
     {
