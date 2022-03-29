@@ -1,15 +1,15 @@
 using CommunityPortal.Models;
 using CommunityPortal.Models.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Text.Json;
 
 namespace CommunityPortal.Controllers
 {
-    
-    [ApiController]
     [Route("api/[controller]")]
-    public class PrivateMessagesController : ControllerBase
+    [Authorize(Roles = "User")]
+    public class PrivateMessagesController : Controller
     {
         private readonly IPrivateMessagesService _privateMessagesService;
 
