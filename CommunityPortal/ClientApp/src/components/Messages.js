@@ -9,6 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from "@mui/material/Typography";
+import authService from "./api-authorization/AuthorizeService";
 import axios from "axios";
 
 export class Messages extends Component {
@@ -19,11 +20,25 @@ export class Messages extends Component {
             messages: []
         };
     }
-    static displayName = Messages.name;
+
+    async authHeader() {
+        const currentUser = await authService.getUser();
+        if (currentUser && currentUser.access_token) {
+            return { "Authorization": `Bearer ${currentUser.access_token}` };
+        } else {
+            return {};
+        }
+    }
 
     async readMessages() {
-        const response = await axios.get("https://localhost:5001/api/PrivateMessages/");
-        if (response.status === 200) {
+        const header = await authService.getUser();
+        const response = await axios.get(
+            "https://localhost:5001/api/PrivateMessages/",
+            {
+                headers: header
+            }
+        );
+        if (response.status === 200 && response.data !== null) {
             let responseData = response.data;
             for (let index = 0; index < responseData.length; index++) {
                 responseData[index] = Object.keys(responseData[index]).reduce((accumulator, key) => {
@@ -32,7 +47,6 @@ export class Messages extends Component {
                 }, {});
             }
             this.setState({ messages: responseData })
-            console.log(responseData);
         }
     }
 
@@ -67,7 +81,7 @@ export class Messages extends Component {
                                         <TableRow key={message.privatemessageid}>
                                             <TableCell>{message.subject}</TableCell>
                                             <TableCell>{message.sender}</TableCell>
-                                            <TableCell>{message.timesent}</TableCell>
+                                            <TableCell>{message.timesent.replace("T", " ")}</TableCell>
                                         </TableRow>
                                     ))
                                     :
@@ -75,20 +89,6 @@ export class Messages extends Component {
                                         <TableCell>There are no messages</TableCell>
                                     </TableRow>
                                 }
-
-
-
-
-                                {/*   {this.state.messages.length > 0 ? (
-                                    }
-                                    < TableRow >
-                                        <TableCell>{this.state.messages.length}</TableCell>
-                                    </TableRow>{
-                                ) : (
-                                    <TableRow>
-                                        <TableCell>No people</TableCell>
-                                    </TableRow>
-                                )}*/}
                             </TableBody>
                         </Table>
                     </TableContainer>
