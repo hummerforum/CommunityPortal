@@ -5,22 +5,20 @@ using CommunityPortal.Data;
 namespace CommunityPortal.Models.Services
 {
 
-    public class PrivateMessageService : IPrivateMessageService
+    public class PrivateMessagesService : IPrivateMessagesService
     {
         private readonly ApplicationDbContext _appDbContext;
 
-        public PrivateMessageService(ApplicationDbContext appDbContext)
+        public PrivateMessagesService(ApplicationDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
         
         public PrivateMessage Add(PrivateMessage privateMessage)
         {
-            PrivateMessage newPrivateMessage = new PrivateMessage();
-            newPrivateMessage = privateMessage;
-            _appDbContext.PrivateMessages.Add(newPrivateMessage);
+            _appDbContext.PrivateMessages.Add(privateMessage);
             _appDbContext.SaveChanges();
-            return newPrivateMessage;
+            return privateMessage;
         }
 
         public PrivateMessage GetById(int privateMessageId)
