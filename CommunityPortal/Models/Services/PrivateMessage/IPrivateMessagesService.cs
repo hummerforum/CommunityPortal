@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace CommunityPortal.Models.Services
 {
 
-    public interface IPrivateMessageService
+    public interface IPrivateMessagesService
     {
         public PrivateMessage Add(PrivateMessage privateMessage);
         public PrivateMessage GetById(int privateMessageId);
