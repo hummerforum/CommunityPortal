@@ -60,7 +60,7 @@ namespace CommunityPortal
 
             services.AddControllersWithViews();
 
-            services.AddScoped<IPrivateMessageService, PrivateMessageService>();
+            services.AddScoped<IPrivateMessagesService, PrivateMessagesService>();
             services.AddScoped<IDiscussionPostsService, DiscussionPostsService>();
             services.AddScoped<IDiscussionGroupsService, DiscussionGroupsService>();
             services.AddScoped<IDiscussionGroupMembershipsService, DiscussionGroupMembershipsService>();
