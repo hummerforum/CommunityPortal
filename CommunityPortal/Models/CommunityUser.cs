@@ -8,6 +8,7 @@ namespace CommunityPortal.Models
 {
     public class CommunityUser : IdentityUser
     {
+        public string UserName2 { get; set; }
 
         List<DiscussionPost> DiscussionPosts { get; set; }
 

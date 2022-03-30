@@ -19,9 +19,13 @@ namespace CommunityPortal.Models
         public DateTime Time { get; set; }
 
         [Required]
+        public string CommunityUserId { get; set; }
         public CommunityUser CommunityUser { get; set; }
 
         public DiscussionPost DiscussionPostReply { get; set; }
+
+        [Required]
+        public int CategoryId { get; set;}
 
         public Category Category { get; set; }
     }
