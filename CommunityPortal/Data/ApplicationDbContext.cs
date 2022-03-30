@@ -57,7 +57,7 @@ namespace CommunityPortal.Data
                 Id = accountId,
                 Email = "user@b.com",
                 NormalizedEmail = "USER@B.COM",
-                UserName = "USER@b.com",
+                UserName = "user@b.com",
                 NormalizedUserName = "USER@B.COM",
                 PasswordHash = passwordHasher.HashPassword(null, "123456"),
             };
