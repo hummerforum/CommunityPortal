@@ -27,12 +27,12 @@ namespace CommunityPortal.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<PrivateMessage>()
-                .HasOne(e => e.FromUser)
+                .HasOne(e => e.Sender)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<PrivateMessage>()
-               .HasOne(e => e.ToUser)
+               .HasOne(e => e.Receiver)
                .WithMany()
                .OnDelete(DeleteBehavior.Restrict);
 
