@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Route, Routes } from "react-router";
 import { Layout } from "./components/Layout";
-import { Home } from "./components/Home";
-import { Forum } from "./components/Forum";
-import { News } from "./components/News";
-import { Messages } from "./components/messages/Messages";
-import { FetchData } from "./components/FetchData";
+import { Home } from "./pages/Home";
+import { Forum } from "./pages/Forum";
+import { News } from "./pages/News";
+import { Messages } from "./components/Messages";
+import { FetchData } from "./pages/FetchData";
 import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
 import {
     ApplicationPaths,
@@ -24,7 +24,7 @@ export default class App extends Component {
             <Layout>
                 <Routes>
                     <Route exact path="/" element={<Home />} />
-                    <Route path="/forum" element={<Forum />} />
+                    <Route path="/forum/*" element={<Forum />} />
                     <Route path="/news" element={<News />} />
                     <Route path="/messages" element={<Messages />} />
                     <Route path="/community-users" element={<CommunityUsers/>} />
