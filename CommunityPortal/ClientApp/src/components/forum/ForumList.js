@@ -16,6 +16,7 @@ const CategoryHeaderStyle = styled.div`
   font-size: 23px;
   padding: 5px;
   border: 1px solid #000;
+  height: 50px;
 `;
 
 const CategoryListContainer = styled.div`
