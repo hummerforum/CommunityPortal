@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace CommunityPortal.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
     public class DiscussionGroupMembershipsController : Controller
     {
@@ -18,7 +19,7 @@ namespace CommunityPortal.Controllers
 
         #region Read
 
-        [HttpGet("GetDiscussionGroupMemberships")]
+        [HttpGet]
         public string GetDiscussionGroupMemberships()
         {
             List<DiscussionGroupMembership> discussionGroupMemberships = this.discussionGroupMembershipsService.Read();
@@ -26,6 +27,32 @@ namespace CommunityPortal.Controllers
             return JsonConvert.SerializeObject(discussionGroupMemberships);
         }
 
+        [HttpGet("{id}")]
+        public string Get(int id)
+        {
+            DiscussionGroupMembership discussionGroupMemberships = this.discussionGroupMembershipsService.FindDiscussionGroupMembership(id);
+            return JsonConvert.SerializeObject(discussionGroupMemberships);
+        }
+
         #endregion
+
+        [HttpPost]
+        public void Post([FromBody] DiscussionGroupMembership discussionGroupMembership)
+        {
+            this.discussionGroupMembershipsService.CreateDiscussionGroupMembership(discussionGroupMembership);
+        }
+
+        [HttpPut]
+        public void Put([FromBody] DiscussionGroupMembership discussionGroupMembership)
+        {
+            this.discussionGroupMembershipsService.UpdateDiscussionGroupMembership(discussionGroupMembership);
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            this.discussionGroupMembershipsService.DeleteDiscussionGroupMembership(id);
+        }
+
     }
 }

@@ -34,6 +34,12 @@ namespace CommunityPortal.Controllers
             return JsonData;
         }
 
+        [HttpGet("rss")]
+        public string GetRSS()
+        {
+            return _newsPostService.GetRSS();
+        }
+
         [HttpPost]
         public void Post([FromBody] NewsPost newsPost)
         {

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace CommunityPortal.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
     public class DiscussionGroupsController : Controller
     {
@@ -21,7 +22,7 @@ namespace CommunityPortal.Controllers
 
         #region Read
 
-        [HttpGet("GetDiscussionGroups")]
+        [HttpGet]
         public string GetDiscussionGroups()
         {
             List<DiscussionGroup> discussionGroups = this.discussionGroupsService.Read();
@@ -29,6 +30,32 @@ namespace CommunityPortal.Controllers
             return JsonConvert.SerializeObject(discussionGroups);
         }
 
+        [HttpGet("{id}")]
+        public string Get(int id)
+        {
+            DiscussionGroup discussionGroup = this.discussionGroupsService.FindDiscussionGroup(id);
+            return JsonConvert.SerializeObject(discussionGroup);
+        }
+
         #endregion
+
+        [HttpPost]
+        public void Post([FromBody] DiscussionGroup discussionGroup)
+        {
+            this.discussionGroupsService.CreateDiscussionGroup(discussionGroup);
+        }
+
+        [HttpPut]
+        public void Put([FromBody] DiscussionGroup discussionGroup)
+        {
+            this.discussionGroupsService.UpdateDiscussionGroup(discussionGroup);
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            this.discussionGroupsService.DeleteDiscussionGroup(id);
+        }
+
     }
 }
