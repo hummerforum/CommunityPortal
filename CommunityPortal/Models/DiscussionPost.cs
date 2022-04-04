@@ -15,18 +15,18 @@ namespace CommunityPortal.Models
         [Required]
         public string Content { get; set; }
 
+        public string Category { get; set; }
+
         [Required]
         public DateTime Time { get; set; }
 
         [Required]
-        public string CommunityUserId { get; set; }
         public CommunityUser CommunityUser { get; set; }
 
         public DiscussionPost DiscussionPostReply { get; set; }
 
-        [Required]
-        public int CategoryId { get; set;}
+        public SubForum SubForum { get; set; }
 
-        public Category Category { get; set; }
+        public List<DiscussionPost> DiscussionPostReplies { get; set; }
     }
 }

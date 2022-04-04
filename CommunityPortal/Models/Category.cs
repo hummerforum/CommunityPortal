@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CommunityPortal.Models
@@ -17,10 +16,6 @@ namespace CommunityPortal.Models
         public string Description { get; set; }
 
         public int ParentId { get; set; }
-
-        DiscussionGroup DiscussionGroup { get; set; }
-
-        List<DiscussionPost> DiscussionPosts { get; set; }
     }
 
 }

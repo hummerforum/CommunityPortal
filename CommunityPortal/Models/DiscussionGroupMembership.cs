@@ -13,17 +13,14 @@ namespace CommunityPortal.Models
         [Key]
         public int DiscussionGroupMembershipId { get; set; }
 
-        
-        
         [Required]
         public int DiscussionGroupMemberId { get; set; }
-        public CommunityUser DiscussionGroupMember { get; set; }
-
-
-
 
         [Required]
         public int DiscussionGroupId { get; set; }
+
+        public CommunityUser DiscussionGroupMember { get; set; }
+
         public DiscussionGroup DiscussionGroup { get; set; }
     }
 }
