@@ -39,7 +39,19 @@ namespace CommunityPortal.Models.Repos
             return true;
         }
 
-        public List<UserRoleViewModel> GetAllUsers()
+        public List<CommunityUser> GetAllUsers()
+        {
+            return appDbContext.CommunityUsers.ToList();
+        }
+
+        public CommunityUser FindUserById(string id)
+        {
+           return appDbContext.CommunityUsers.First(cu => cu.Id == id);
+        
+        }
+
+
+        public List<UserRoleViewModel> GetAllUsersWithRoles()
         {
 
             List<UserRoleViewModel> usersWithRoles =

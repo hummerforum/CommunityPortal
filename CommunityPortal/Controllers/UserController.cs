@@ -38,7 +38,7 @@ namespace CommunityPortal.Controllers
         public string GetAllUsers()
         {
             // lägg till roller....
-            return  JsonSerializer.Serialize(userService.GetAllUsers());
+            return  JsonSerializer.Serialize(userService.GetAllUsersWithRoles());
         }
 
         public class RoleData
