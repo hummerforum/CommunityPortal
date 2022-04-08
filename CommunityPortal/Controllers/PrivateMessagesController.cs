@@ -1,55 +1,165 @@
 using CommunityPortal.Models;
+using CommunityPortal.Models.React;
 using CommunityPortal.Models.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Text.Json;
 
 namespace CommunityPortal.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User, Moderator, Admin")]
     public class PrivateMessagesController : Controller
     {
-        private readonly IPrivateMessagesService _privateMessagesService;
+        private readonly IUserService userService;
+        private readonly IPrivateMessagesService privateMessagesService;
 
-        public PrivateMessagesController(IPrivateMessagesService privateMessagesService)
+        public PrivateMessagesController(IUserService userService, IPrivateMessagesService privateMessagesService)
         {
-            _privateMessagesService = privateMessagesService;
+            this.userService = userService;
+            this.privateMessagesService = privateMessagesService;
         }
 
-        [HttpGet]
-        public string Get()
+        [HttpPost("CreatePrivateMessage")]
+        public IActionResult CreatePrivateMessage([FromBody] CreatePrivateMessage createPrivateMessage)
         {
-            List<PrivateMessage> PrivateMessages = _privateMessagesService.GetList();
-            string JsonData = JsonSerializer.Serialize(PrivateMessages);
-            return JsonData;
+            ReceivedPrivateMessage receivedPrivateMessage = new ReceivedPrivateMessage()
+            {
+                Subject = createPrivateMessage.Subject,
+                Message = createPrivateMessage.Message,
+                ReceiverId = createPrivateMessage.ReceiverId,
+                ReceiverUserName = createPrivateMessage.ReceiverUserName,
+                SenderId = createPrivateMessage.SenderId,
+                SenderUserName = createPrivateMessage.SenderUserName,
+                TimeReceived = DateTime.Now
+            };
+
+            this.privateMessagesService.CreateReceivedPrivateMessage(receivedPrivateMessage);
+
+
+            SentPrivateMessage sentPrivateMessage = new SentPrivateMessage()
+            {
+                Subject = createPrivateMessage.Subject,
+                Message = createPrivateMessage.Message,
+                ReceiverId = createPrivateMessage.ReceiverId,
+                ReceiverUserName = createPrivateMessage.ReceiverUserName,
+                SenderId = createPrivateMessage.SenderId,
+                SenderUserName = createPrivateMessage.SenderUserName,
+                TimeSent = DateTime.Now
+            };
+
+            this.privateMessagesService.CreateSentPrivateMessage(sentPrivateMessage);
+
+            return StatusCode(201);
         }
 
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("GetReceivedPrivateMessages/{communityUserId}")]
+        public string GetReceivedPrivateMessages(string communityUserId)
         {
-            PrivateMessage privateMessage = _privateMessagesService.GetById(id);
-            string JsonData = JsonSerializer.Serialize(privateMessage);
-            return JsonData;
+            List<ReceivedPrivateMessage> receivedPrivateMessages = this.privateMessagesService.GetReceivedPrivateMessages(communityUserId);
+
+            List<GetPrivateMessage> receivedPrivateMessagesToReturn = new List<GetPrivateMessage>();
+
+            foreach (var receivedPrivateMessage in receivedPrivateMessages)
+            {
+                receivedPrivateMessagesToReturn.Add(
+                    new GetPrivateMessage()
+                    {
+                        Id = receivedPrivateMessage.Id,
+                        Subject = receivedPrivateMessage.Subject,
+                        Message = receivedPrivateMessage.Message,
+                        ReceiverId = receivedPrivateMessage.ReceiverId,
+                        ReceiverUserName = receivedPrivateMessage.ReceiverUserName,
+                        SenderId = receivedPrivateMessage.SenderId,
+                        SenderUserName = receivedPrivateMessage.SenderUserName,
+                        TimeSent = receivedPrivateMessage.TimeReceived.ToString("yyyy-MM-dd HH:mm")
+                    }
+                    );
+            }
+
+
+            return JsonConvert.SerializeObject(receivedPrivateMessagesToReturn);
         }
 
-        [HttpPost]
-        public void Post([FromBody] PrivateMessage privateMessage)
+        [HttpGet("GetSentPrivateMessages/{communityUserId}")]
+        public string GetSentPrivateMessages(string communityUserId)
         {
-            _privateMessagesService.Add(privateMessage);
+            List<SentPrivateMessage> sentPrivateMessages = this.privateMessagesService.GetSentPrivateMessages(communityUserId);
+
+            List<GetPrivateMessage> sentPrivateMessagesToReturn = new List<GetPrivateMessage>();
+
+            foreach (var receivedPrivateMessage in sentPrivateMessages)
+            {
+                sentPrivateMessagesToReturn.Add(
+                    new GetPrivateMessage()
+                    {
+                        Id = receivedPrivateMessage.Id,
+                        Subject = receivedPrivateMessage.Subject,
+                        Message = receivedPrivateMessage.Message,
+                        ReceiverId = receivedPrivateMessage.ReceiverId,
+                        ReceiverUserName = receivedPrivateMessage.ReceiverUserName,
+                        SenderId = receivedPrivateMessage.SenderId,
+                        SenderUserName = receivedPrivateMessage.SenderUserName,
+                        TimeSent = receivedPrivateMessage.TimeSent.ToString("yyyy-MM-dd HH:mm")
+                    }
+                    );
+            }
+
+
+            return JsonConvert.SerializeObject(sentPrivateMessagesToReturn);
         }
 
-        [HttpPut]
-        public void Put([FromBody] PrivateMessage privateMessage)
+        [HttpGet("GetAllUsers")]
+        public string GetAllUsers()
         {
-            _privateMessagesService.Update(privateMessage);
+            List<CommunityUser> communityUsers = this.userService.GetAllUsers();
+            List<GetAllUsers> usersToReturn = new List<GetAllUsers>();
+
+            foreach (var user in communityUsers)
+            {
+                usersToReturn.Add(
+                    new GetAllUsers()
+                    {
+                        Id = user.Id,
+                        UserName = user.UserName
+                    }
+                    );
+            }
+
+
+            return JsonConvert.SerializeObject(usersToReturn);
         }
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpGet("DeleteReceivedPrivateMessage/{receivedPrivateMessageId}")]
+        public IActionResult DeleteReceivedPrivateMessage(int receivedPrivateMessageId)
         {
-            _privateMessagesService.Delete(id);
+            bool wasReceivedPrivateMessageDeleted = this.privateMessagesService.DeleteReceivedPrivateMessage(receivedPrivateMessageId);
+
+            if (wasReceivedPrivateMessageDeleted)
+            {
+                return StatusCode(204);
+            }
+            else
+            {
+                return StatusCode(400);
+            }
+        }
+
+        [HttpGet("DeleteSentPrivateMessage/{sentPrivateMessageId}")]
+        public IActionResult DeleteSentPrivateMessage(int sentPrivateMessageId)
+        {
+            bool wasSentPrivateMessageDeleted = this.privateMessagesService.DeleteSentPrivateMessage(sentPrivateMessageId);
+
+            if (wasSentPrivateMessageDeleted)
+            {
+                return StatusCode(204);
+            }
+            else
+            {
+                return StatusCode(400);
+            }
         }
     }
 

@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { LoginMenu } from "../components/api-authorization/LoginMenu";
+import { MessagesLink } from "../components/messages/MessagesLink";
 import Link from "@mui/material/Link";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -45,9 +46,10 @@ const NavMenu = () => {
                             Fetch-data (AUTH CHECK)
                         </Button>
                     </Box>
-                    <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/messages">
+                    {/*<Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/messages">
                         Messages
-                    </Button>
+                    </Button>*/}
+                    <MessagesLink />
                     <LoginMenu />
                 </Toolbar>
             </Container>

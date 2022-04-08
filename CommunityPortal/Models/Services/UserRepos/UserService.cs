@@ -19,6 +19,11 @@ namespace CommunityPortal.Models.Repos
             return  appDbContext.CommunityUsers.ToList();
         }
 
+        public CommunityUser FindUserById(string userId)
+        {
+            return this.appDbContext.CommunityUsers.Where(user => user.Id == userId).SingleOrDefault();
+        }
+
 
         public bool UpdateUser(string userInfo)
         {
