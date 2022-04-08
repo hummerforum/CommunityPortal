@@ -6,6 +6,10 @@ namespace CommunityPortal.Models.Services
     {
         public List<CommunityUser> GetAllUsers();
 
+        public CommunityUser FindUserById(string userId);
+
+        public bool UpdateUser(string userInfo);
+
         public bool RemoveUser(string Id);
     }
 }
