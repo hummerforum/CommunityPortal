@@ -8,6 +8,8 @@ namespace CommunityPortal.Models.Services
         public NewsPost Add(NewsPost newsPost);
         public NewsPost GetById(int newsPostId);
         public List<NewsPost> GetList();
+        public List<NewsPost> GetListByCategoryId(int categoryId);
+        public string GetRSS();
         public NewsPost Update(NewsPost newsPost);
         List<NewsPost> SearchOR(string searchString);
         List<NewsPost> SearchAND(string searchString);

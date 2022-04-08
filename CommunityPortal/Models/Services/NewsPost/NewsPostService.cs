@@ -33,6 +33,50 @@ namespace CommunityPortal.Models.Services
             return _appDbContext.NewsPosts.ToList();
         }
 
+        public List<NewsPost> GetListByCategoryId(int categoryId)
+        {
+            List<NewsPost> newsPosts = new List<NewsPost>();
+            foreach (var newsPost in _appDbContext.NewsPosts)
+            {
+                if (newsPost.CategoryId == categoryId)
+                    newsPosts.Add(newsPost);
+            }
+            return newsPosts;
+        }
+
+        public string GetRSS()
+        {
+            string URL = "https://localhost:5001/";
+            string RSSFeed = "<?xml version=\"1.0\"?>\n" +
+                "<rss version=\"0.91\">\n" +
+                "  <channel>\n" +
+                "    <title>Hummmer Forum</title>\n" +
+                $"    <link>{URL}</link>\n" +
+                "    <description></description>\n" +
+                "    <language>en-us</language>\n" +
+                "    <copyright>&copy; 2022, Hummer Forum. All Rights Reserved.</copyright>\n" +
+                "    <image>\n" +
+                "      <title>Hummer Forum</title>\n" +
+                $"      <url>{URL}static/media/lobster.98b40151450656d37be6.jpg</url>\n" +
+                $"      <link>{URL}</link>\n" +
+                "    </image>\n";
+            
+            List<NewsPost> newsPosts = _appDbContext.NewsPosts.ToList();
+            foreach (var newsPost in newsPosts)
+            {
+                RSSFeed += "      <item>\n" +
+                    $"        <title>{newsPost.Heading}</title>\n" +
+                    $"        <link>{URL}{newsPost.NewsPostId}</link>\n" +
+                    $"        <quid>{URL}{newsPost.NewsPostId}</guid>\n" +
+                    $"        <description>{newsPost.Description}</description>\n" +
+                    "      </item>\n";
+            }
+
+            RSSFeed += "  </channel>\n" +
+                "</rss>";
+            return RSSFeed;
+        }
+
         public NewsPost Update(NewsPost newsPost)
         {
             int id = newsPost.NewsPostId;
