@@ -9,7 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import AddNewsPost from "./AddNewsPost";
 import UpdateNewsPost from "./UpdateNewsPost";
-import authService from "../api-authorization/AuthorizeService";
+import authService from "../../components/api-authorization/AuthorizeService";
 
 export class NewsPostForm extends Component {
   static displayName = NewsPostForm.name;

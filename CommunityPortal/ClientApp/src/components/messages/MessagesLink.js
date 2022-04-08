@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Button from "@mui/material/Button";
-import authService from "../api-authorization/AuthorizeService";
+import authService from "../../components/api-authorization/AuthorizeService";
 
 export class MessagesLink extends Component {
     constructor(props) {

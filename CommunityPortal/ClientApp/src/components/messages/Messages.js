@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from "@mui/material/Typography";
-import authService from "../api-authorization/AuthorizeService";
+import authService from "../../components/api-authorization/AuthorizeService";
 import axios from "axios";
 import ViewMessage from "./ViewMessage";
 import CreateMessage from "./CreateMessage";

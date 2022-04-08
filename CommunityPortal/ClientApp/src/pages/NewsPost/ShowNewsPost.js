@@ -10,7 +10,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from "@mui/material/Typography";
-import authService from "../api-authorization/AuthorizeService";
+import authService from "../../components/api-authorization/AuthorizeService";
 import Button from "@mui/material/Button";
 import NewsPostForm from "./NewsPostForm";
 import DeleteNewsPost from "./DeleteNewsPost";
