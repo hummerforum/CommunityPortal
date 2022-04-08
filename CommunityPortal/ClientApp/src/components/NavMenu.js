@@ -44,6 +44,11 @@ const NavMenu = () => {
                         <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/fetch-data">
                             Fetch-data (AUTH CHECK)
                         </Button>
+                        <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/community-users">
+                            Users
+                        </Button>
+
+
                     </Box>
                     <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/messages">
                         Messages

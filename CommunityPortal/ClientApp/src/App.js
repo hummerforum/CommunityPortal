@@ -14,6 +14,7 @@ import {
 } from "./components/api-authorization/ApiAuthorizationConstants";
 import { Login } from "./components/api-authorization/Login";
 import { Logout } from "./components/api-authorization/Logout";
+import { CommunityUsers } from "./components/CommunityUsers";
 
 export default class App extends Component {
     static displayName = App.name;
@@ -26,6 +27,7 @@ export default class App extends Component {
                     <Route path="/forum" element={<Forum />} />
                     <Route path="/news" element={<News />} />
                     <Route path="/messages" element={<Messages />} />
+                    <Route path="/community-users" element={<CommunityUsers/>} />
                     {/* This is how you do a privileged route path is the url component is the react component that loads */}
                     <Route
                         path="/fetch-data"

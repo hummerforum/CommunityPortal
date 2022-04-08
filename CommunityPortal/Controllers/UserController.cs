@@ -8,45 +8,72 @@ using System.Text.Json;
 
 namespace CommunityPortal.Controllers
 {
-    [Authorize]
+
+    //[Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     public class UserController : Controller
     {
         private IUserService userService;
-        private RoleManager<IdentityRole> applicationRoleManager;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<CommunityUser> userManager;
 
-        public UserController(IUserService _userService, RoleManager<IdentityRole> _roleManager)
+        public UserController(IUserService _userService, UserManager<CommunityUser> _userManager)
         {
             userService = _userService;
-            roleManager = _roleManager;
-
+            userManager = _userManager;
         }
 
+        public class UpdateRoleInfo
+        { 
+            public string UserId { get; set; }
+            public string RoleId { get; set; }
+        }
 
-        // https://localhost:44373/api/User/GetMe
-
-        [HttpGet("GetMe")]
-        public string GetMe()
+        [HttpPost("UpdateRole")]
+        public bool UpdateRole([FromBody] UpdateRoleInfo info)
         {
-            return ("Makrillen simmar i havet ");
+            return userService.UpdateRole(info.UserId, info.RoleId);
         }
-
-        [Authorize(Roles = "Admin")]
+        
         [HttpGet("GetAllUsers")]
         public string GetAllUsers()
         {
             // lägg till roller....
-
-            // if(roleManager.Roles()
-            return JsonSerializer.Serialize(userService.GetAllUsers());
+            return  JsonSerializer.Serialize(userService.GetAllUsers());
         }
 
-        [HttpPost]
-        public bool UpdateUser(string user)
+        public class RoleData
         {
-            return true;
-        
+            public string Role { get; set; }
+        }
+
+        [HttpPost("GetRole")]
+        public string GetRole()
+        {
+            if (this.User.IsInRole("Admin"))
+                return "Admin";
+
+            else if (this.User.IsInRole("Moderator"))
+                return "Moderator";
+
+            else
+                return "User";
+        }
+
+
+        public class DeleteInfo
+        {
+            public string UserId { get; set; }
+        }
+
+        [HttpPost("DeleteUser")]
+        public bool DeleteUser([FromBody] DeleteInfo UserId)
+        {
+            if (userManager.GetUserId(User) == UserId.UserId)
+                return false;
+
+
+            return userService.DeleteUser(UserId.UserId);
         }
     }
 }
+    

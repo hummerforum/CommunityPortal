@@ -1,5 +1,8 @@
 import { UserManager, WebStorageStateStore } from "oidc-client";
 import { ApplicationPaths, ApplicationName } from "./ApiAuthorizationConstants";
+import axios from "axios";
+
+
 
 export class AuthorizeService {
   _callbacks = [];
@@ -15,6 +18,21 @@ export class AuthorizeService {
     const user = await this.getUser();
     return !!user;
   }
+
+
+    async getRole() {
+        const header = await authService.getUser();
+        const response = await axios.post(
+            "https://localhost:5001/api/User/GetRole/",
+            {headers: header}
+            );
+        if (response.status === 200 && response.data !== null) {
+            return response.data;
+        }
+        else
+            return "Error finding role";
+   }
+
 
   async getUser() {
     if (this._user && this._user.profile) {
