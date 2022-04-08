@@ -27,7 +27,7 @@ namespace CommunityPortal.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<PrivateMessage>()
+            /*modelBuilder.Entity<PrivateMessage>()
                 .HasOne(e => e.SenderCommunityUser)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
@@ -35,7 +35,7 @@ namespace CommunityPortal.Data
             modelBuilder.Entity<PrivateMessage>()
                .HasOne(e => e.ReceiverCommunityUser)
                .WithMany()
-               .OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.Restrict);*/
 
 
             string adminRoleId = Guid.NewGuid().ToString();
