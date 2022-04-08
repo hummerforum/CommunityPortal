@@ -27,12 +27,24 @@ namespace CommunityPortal.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<PrivateMessage>()
+                .HasOne(e => e.SenderCommunityUser)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PrivateMessage>()
+               .HasOne(e => e.ReceiverCommunityUser)
+               .WithMany()
+               .OnDelete(DeleteBehavior.Restrict);
+
 
             string adminRoleId = Guid.NewGuid().ToString();
             string moderatorRoleId = Guid.NewGuid().ToString();
             string userRoleId = Guid.NewGuid().ToString();
 
             string accountId = Guid.NewGuid().ToString();
+            string accountId2 = Guid.NewGuid().ToString();
+            string accountId3 = Guid.NewGuid().ToString();
 
 
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Id = adminRoleId, Name = "Admin", NormalizedName = "ADMIN" });
@@ -41,58 +53,117 @@ namespace CommunityPortal.Data
 
             PasswordHasher<CommunityUser> passwordHasher = new PasswordHasher<CommunityUser>();
 
-            modelBuilder.Entity<CommunityUser>().HasData(new CommunityUser
+            CommunityUser cu = new CommunityUser
             {
                 Id = accountId,
-                Email = "a@b.com",
-                NormalizedEmail = "A@B.COM",
-                UserName = "a@b.com",
-                NormalizedUserName = "A@B.COM",
+                Email = "user@b.com",
+                NormalizedEmail = "USER@B.COM",
+                UserName = "user@b.com",
+                NormalizedUserName = "USER@B.COM",
                 PasswordHash = passwordHasher.HashPassword(null, "123456"),
-            });
-
-            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { UserId = accountId, RoleId = userRoleId });
-
-            string userU1Id = Guid.NewGuid().ToString();
-            CommunityUser communityUser1 = new CommunityUser
-            {
-                Id = userU1Id,
-                Email = "userU1@user.com",
-                NormalizedEmail = "USERU1@USER.COM",
-                UserName = "userU1@user.com",
-                NormalizedUserName = "USERU1@USER.COM",
-                PasswordHash = passwordHasher.HashPassword(null, "userU1@user.com"),
             };
-            modelBuilder.Entity<CommunityUser>().HasData(communityUser1);
-            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { UserId = userU1Id, RoleId = userRoleId });
+            modelBuilder.Entity<CommunityUser>().HasData(cu);
 
-            string userU2Id = Guid.NewGuid().ToString();
-            CommunityUser communityUser2 = new CommunityUser
+            CommunityUser cu2 = new CommunityUser
             {
-                Id = userU2Id,
-                Email = "userU2@user.com",
-                NormalizedEmail = "USERU2@USER.COM",
-                UserName = "userU2@user.com",
-                NormalizedUserName = "USERU2@USER.COM",
-                PasswordHash = passwordHasher.HashPassword(null, "userU2@user.com"),
+                Id = accountId2,
+                Email = "moderator@b.com",
+                NormalizedEmail = "MODERATOR@B.COM",
+                UserName = "moderator@b.com",
+                NormalizedUserName = "MODERATOR@B.COM",
+                PasswordHash = passwordHasher.HashPassword(null, "123456"),
             };
-            modelBuilder.Entity<CommunityUser>().HasData(communityUser2);
-            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { UserId = userU2Id, RoleId = userRoleId });
 
-            string userU3Id = Guid.NewGuid().ToString();
-            CommunityUser communityUser3 = new CommunityUser
+            modelBuilder.Entity<CommunityUser>().HasData(cu2);
+
+
+            CommunityUser cu3 = new CommunityUser
             {
-                Id = userU3Id,
-                Email = "userU3@user.com",
-                NormalizedEmail = "USERU3@USER.COM",
-                UserName = "userU3@user.com",
-                NormalizedUserName = "USERU3@USER.COM",
-                PasswordHash = passwordHasher.HashPassword(null, "userU3@user.com"),
+                Id = accountId3,
+                Email = "admin@b.com",
+                NormalizedEmail = "ADMIN@B.COM",
+                UserName = "admin@b.com",
+                NormalizedUserName = "ADMIN@B.COM",
+                PasswordHash = passwordHasher.HashPassword(null, "123456"),
             };
-            modelBuilder.Entity<CommunityUser>().HasData(communityUser3);
-            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string> { UserId = userU3Id, RoleId = userRoleId });
+
+            modelBuilder.Entity<CommunityUser>().HasData(cu3);
+
+            // ROLES
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string> { UserId = accountId, RoleId = userRoleId });
+
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string> { UserId = accountId2, RoleId = moderatorRoleId });
+
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string> { UserId = accountId3, RoleId = adminRoleId });
 
 
+
+
+            DiscussionGroup dg = new DiscussionGroup() 
+                    { Name = "Grupp1", DiscussionGroupId = 1, Description = "Text för discusionsgrupp1" };
+
+            DiscussionGroup dg2 = new DiscussionGroup()
+            { Name = "Grupp2", DiscussionGroupId = 2, Description = "Text för discusionsgrupp2" };
+
+
+            DiscussionGroup dg3 = new DiscussionGroup()
+            { Name = "Grupp3", DiscussionGroupId = 3, Description = "Text för discusionsgrupp3" };
+
+
+            modelBuilder.Entity<DiscussionGroup>().HasData(dg);
+            modelBuilder.Entity<DiscussionGroup>().HasData(dg2);
+            modelBuilder.Entity<DiscussionGroup>().HasData(dg3);
+
+            Category c = new Category() {CategoryId=1,Title="Kategori 1",Description="Text för grupp1 " };
+            Category c2 = new Category() {CategoryId=2,Title="Kategori 2",Description="Text för grupp2 " };
+            Category c3 = new Category() {CategoryId=3,Title="Kategori 3",Description="Text för grupp3 " };
+
+            modelBuilder.Entity<Category>().HasData(c);
+            modelBuilder.Entity<Category>().HasData(c2);
+            modelBuilder.Entity<Category>().HasData(c3);
+
+
+            DiscussionPost dp = new DiscussionPost()
+            {
+                DiscussionPostId = 1,
+                Heading = "Heading dp1",
+                Content = "content dp1",
+                Time = DateTime.Now,
+                CommunityUserId = cu.Id,
+                CategoryId= 1 
+             };
+
+            DiscussionPost dp2 = new DiscussionPost()
+            {
+                DiscussionPostId = 2,
+                Heading = "Heading dp2",
+                Content = "content dp2",
+                Time = DateTime.Now,
+                CommunityUserId = cu2.Id,
+                CategoryId = 2
+            };
+
+            DiscussionPost dp3 = new DiscussionPost()
+            {
+                DiscussionPostId = 3,
+                Heading = "Heading dp3",
+                Content = "content dp3",
+                Time = DateTime.Now,
+                CommunityUserId = cu3.Id,
+                CategoryId = 3
+            };
+
+            modelBuilder.Entity<DiscussionPost>().HasData(dp);
+            modelBuilder.Entity<DiscussionPost>().HasData(dp2);
+            modelBuilder.Entity<DiscussionPost>().HasData(dp3);
+
+
+            DiscussionGroupMembership dgm = new DiscussionGroupMembership(1, dg.DiscussionGroupId);
+            DiscussionGroupMembership dgm2 = new DiscussionGroupMembership(2, dg2.DiscussionGroupId);
+            DiscussionGroupMembership dgm3 = new DiscussionGroupMembership(3, dg3.DiscussionGroupId);
         }
     }
 }

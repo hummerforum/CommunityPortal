@@ -24,17 +24,19 @@ namespace CommunityPortal.Areas.Identity.Pages.Account
         private readonly UserManager<CommunityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<CommunityUser> userManager,
             SignInManager<CommunityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         [BindProperty]
@@ -77,7 +79,10 @@ namespace CommunityPortal.Areas.Identity.Pages.Account
             {
                 var user = new CommunityUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                if (result.Succeeded)
+                
+                var result2 = await _userManager.AddToRoleAsync(user, "User");
+
+                if (result.Succeeded && result2.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
