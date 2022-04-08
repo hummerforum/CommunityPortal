@@ -134,6 +134,7 @@ export default class CreateMessage extends Component {
                                 error={this.state.subjectError}
                                 helperText={this.state.subjectHelperText}
                                 onChange={this.handleInputChange.bind(this)}
+                                onBlur={this.handleInputChange.bind(this)}
                             />
                         </FormControl>
                         <FormControl fullWidth>
@@ -145,6 +146,7 @@ export default class CreateMessage extends Component {
                                 multiline
                                 rows={10}
                                 onChange={this.handleInputChange.bind(this)}
+                                onBlur={this.handleInputChange.bind(this)}
                             />
                         </FormControl>
                         <CardActions>

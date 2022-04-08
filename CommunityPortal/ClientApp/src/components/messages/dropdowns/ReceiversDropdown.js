@@ -94,6 +94,8 @@ export default class ReceiversDropdown extends Component {
                         />
                     )}
                     onChange={(event, selectedValue) => this.handleChange(event, selectedValue)}
+                    onfocusout={(event, selectedValue) => this.handleChange(event, selectedValue)}
+                    onBlur={(event, selectedValue) => this.handleChange(event, selectedValue)}
                 />
                 <FormHelperText
                     error={this.state.receiverError}
