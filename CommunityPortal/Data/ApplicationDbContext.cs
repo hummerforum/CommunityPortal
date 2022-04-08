@@ -16,7 +16,8 @@ namespace CommunityPortal.Data
 
         public DbSet<CommunityUser> CommunityUsers { get; set; }
 
-        public DbSet<PrivateMessage> PrivateMessages { get; set; }
+        public DbSet<ReceivedPrivateMessage> ReceivedPrivateMessages { get; set; }
+        public DbSet<SentPrivateMessage> SentPrivateMessages { get; set; }
         public DbSet<DiscussionPost> DiscussionPosts { get; set; }
         public DbSet<DiscussionGroupMembership> DiscussionGroupMemberships { get; set; }
         public DbSet<DiscussionGroup> DiscussionGroups { get; set; }
@@ -26,7 +27,7 @@ namespace CommunityPortal.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<PrivateMessage>()
+            /*modelBuilder.Entity<PrivateMessage>()
                 .HasOne(e => e.SenderCommunityUser)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
@@ -34,7 +35,7 @@ namespace CommunityPortal.Data
             modelBuilder.Entity<PrivateMessage>()
                .HasOne(e => e.ReceiverCommunityUser)
                .WithMany()
-               .OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.Restrict);*/
 
 
             string adminRoleId = Guid.NewGuid().ToString();
@@ -163,7 +164,6 @@ namespace CommunityPortal.Data
             DiscussionGroupMembership dgm = new DiscussionGroupMembership(1, dg.DiscussionGroupId);
             DiscussionGroupMembership dgm2 = new DiscussionGroupMembership(2, dg2.DiscussionGroupId);
             DiscussionGroupMembership dgm3 = new DiscussionGroupMembership(3, dg3.DiscussionGroupId);
-
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+
 
 namespace CommunityPortal.Models
 {
@@ -14,6 +15,10 @@ namespace CommunityPortal.Models
         List<DiscussionPost> DiscussionPosts { get; set; }
 
         List<DiscussionGroupMembership> DiscussionGroupMemberships { get; set; }
+
+        List<ReceivedPrivateMessage> ReceivedPrivateMessages { get; set; }
+
+        List<SentPrivateMessage> SentPrivateMessages { get; set; }
     }
 
     // bara för senare bruk om vi behöver ha direkt access till variabler 
