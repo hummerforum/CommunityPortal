@@ -13,6 +13,7 @@ namespace CommunityPortal.Models
         public int PostType { get; set; }
 
         public string Tag { get; set; }
+        public string Description { get; set; }
 
         [Required]
         [Display(Name = "Header")]
@@ -26,13 +27,13 @@ namespace CommunityPortal.Models
         public Category Category { get; set; }
 
         [Required]
-        [Display(Name = "Username")]
         public string UserName { get; set; }
         public CommunityUser User { get; set; }
 
         [Required]
-        [Display(Name = "Date")]
-        public DateTime Date { get; set; }
+        public DateTime CreatedDate { get; set; }
+        [Required]
+        public DateTime UpdatedDate { get; set; }
     }
 
 }
