@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import authService from "../api-authorization/AuthorizeService";
+import authService from "../../components/api-authorization/AuthorizeService";
 import ListNewsPosts from "./ListNewsPosts";
 
 export class UpdateNewsPost extends Component {

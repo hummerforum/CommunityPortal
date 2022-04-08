@@ -4,7 +4,7 @@ import { Layout } from "./components/Layout";
 import { Home } from "./pages/Home";
 import { Forum } from "./pages/Forum";
 import { News } from "./pages/News";
-import { Messages } from "./components/Messages";
+import { Messages } from "./components/messages/Messages";
 import { FetchData } from "./pages/FetchData";
 import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
 import {
