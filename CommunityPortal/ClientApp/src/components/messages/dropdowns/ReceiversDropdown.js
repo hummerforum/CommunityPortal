@@ -45,6 +45,10 @@ export default class ReceiversDropdown extends Component {
         this.validateReceiver(selectedValue);
     }
 
+    handleBlur() {
+        this.validateReceiver(this.state.selectedValue);
+    }
+
     validateReceiver(selectedValue) {
         if (selectedValue) {
             this.setState({
@@ -94,6 +98,8 @@ export default class ReceiversDropdown extends Component {
                         />
                     )}
                     onChange={(event, selectedValue) => this.handleChange(event, selectedValue)}
+                    //onfocusout={this.handleBlur()}
+                    onBlur={() => this.handleBlur()}
                 />
                 <FormHelperText
                     error={this.state.receiverError}

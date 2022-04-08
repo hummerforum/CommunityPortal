@@ -225,7 +225,7 @@ export class Messages extends Component {
                                         ))
                                         :
                                         < TableRow >
-                                            <TableCell>There are no messages</TableCell>
+                                            <TableCell key={0}>There are no messages</TableCell>
                                         </TableRow>
                                     }
                                 </TableBody>
@@ -263,7 +263,7 @@ export class Messages extends Component {
                                         ))
                                         :
                                         < TableRow >
-                                            <TableCell>There are no messages</TableCell>
+                                            <TableCell key={0}>There are no messages</TableCell>
                                         </TableRow>
                                     }
                                 </TableBody>
