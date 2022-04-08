@@ -22,9 +22,41 @@ namespace CommunityPortal.Controllers
             this.privateMessagesService = privateMessagesService;
         }
 
+        #region create
+
         [HttpPost("CreatePrivateMessage")]
         public IActionResult CreatePrivateMessage([FromBody] CreatePrivateMessage createPrivateMessage)
         {
+            if (string.IsNullOrEmpty(createPrivateMessage.Subject))
+            {
+                return StatusCode(400);
+            }
+
+            if (string.IsNullOrEmpty(createPrivateMessage.Message))
+            {
+                return StatusCode(400);
+            }
+
+            if (this.userService.FindUserById(createPrivateMessage.ReceiverId) == null)
+            {
+                return StatusCode(400);
+            }
+
+            if (string.IsNullOrEmpty(createPrivateMessage.ReceiverUserName))
+            {
+                return StatusCode(400);
+            }
+
+            if (this.userService.FindUserById(createPrivateMessage.SenderId) == null)
+            {
+                return StatusCode(400);
+            }
+
+            if (string.IsNullOrEmpty(createPrivateMessage.SenderUserName))
+            {
+                return StatusCode(400);
+            }
+
             ReceivedPrivateMessage receivedPrivateMessage = new ReceivedPrivateMessage()
             {
                 Subject = createPrivateMessage.Subject,
@@ -54,6 +86,10 @@ namespace CommunityPortal.Controllers
 
             return StatusCode(201);
         }
+
+        #endregion
+
+        #region read
 
         [HttpGet("GetReceivedPrivateMessages/{communityUserId}")]
         public string GetReceivedPrivateMessages(string communityUserId)
@@ -132,6 +168,10 @@ namespace CommunityPortal.Controllers
             return JsonConvert.SerializeObject(usersToReturn);
         }
 
+        #endregion
+
+        #region delete
+
         [HttpGet("DeleteReceivedPrivateMessage/{receivedPrivateMessageId}")]
         public IActionResult DeleteReceivedPrivateMessage(int receivedPrivateMessageId)
         {
@@ -161,6 +201,8 @@ namespace CommunityPortal.Controllers
                 return StatusCode(400);
             }
         }
+
+        #endregion
     }
 
 }

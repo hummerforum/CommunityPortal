@@ -21,7 +21,14 @@ namespace CommunityPortal.Models.Repos
 
         public CommunityUser FindUserById(string userId)
         {
-            return this.appDbContext.CommunityUsers.Where(user => user.Id == userId).SingleOrDefault();
+            try
+            {
+                return this.appDbContext.CommunityUsers.Where(user => user.Id == userId).SingleOrDefault();
+            }
+            catch (System.Exception)
+            {
+                return null;
+            }            
         }
 
 
