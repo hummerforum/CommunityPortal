@@ -22,16 +22,27 @@ namespace CommunityPortal.Controllers
         public string Get()
         {
             List<NewsPost> NewsPosts = _newsPostService.GetList();
-            string JsonData = JsonSerializer.Serialize(NewsPosts);
-            return JsonData;
+            return JsonSerializer.Serialize(NewsPosts);
         }
 
         [HttpGet("{id}")]
         public string Get(int id)
         {
             NewsPost newsPost = _newsPostService.GetById(id);
-            string JsonData = JsonSerializer.Serialize(newsPost);
-            return JsonData;
+            return JsonSerializer.Serialize(newsPost);
+        }
+
+        [HttpGet("GetByCategoryId/{categoryId}")]
+        public string GetByCategoryId(int categoryId)
+        {
+            List<NewsPost> NewsPosts = _newsPostService.GetListByCategoryId(categoryId);
+            return JsonSerializer.Serialize(NewsPosts);
+        }
+
+        [HttpGet("rss")]
+        public string GetRSS()
+        {
+            return _newsPostService.GetRSS();
         }
 
         [HttpPost]
