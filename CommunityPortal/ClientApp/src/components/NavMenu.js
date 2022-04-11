@@ -32,7 +32,7 @@ const NavMenu = () => {
                             component="div"
                             sx={{ mr: 2, display: { xs: "none", md: "flex" }, color: "#FFF" }}
                         >
-                            Hummer
+                            Lobster forum
                         </Typography>
                     </Link>
                     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -42,9 +42,7 @@ const NavMenu = () => {
                         <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/forum">
                             Forum
                         </Button>
-                        <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/fetch-data">
-                            Fetch-data (AUTH CHECK)
-                        </Button>
+                        
                         <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/community-users">
                             Users
                         </Button>
