@@ -2,7 +2,14 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
-import ListNewsPosts from "./NewsPost/ListNewsPosts";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import ListNewsPosts from "../components/newsposts/ListNewsPosts";
 import Button from "@mui/material/Button";
 
 export class News extends Component {
@@ -48,11 +55,28 @@ export class News extends Component {
           >
             <div id="NewsPostView">
               {categories.length > 0 ?
-                categories.map((category) => (
-                  <Button variant="contained" color="primary" value={category.CategoryId} onClick={e => this.clickCategory(e.target.value)}>
-                    {category.Title}
-                  </Button>
-                ))
+                <TableContainer component={Paper}>
+                  <Table className='table table-bordered'>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Category</TableCell>
+                        <TableCell>View</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {categories.map((category) => (
+                        <TableRow key={category.CategoryId}>
+                          <TableCell>{category.Title}</TableCell>
+                          <TableCell>
+                            <Button variant="contained" color="primary" value={category.CategoryId} onClick={e => this.clickCategory(e.target.value)}>
+                              View
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               : 
                 <ListNewsPosts categoryId={null} />
               }
