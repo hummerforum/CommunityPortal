@@ -8,6 +8,9 @@ namespace CommunityPortal.Model.Services
         public int CreateDiscussionPost(DiscussionPost discussionPost);
 
         public List<DiscussionPost> Read();
+        public DiscussionPost GetSingeDiscussionPost(int discussionPostId);
+
+        public void IncreaseViewCount(int discussionPostId);
 
         public List<DiscussionPost> FindDiscussionPosts(string searchString, bool caseSensitive);
 
