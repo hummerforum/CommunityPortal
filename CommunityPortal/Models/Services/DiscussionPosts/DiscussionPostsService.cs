@@ -30,6 +30,52 @@ namespace CommunityPortal.Models.Services
                 .ToList();
         }
 
+        public void IncreaseViewCount(int discussionPostId)
+        {
+            DiscussionPost dp =
+           db.DiscussionPosts.First(dp => dp.DiscussionPostId == discussionPostId);
+            if (dp != null)
+            {
+                try
+                {
+                    dp.NrOfViews++;
+                    db.DiscussionPosts.Update(dp);   
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                }
+            }
+        }
+
+        // Method to get a post and also increase the counter for Views
+
+        public DiscussionPost GetSingeDiscussionPost(int discussionPostId)
+        {
+            DiscussionPost dp =
+           db.DiscussionPosts.First(dp => dp.DiscussionPostId == discussionPostId);
+
+            if (dp != null)
+            {
+                try
+                {
+                    dp.NrOfViews++;
+                    db.DiscussionPosts.Update(dp);
+                    db.SaveChanges();
+                    return dp;
+                }
+                catch (Exception)
+                {
+                }
+            }
+            return null;
+        }
+
+
+
+
+
+
         public List<DiscussionPost> FindDiscussionPosts(string searchString, bool caseSensitive)
         {
             List<DiscussionPost> discussionPostsToReturn = new List<DiscussionPost>();
