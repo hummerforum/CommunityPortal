@@ -28,6 +28,8 @@ namespace CommunityPortal.Controllers
             public string RoleId { get; set; }
         }
 
+        [Authorize(Roles = "Admin")]
+
         [HttpPost("UpdateRole")]
         public bool UpdateRole([FromBody] UpdateRoleInfo info)
         {

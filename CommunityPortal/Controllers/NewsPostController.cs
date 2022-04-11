@@ -11,9 +11,9 @@ namespace CommunityPortal.Controllers
     [Route("api/[controller]")]
     public class NewsPostController : ControllerBase
     {
-        private readonly NewsPostService _newsPostService;
+        private readonly INewsPostService _newsPostService;
 
-        public NewsPostController(NewsPostService newsPostService)
+        public NewsPostController(INewsPostService newsPostService)
         {
             _newsPostService = newsPostService;
         }
