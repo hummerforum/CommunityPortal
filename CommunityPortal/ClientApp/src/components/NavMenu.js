@@ -9,8 +9,24 @@ import { LoginMenu } from "../components/api-authorization/LoginMenu";
 import { MessagesLink } from "../components/messages/MessagesLink";
 import Link from "@mui/material/Link";
 import { Link as RouterLink } from "react-router-dom";
+import authService from "../components/api-authorization/AuthorizeService";
+import { useState, useEffect } from 'react';
 
 const NavMenu = () => {
+
+    const CheckRole = async () => {
+        const currentUser = await authService.getRole();
+        if (currentUser === "Admin") {
+            setRole("Admin");
+        }
+        else {
+            setRole("User");
+        }
+    }
+
+    const [role, setRole] = useState("User");
+    CheckRole();
+
     return (
         <AppBar position="static">
             <Container
@@ -42,16 +58,14 @@ const NavMenu = () => {
                         <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/forum">
                             Forum
                         </Button>
-                        
-                        <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/community-users">
-                            Users
-                        </Button>
 
+                        {role === "Admin" ?
+                            <Button sx={{ my: 2, color: "white", display: "block" }}
+                                component={RouterLink} to="/community-users"> Users </Button>
+                            : " "
+                        }
 
-                    </Box>
-                    {/*<Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/messages">
-                        Messages
-                    </Button>*/}
+                      </Box>
                     <MessagesLink />
                     <LoginMenu />
                 </Toolbar>
