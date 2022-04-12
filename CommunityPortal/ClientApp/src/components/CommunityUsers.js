@@ -144,13 +144,20 @@ export class CommunityUsers extends Component {
                                                 onChange={(event) => this.handleChange(message.UserId, event, message.UserId)}
                                             >
                                                 <MenuItem value={"Admin"}>Administrator</MenuItem>
-                                                <MenuItem value={"User"}>User</MenuItem>
-                                                <MenuItem value={"Moderator"}>Moderator</MenuItem>
+                                                {message.UserName !== "admin@b.com" ?
+                                                    <MenuItem value={"User"}>User</MenuItem> : ""}
+                                                {message.UserName !== "admin@b.com" ?
+                                                    <MenuItem value={"Moderator"}>Moderator</MenuItem> : ""}
+                                                    
                                             </Select>
                                         </TableCell>
 
                                         <TableCell align="right">
+                                            {
+                                                message.UserName !== "admin@b.com" ?
                                             <Button onClick={(event) => this.RemoveUser(message.UserId)} align="right">Delete</Button>
+                                                    : " "
+                                            }
                                         </TableCell>
                                     </TableRow>
                                 ))}
