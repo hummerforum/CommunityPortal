@@ -13,16 +13,16 @@ export class AddNewsPost extends Component {
     super(props);
     this.state = {
       isAdded: false,
-      newsPost: null
+      newsPost: null,
     };
   }
 
   async authHeader() {
     const currentUser = await authService.getUser();
     if (currentUser && currentUser.access_token) {
-        return { "Authorization": `Bearer ${currentUser.access_token}` };
+      return { Authorization: `Bearer ${currentUser.access_token}` };
     } else {
-        return {};
+      return {};
     }
   }
 
@@ -33,8 +33,8 @@ export class AddNewsPost extends Component {
   async addNewsPost() {
     const header = await authService.getUser();
     const data = this.props.data;
-    const response = await fetch("/api/newspost", { 
-      method: 'POST',
+    const response = await fetch("/api/newspost", {
+      method: "POST",
       headers: header,
       body: JSON.stringify({
         PostType: parseInt(data.PostType),
@@ -44,17 +44,17 @@ export class AddNewsPost extends Component {
         UserName: data.UserName, // ???
         CreatedDate: data.Date, // to do: get current date and time
         UpdatedDate: data.Date, // to do: get current date and time (or null?)
-        Tag: data.Tag
-      })
+        Tag: data.Tag,
+      }),
     });
     const newsPostData = await response.json();
     this.setState({ newsPost: newsPostData, isAdded: true });
   }
 
   render() {
-    const {isAdded, newsPost} = this.state;
+    const { isAdded, newsPost } = this.state;
     if (!isAdded) {
-      return <div>Adding news post...</div>
+      return <div>Adding news post...</div>;
     } else {
       return (
         <Container>
@@ -64,19 +64,24 @@ export class AddNewsPost extends Component {
             justifyContent="space-evenly"
             alignItems="center"
           >
-            {newsPost != null ?
+            {newsPost != null ? (
               [
-                ReactDOM.unmountComponentAtNode(document.getElementById('NewsPostView')),
-                ReactDOM.render(<ListNewsPosts categoryId={this.props.categoryId} />, document.getElementById('NewsPostView'))
+                ReactDOM.unmountComponentAtNode(
+                  document.getElementById("NewsPostView")
+                ),
+                ReactDOM.render(
+                  <ListNewsPosts categoryId={this.props.categoryId} />,
+                  document.getElementById("NewsPostView")
+                ),
               ]
-            :
+            ) : (
               <Typography variant="h2" component="div" gutterBottom>
                 Failed to add news post!
               </Typography>
-            }
+            )}
           </Grid>
         </Container>
-      )
+      );
     }
   }
 }

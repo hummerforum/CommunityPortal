@@ -1,4 +1,5 @@
-﻿using CommunityPortal.Models;
+﻿/*
+using CommunityPortal.Models;
 using System.Collections.Generic;
 
 namespace CommunityPortal.Model.Services
@@ -23,3 +24,4 @@ namespace CommunityPortal.Model.Services
         public void DeleteDiscussionPost(int discussionPostId);
     }
 }
+*/

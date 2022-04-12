@@ -168,8 +168,7 @@ class Topic extends Component {
             content={topic.Content}
             date={topic.Time}
           />
-          {replies &&
-            replies.length > 0 &&
+          {replies && replies.length > 0 &&
             replies.map((reply) => (
               <Reply
                 key={reply.DiscussionReplyId}

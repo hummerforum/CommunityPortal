@@ -9,16 +9,16 @@ import Messages from "./components/messages/Messages";
 import { FetchData } from "./pages/FetchData";
 import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
 import {
-    ApplicationPaths,
-    LoginActions,
-    LogoutActions,
+  ApplicationPaths,
+  LoginActions,
+  LogoutActions,
 } from "./components/api-authorization/ApiAuthorizationConstants";
 import { Login } from "./components/api-authorization/Login";
 import { Logout } from "./components/api-authorization/Logout";
 import { CommunityUsers } from "./components/CommunityUsers";
 
 export default class App extends Component {
-    static displayName = App.name;
+  static displayName = App.name;
 
     render() {
         const MessagesWrapper = (props) => {

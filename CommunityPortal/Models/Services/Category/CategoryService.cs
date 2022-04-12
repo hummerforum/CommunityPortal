@@ -36,11 +36,11 @@ namespace CommunityPortal.Models.Services
         public List<Category> GetParentList()
         {
             List<Category> parentCategories = new List<Category>();
-            foreach (var parentCategory in _appDbContext.Categories)
+            /*foreach (var parentCategory in _appDbContext.Categories)
             {
                 if (parentCategory.ParentId == 0)
                     parentCategories.Add(parentCategory);
-            }
+            }*/
             return parentCategories;
         }
 

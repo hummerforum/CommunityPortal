@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 
 namespace CommunityPortal.Models
@@ -12,13 +14,18 @@ namespace CommunityPortal.Models
     public class CommunityUser : IdentityUser
     {
 
-        List<DiscussionPost> DiscussionPosts { get; set; }
+        List<DiscussionReply> DiscussionReply { get; set; }
 
-        List<DiscussionGroupMembership> DiscussionGroupMemberships { get; set; }
+        public IList<DiscussionGroupMembership> DiscussionGroupMemberships { get; set; }
 
         List<ReceivedPrivateMessage> ReceivedPrivateMessages { get; set; }
 
         List<SentPrivateMessage> SentPrivateMessages { get; set; }
+        public List<DiscussionGroupMembership> DiscussionGroupMembership { get; set; }
+        
+        [JsonIgnore] 
+        [IgnoreDataMember]
+        public List<DiscussionTopic> DiscussionTopics { get; set; }
     }
 
     // bara för senare bruk om vi behöver ha direkt access till variabler 

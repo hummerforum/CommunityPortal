@@ -10,69 +10,86 @@ import { MessagesLink } from "../components/messages/MessagesLink";
 import Link from "@mui/material/Link";
 import { Link as RouterLink } from "react-router-dom";
 import authService from "../components/api-authorization/AuthorizeService";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 const NavMenu = () => {
-
-    const CheckRole = async () => {
-        const currentUser = await authService.getRole();
-        if (currentUser === "Admin") {
-            setRole("Admin");
-        }
-        else {
-            setRole("User");
-        }
+  const CheckRole = async () => {
+    const currentUser = await authService.getRole();
+    if (currentUser === "Admin") {
+      setRole("Admin");
+    } else {
+      setRole("User");
     }
+  };
 
-    const [role, setRole] = useState("User");
-    CheckRole();
+  const [role, setRole] = useState("User");
+  CheckRole();
 
-    return (
-        <AppBar position="static">
-            <Container
-                maxWidth="xl"
-                sx={{
-                    bgcolor: "#70163C",
-                }}
+  return (
+    <AppBar
+      position="static"
+      sx={{
+        bgcolor: "#70163C",
+      }}
+    >
+      <Container
+        maxWidth="xl"
+        sx={{
+          bgcolor: "#70163C",
+        }}
+      >
+        <Toolbar
+          disableGutters
+          sx={{
+            bgcolor: "#70163C",
+          }}
+        >
+          <Link component={RouterLink} to="/" underline="none">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ mr: 2, display: { xs: "none", md: "flex" }, color: "#FFF" }}
             >
-                <Toolbar
-                    disableGutters
-                    sx={{
-                        bgcolor: "#70163C",
-                    }}
-                >
-                    <Link component={RouterLink} to="/" underline="none">
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="div"
-                            sx={{ mr: 2, display: { xs: "none", md: "flex" }, color: "#FFF" }}
-                        >
-                            Lobster forum
-                        </Typography>
-                    </Link>
-                    <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-                        <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/news">
-                            News
-                        </Button>
-                        <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/forum">
-                            Forum
-                        </Button>
+              Hummer
+            </Typography>
+          </Link>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Button
+              sx={{ my: 2, color: "white", display: "block" }}
+              component={RouterLink}
+              to="/news"
+            >
+              News
+            </Button>
+            <Button
+              sx={{ my: 2, color: "white", display: "block" }}
+              component={RouterLink}
+              to="/forum"
+            >
+              Forum
+            </Button>
 
-                        {role === "Admin" ?
-                            <Button sx={{ my: 2, color: "white", display: "block" }}
-                                component={RouterLink} to="/community-users"> Users </Button>
-                            : " "
-                        }
+            {role === "Admin" ? (
+              <Button
+                sx={{ my: 2, color: "white", display: "block" }}
+                component={RouterLink}
+                to="/community-users"
+              >
+                {" "}
+                Users{" "}
+              </Button>
+            ) : (
+              " "
+            )}
+          </Box>
 
-                      </Box>
-                                             
-                    <MessagesLink />
-                    <LoginMenu />
-                </Toolbar>
-            </Container>
-        </AppBar>
-    );
+          <MessagesLink />
+          <LoginMenu />
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
 };
 
 export default NavMenu;
