@@ -4,12 +4,15 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
+import "./messages.css";
+import { Grid } from "@mui/material";
+import { withRouter } from "./withRouter";
 
 
-export default class ViewMessage extends Component {
+class ViewMessage extends Component {
 
-    constructor(prop) {
-        super(prop);
+    constructor(props) {
+        super(props);
     }
 
     async deleteMessage(event, message) {
@@ -20,11 +23,24 @@ export default class ViewMessage extends Component {
         }
     }
 
+    answerMessage(event, viewMessage) {
+        this.props.navigate(`/messages/${viewMessage.senderid}/Reply%20to%20subject:%20${viewMessage.subject}/Reply%20to%20message:%20${viewMessage.message}%0A----------%0A`);
+    }
+
     render() {
         return (
             <Card sx={{ minWidth: 275 }}>
                 <CardContent>
-                    <Typography variant="h5" component="div">
+                    {this.props.viewMessage.type === "received" ? (
+                        <Typography variant="h5" component="div">
+                            Received Message
+                        </Typography>
+                    ) : (
+                        <Typography variant="h5" component="div">
+                            Sent Message
+                        </Typography>
+                    )}
+                    <Typography variant="body2" component="div">
                         Subject: {this.props.viewMessage.subject}
                     </Typography>
                     {this.props.viewMessage.type === "received" ? (
@@ -44,15 +60,34 @@ export default class ViewMessage extends Component {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small">Answer Message</Button>
-                    <Button
-                        size="small"
-                        onClick={(event) => this.deleteMessage(event, this.props.viewMessage)}
-                    >
-                        Delete Message
-                    </Button>
+                    <Grid container >
+                        <Grid item xs={6}>
+                            <Button
+                                size="small"
+                                onClick={(event) =>this.answerMessage(event, this.props.viewMessage)}
+                            >
+                                Answer Message
+                            </Button>
+                            <Button
+                                size="small"
+                                onClick={(event) => this.deleteMessage(event, this.props.viewMessage)}
+                            >
+                                Delete Message
+                            </Button>
+                        </Grid>
+                        <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'flex-end' }} >
+                            <Button
+                                size="small"
+                                onClick={() => this.props.setViewMessage(this.props.viewMessage)}
+                            >
+                                Close Message
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </CardActions>
-            </Card>
+            </Card >
         );
     }
 }
+
+export default withRouter(ViewMessage);

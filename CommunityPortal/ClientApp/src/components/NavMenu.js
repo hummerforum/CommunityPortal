@@ -48,12 +48,7 @@ const NavMenu = () => {
                         <Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/community-users">
                             Users
                         </Button>
-
-
                     </Box>
-                    {/*<Button sx={{ my: 2, color: "white", display: "block" }} component={RouterLink} to="/messages">
-                        Messages
-                    </Button>*/}
                     <MessagesLink />
                     <LoginMenu />
                 </Toolbar>
