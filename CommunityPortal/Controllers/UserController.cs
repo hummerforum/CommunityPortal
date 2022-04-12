@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace CommunityPortal.Controllers
 {
 
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     public class UserController : Controller
     {
