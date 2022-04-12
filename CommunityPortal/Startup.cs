@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Text.Json.Serialization;
 
 namespace CommunityPortal
 {
@@ -55,18 +56,15 @@ namespace CommunityPortal
                 .AddIdentityServerJwt();
 
             services.AddScoped<IUserService, UserService>();
-
-
-
+            
             services.AddControllersWithViews();
 
             services.AddScoped<IPrivateMessagesService, PrivateMessagesService>();
-            services.AddScoped<IDiscussionPostsService, DiscussionPostsService>();
-            services.AddScoped<IDiscussionGroupsService, DiscussionGroupsService>();
-            services.AddScoped<IDiscussionGroupMembershipsService, DiscussionGroupMembershipsService>();
+            //services.AddScoped<IDiscussionGroupsService, DiscussionGroupsService>();
+            //services.AddScoped<IDiscussionGroupMembershipsService, DiscussionGroupMembershipsService>();
+            services.AddScoped<IDiscussionForumService, DiscussionForumService>();
             services.AddScoped<INewsPostService, NewsPostService>();
             services.AddScoped<ICategoryService, CategoryService>();
-
             services.AddRazorPages();
 
             // In production, the React files will be served from this directory

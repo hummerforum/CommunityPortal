@@ -13,16 +13,16 @@ export class DeleteNewsPost extends Component {
     super(props);
     this.state = {
       isDeleted: false,
-      newsPost: []
+      newsPost: [],
     };
   }
 
   async authHeader() {
     const currentUser = await authService.getUser();
     if (currentUser && currentUser.access_token) {
-        return { "Authorization": `Bearer ${currentUser.access_token}` };
+      return { Authorization: `Bearer ${currentUser.access_token}` };
     } else {
-        return {};
+      return {};
     }
   }
 
@@ -33,8 +33,8 @@ export class DeleteNewsPost extends Component {
   async deleteNewsPost() {
     const header = await authService.getUser();
     const id = this.props.id;
-    const response = await fetch("/api/newspost/" + id, { 
-      method: 'DELETE',
+    const response = await fetch("/api/newspost/" + id, {
+      method: "DELETE",
       headers: header,
     });
     const newsPostData = await response.json();
@@ -42,9 +42,9 @@ export class DeleteNewsPost extends Component {
   }
 
   render() {
-    const {isDeleted, newsPost} = this.state;
+    const { isDeleted, newsPost } = this.state;
     if (!isDeleted) {
-      return <div>Deleting news post...</div>
+      return <div>Deleting news post...</div>;
     } else {
       return (
         <Container>
@@ -54,19 +54,24 @@ export class DeleteNewsPost extends Component {
             justifyContent="space-evenly"
             alignItems="center"
           >
-            {newsPost != null ?
+            {newsPost != null ? (
               [
-                ReactDOM.unmountComponentAtNode(document.getElementById('NewsPostView')),
-                ReactDOM.render(<ListNewsPosts categoryId={this.props.categoryId} />, document.getElementById('NewsPostView'))
+                ReactDOM.unmountComponentAtNode(
+                  document.getElementById("NewsPostView")
+                ),
+                ReactDOM.render(
+                  <ListNewsPosts categoryId={this.props.categoryId} />,
+                  document.getElementById("NewsPostView")
+                ),
               ]
-            :
+            ) : (
               <Typography variant="h2" component="div" gutterBottom>
                 Failed to delete news post!
               </Typography>
-            }
+            )}
           </Grid>
         </Container>
-      )
+      );
     }
   }
 }

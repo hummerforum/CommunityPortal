@@ -14,8 +14,6 @@ namespace CommunityPortal.Models
 
         [Display(Name = "Description")]
         public string Description { get; set; }
-
-        public int ParentId { get; set; }
     }
 
 }

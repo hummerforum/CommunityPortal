@@ -1,4 +1,4 @@
-﻿import React, { Component } from "react";
+﻿﻿import React, { Component } from "react";
 import Container from "@mui/material/Container";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -14,7 +14,6 @@ import axios from "axios";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
 
 
 export class CommunityUsers extends Component {
@@ -144,13 +143,20 @@ export class CommunityUsers extends Component {
                                                 onChange={(event) => this.handleChange(message.UserId, event, message.UserId)}
                                             >
                                                 <MenuItem value={"Admin"}>Administrator</MenuItem>
-                                                <MenuItem value={"User"}>User</MenuItem>
-                                                <MenuItem value={"Moderator"}>Moderator</MenuItem>
+                                                {message.UserName !== "admin@b.com" ?
+                                                    <MenuItem value={"User"}>User</MenuItem> : ""}
+                                                {message.UserName !== "admin@b.com" ?
+                                                    <MenuItem value={"Moderator"}>Moderator</MenuItem> : ""}
+                                                    
                                             </Select>
                                         </TableCell>
 
                                         <TableCell align="right">
+                                            {
+                                                message.UserName !== "admin@b.com" ?
                                             <Button onClick={(event) => this.RemoveUser(message.UserId)} align="right">Delete</Button>
+                                                    : " "
+                                            }
                                         </TableCell>
                                     </TableRow>
                                 ))}

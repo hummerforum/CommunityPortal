@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CommunityPortal.Models
@@ -9,12 +10,10 @@ namespace CommunityPortal.Models
         public int DiscussionGroupId { get; set; }
 
         [Required]
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-
-        List<DiscussionGroupMembership> DiscussionGroupMemberships { get; set; }
-
-        List<Category> Categories { get; set; }
-    }
+        public string DiscussionGroupName { get; set; }
+        
+        public List<DiscussionGroupMembership> DiscussionGroupMembership { get; set; }
+        }
+    
+    
 }
