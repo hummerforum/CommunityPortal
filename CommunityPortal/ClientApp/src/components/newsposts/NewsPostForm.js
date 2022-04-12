@@ -60,7 +60,7 @@ export class NewsPostForm extends Component {
   }
 
   async getCategories() {
-    const response = await fetch("/api/category", { 
+    const response = await fetch("/api/category/GetParentList", { 
       method: 'GET'
     });
     const categoryData = await response.json();
