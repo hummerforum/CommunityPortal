@@ -2,7 +2,7 @@ using CommunityPortal.Models;
 using CommunityPortal.Models.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace CommunityPortal.Controllers
 {
@@ -22,21 +22,21 @@ namespace CommunityPortal.Controllers
         public string Get()
         {
             List<NewsPost> NewsPosts = _newsPostService.GetList();
-            return JsonSerializer.Serialize(NewsPosts);
+            return JsonConvert.SerializeObject(NewsPosts);
         }
 
         [HttpGet("{id}")]
         public string Get(int id)
         {
             NewsPost newsPost = _newsPostService.GetById(id);
-            return JsonSerializer.Serialize(newsPost);
+            return JsonConvert.SerializeObject(newsPost);
         }
 
         [HttpGet("GetByCategoryId/{categoryId}")]
         public string GetByCategoryId(int categoryId)
         {
             List<NewsPost> NewsPosts = _newsPostService.GetListByCategoryId(categoryId);
-            return JsonSerializer.Serialize(NewsPosts);
+            return JsonConvert.SerializeObject(NewsPosts);
         }
 
         [HttpGet("rss")]

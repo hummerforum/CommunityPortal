@@ -2,7 +2,7 @@ using CommunityPortal.Models;
 using CommunityPortal.Models.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace CommunityPortal.Controllers
 {
@@ -22,21 +22,21 @@ namespace CommunityPortal.Controllers
         public string Get()
         {
             List<Category> Categories = _categoryService.GetList();
-            return JsonSerializer.Serialize(Categories);
+            return JsonConvert.SerializeObject(Categories);
         }
 
         [HttpGet("{id}")]
         public string Get(int id)
         {
             Category category = _categoryService.GetById(id);
-            return JsonSerializer.Serialize(category);
+            return JsonConvert.SerializeObject(category);
         }
 
         [HttpGet("GetParentList")]
         public string GetParentList()
         {
             List<Category> Categories = _categoryService.GetParentList();
-            return JsonSerializer.Serialize(Categories);
+            return JsonConvert.SerializeObject(Categories);
         }
 
         [HttpPost]

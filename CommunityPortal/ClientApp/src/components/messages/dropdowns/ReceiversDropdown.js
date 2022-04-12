@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
-/*import Select from 'react-select'*/
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
-import InputLabel from '@mui/material/InputLabel';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -15,7 +11,6 @@ export default class ReceiversDropdown extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            testSelectOptions: [],
             selectOptions: [],
             selectedValue: null,
             receiverLabel: "Receiver",
@@ -32,13 +27,29 @@ export default class ReceiversDropdown extends Component {
             "username": data.UserName
         }))
 
-        this.setState({ selectOptions: options });
+        this.setState({
+            selectOptions: options
+        });
+
+        if (this.props.match) {
+            if (this.props.match.params.receiverid) {
+                this.state.selectOptions.forEach((option) => {
+                    if (option.userid === this.props.match.params.receiverid) {
+                        this.setState({
+                            selectedValue: option
+                        });
+
+                        this.props.getReceiverData(option.userid, option.username);
+                    }
+                });
+            }
+        }
 
     }
 
     handleChange(event, selectedValue) {
         if (selectedValue) {
-            this.setState({ selectedValue: selectedValue.userid })
+            this.setState({ selectedValue: selectedValue })
             this.props.getReceiverData(selectedValue.userid, selectedValue.username);
         }
 
@@ -82,6 +93,7 @@ export default class ReceiversDropdown extends Component {
                     options={this.state.selectOptions}
                     autoHighlight
                     getOptionLabel={(option) => option.username}
+                    value={this.state.selectedValue}
                     renderOption={(props, option) => (
                         <Box component="li" sx={{ '& > img': { mb: 1.5, mr: 2, flexShrink: 0 } }} {...props}>
                             {option.username}
@@ -98,7 +110,6 @@ export default class ReceiversDropdown extends Component {
                         />
                     )}
                     onChange={(event, selectedValue) => this.handleChange(event, selectedValue)}
-                    //onfocusout={this.handleBlur()}
                     onBlur={() => this.handleBlur()}
                 />
                 <FormHelperText

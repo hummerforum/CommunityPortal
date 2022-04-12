@@ -8,10 +8,12 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import ReceiversDropdown from "./dropdowns/ReceiversDropdown"
 import FormControl from '@mui/material/FormControl';
+import { Grid } from "@mui/material";
+import { withRouter } from "./withRouter";
 
 
 
-export default class CreateMessage extends Component {
+class CreateMessage extends Component {
 
     constructor(props) {
         super(props);
@@ -57,6 +59,8 @@ export default class CreateMessage extends Component {
             await axios.post('https://localhost:5001/api/PrivateMessages/CreatePrivateMessage', messageToPost);
             this.props.readReceivedMessages();
             this.props.readSentMessages();
+
+            this.props.navigate(`/messages`);
         }
     }
 
@@ -115,6 +119,22 @@ export default class CreateMessage extends Component {
         }
     }
 
+    cancelCreate() {
+        this.props.setCreateMessage(false);
+        this.props.navigate(`/messages`);
+    }
+
+    componentDidMount() {
+        if (this.props.match) {
+            if (this.props.match.params.subject) {
+                this.setState({ subject: this.props.match.params.subject });
+            }
+            if (this.props.match.params.message) {
+                this.setState({ message: this.props.match.params.message });
+            }
+        }
+    }
+
     render() {
         return (
             <Card sx={{ minWidth: 275 }}>
@@ -126,10 +146,12 @@ export default class CreateMessage extends Component {
                         <ReceiversDropdown
                             getReceiverData={this.getReceiverData.bind(this)}
                             validationToggle={this.state.validationToggle}
+                            match={this.props.match}
                         />
                         <FormControl fullWidth sx={{ mb: 1.5 }}>
                             <TextField
                                 name="subject"
+                                value={this.state.subject}
                                 label={this.state.subjectLabel}
                                 error={this.state.subjectError}
                                 helperText={this.state.subjectHelperText}
@@ -140,6 +162,7 @@ export default class CreateMessage extends Component {
                         <FormControl fullWidth>
                             <TextField
                                 name="message"
+                                value={this.state.message}
                                 label={this.state.messageLabel}
                                 error={this.state.messageError}
                                 helperText={this.state.messageHelperText}
@@ -150,7 +173,19 @@ export default class CreateMessage extends Component {
                             />
                         </FormControl>
                         <CardActions>
-                            <Button size="small" type="submit" >Send Message</Button>
+                            <Grid container >
+                                <Grid item xs={6}>
+                                    <Button size="small" type="submit" >Send Message</Button>
+                                </Grid>
+                                <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'flex-end' }} >
+                                    <Button
+                                        size="small"
+                                        onClick={() => this.cancelCreate()}
+                                    >
+                                        Cancel
+                                    </Button>
+                                </Grid>
+                            </Grid>
                         </CardActions>
                         </form>
                 </CardContent>
@@ -158,3 +193,5 @@ export default class CreateMessage extends Component {
         );
     }
 }
+
+export default withRouter(CreateMessage);

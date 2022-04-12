@@ -84,78 +84,74 @@ export class ListNewsPosts extends Component {
     if (!isLoaded) {
       return <div>Loading news posts...</div>
     } else {
-      return (
-        [
-          this.sortedNewsPosts = newsPosts.sort((a, b) => a.CreatedDate < b.CreatedDate ? 1 : -1),
-          newsPosts = this.sortedNewsPosts,
-          <Container>
-            <Grid
-              container
-              direction="column"
-              justifyContent="space-evenly"
-              alignItems="center"
-            >
-              <Typography variant="h2" component="div" gutterBottom>
-                News posts
-              </Typography>
-              {(userRole === "Admin") || (userRole === "Moderator") ?
-                <Button variant="contained" color="primary" onClick={this.clickAdd()}>
-                  Add news post
-                </Button>
-              :
-              {}}
-              <TableContainer component={Paper}>
-                <Table className='table table-bordered'>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Header</TableCell>
-                      <TableCell>Date</TableCell>
-                      {(userRole === "Admin") || (userRole === "Moderator") ?
-                        [
-                          <TableCell>Edit</TableCell>,
-                          <TableCell>Delete</TableCell>
-                        ]
-                      : {}}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {newsPosts.length > 0 ?
-                      newsPosts.map((newsPost) => (
-                        <TableRow key={newsPost.NewsPostId}>
-                          <TableCell><Link href="#" onClick={e => this.clickView(e.target.value)}>{newsPost.Heading}</Link></TableCell>
-                          <TableCell>{newsPost.CreatedDate}
-                          {newsPost.UpdatedDate != null ?
-                            <span>Updated: {newsPost.UpdatedDate}</span>
-                          :{}}
+      const sortedNewsPosts = newsPosts.sort((a, b) => a.CreatedDate < b.CreatedDate ? 1 : -1);
+      newsPosts = sortedNewsPosts;
+      return [
+        <Container>
+          <Grid
+            container
+            direction="column"
+            justifyContent="space-evenly"
+            alignItems="center"
+          >
+            <Typography variant="h2" component="div" gutterBottom>
+              News posts
+            </Typography>
+            {(userRole === "Admin") || (userRole === "Moderator") ?
+              <Button variant="contained" color="primary" onClick={this.clickAdd()}>
+                Add news post
+              </Button>
+            :
+            {}}
+            <TableContainer component={Paper}>
+              <Table className='table table-bordered'>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Header</TableCell>
+                    <TableCell>Date</TableCell>
+                    {(userRole === "Admin") || (userRole === "Moderator") ? [
+                      <TableCell>Edit</TableCell>,
+                      <TableCell>Delete</TableCell>
+                    ]
+                    : {}}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {newsPosts.length > 0 ?
+                    newsPosts.map((newsPost) => (
+                      <TableRow key={newsPost.NewsPostId}>
+                        <TableCell><Link href="#" onClick={e => this.clickView(e.target.value)}>{newsPost.Heading}</Link></TableCell>
+                        <TableCell>{newsPost.CreatedDate}
+                        {newsPost.UpdatedDate != null ?
+                          <span>Updated: {newsPost.UpdatedDate}</span>
+                        :{}}
+                        </TableCell>
+                        {(userRole === "Admin") || (userRole === "Moderator") ? [
+                          <TableCell>
+                            <Button variant="contained" color="primary" value={newsPost.NewsPostId} onClick={e => this.clickEdit(e.target.value)}>,
+                              Edit
+                            </Button>
+                          </TableCell>,
+                          <TableCell>
+                            <Button variant="contained" color="primary" value={newsPost.NewsPostId} onClick={e => this.clickDelete(e.target.value)}>
+                              Delete
+                            </Button>
                           </TableCell>
-                          {(userRole === "Admin") || (userRole === "Moderator") ?
-                            [
-                              <TableCell>
-                                <Button variant="contained" color="primary" value={newsPost.NewsPostId} onClick={e => this.clickEdit(e.target.value)}>,
-                                  Edit
-                                </Button>
-                              </TableCell>,
-                              <TableCell>
-                                <Button variant="contained" color="primary" value={newsPost.NewsPostId} onClick={e => this.clickDelete(e.target.value)}>
-                                  Delete
-                                </Button>
-                              </TableCell>
-                            ]
-                          : {}}
+                        ]
+                        : {}}
                         </TableRow>
                       ))
                     :
                       < TableRow>
                         <TableCell>There are no news posts</TableCell>
                       </TableRow>
-                    }
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Grid>
-          </Container>
-        ]
-      )
+                  }
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+        </Container>
+      ]
     }
   }
 }
