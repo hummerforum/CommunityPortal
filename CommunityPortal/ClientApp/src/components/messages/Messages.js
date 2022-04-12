@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import Grid from "@mui/material/Grid";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -15,16 +15,18 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import "./messages.css";
+import { withRouter } from "./withRouter";
 
-export class Messages extends Component {
-    constructor() {
-        super();
+class Messages extends Component {
+    constructor(props) {
+        super(props);
         this.state = {
             receivedMessages: [],
             sentMessages: [],
             viewMessage: null,
             isViewMessageVisible: false,
             isCreateMessageVisible: false,
+            isCreateMessageButtonVisible: true,
             userId: null,
             senderUserName: null
         };
@@ -40,6 +42,8 @@ export class Messages extends Component {
                 this.setState({
                     isViewMessageVisible: true
                 })
+                this.setCreateMessage(false);
+                this.props.navigate(`/messages`);
             } else {
                 if (this.state.isViewMessageVisible) {
                     this.setState({
@@ -49,6 +53,8 @@ export class Messages extends Component {
                     this.setState({
                         isViewMessageVisible: true
                     })
+                    this.setCreateMessage(false);
+                    this.props.navigate(`/messages`);
                 }
             }
         } else {
@@ -56,11 +62,20 @@ export class Messages extends Component {
                 viewMessage: viewMessage
             })
             this.state.isViewMessageVisible = true;
+            this.setCreateMessage(false);
+            this.props.navigate(`/messages`);
         }
     }
 
     setCreateMessage(isCreateMessageVisible) {
         this.setState({ isCreateMessageVisible: isCreateMessageVisible });
+        this.setState({ isCreateMessageButtonVisible: !isCreateMessageVisible });
+
+        if (isCreateMessageVisible) {
+            this.setState({
+                isViewMessageVisible: false
+            })
+        }
     }
 
     async authHeader() {
@@ -131,8 +146,10 @@ export class Messages extends Component {
             }
         );
         this.readReceivedMessages();
-        if ((this.state.viewMessage.id === receivedPrivateMessage.id) && (this.state.viewMessage.type === receivedPrivateMessage.type)) {
-            this.setViewMessage(receivedPrivateMessage);
+        if (this.state.viewMessage) {
+            if ((this.state.viewMessage.id === receivedPrivateMessage.id) && (this.state.viewMessage.type === receivedPrivateMessage.type)) {
+                this.setViewMessage(receivedPrivateMessage);
+            }
         }
     }
 
@@ -146,14 +163,20 @@ export class Messages extends Component {
             }
         );
         this.readSentMessages();
-        if ((this.state.viewMessage.id === sentPrivateMessage.id) && (this.state.viewMessage.type === sentPrivateMessage.type)) {
-            this.setViewMessage(sentPrivateMessage);
+        if (this.state.viewMessage) {
+            if ((this.state.viewMessage.id === sentPrivateMessage.id) && (this.state.viewMessage.type === sentPrivateMessage.type)) {
+                this.setViewMessage(sentPrivateMessage);
+            }
         }
     }
 
     componentDidMount() {
         this.readReceivedMessages();
         this.readSentMessages();
+
+        if (this.props.match && this.props.match.params) {
+            this.setCreateMessage(true);
+        }
     }
 
     render() {
@@ -166,12 +189,19 @@ export class Messages extends Component {
                         <Typography variant="h2" component="div" gutterBottom>
                             Messages
                         </Typography>
-                        <Button variant="contained" onClick={() => this.setCreateMessage(true)}>Create Message</Button>
+                        {this.state.isCreateMessageButtonVisible ? (
+                            <Button variant="contained" onClick={() => this.setCreateMessage(true)}>Create Message</Button>
+                        ) : (
+                            null
+                        )
+                        }
                         {this.state.isViewMessageVisible ? (
                             <ViewMessage
                                 viewMessage={this.state.viewMessage}
+                                setViewMessage={this.setViewMessage.bind(this)}
                                 deleteReceivedMessage={this.deleteReceivedMessage.bind(this)}
                                 deleteSentMessage={this.deleteSentMessage.bind(this)}
+                                setCreateMessage={this.setCreateMessage.bind(this)}
                             />
                         ) : (
                             null
@@ -183,6 +213,7 @@ export class Messages extends Component {
                                 setCreateMessage={this.setCreateMessage.bind(this)}
                                 readReceivedMessages={this.readReceivedMessages.bind(this)}
                                 readSentMessages={this.readSentMessages.bind(this)}
+                                match={this.props.match}
                             />
                         ) : (
                             null
@@ -199,11 +230,11 @@ export class Messages extends Component {
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
-                                    <TableRow>
+                                    <TableRow key={1}>
                                         <TableCell>Subject</TableCell>
                                         <TableCell>From</TableCell>
                                         <TableCell>Sent</TableCell>
-                                        <TableCell/>
+                                        <TableCell />
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -224,8 +255,8 @@ export class Messages extends Component {
                                             </TableRow>
                                         ))
                                         :
-                                        < TableRow >
-                                            <TableCell key={0}>There are no messages</TableCell>
+                                        < TableRow key={1} >
+                                            <TableCell >There are no messages</TableCell>
                                         </TableRow>
                                     }
                                 </TableBody>
@@ -237,11 +268,11 @@ export class Messages extends Component {
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
-                                    <TableRow>
+                                    <TableRow key={1}>
                                         <TableCell>Subject</TableCell>
                                         <TableCell>To</TableCell>
                                         <TableCell>Sent</TableCell>
-                                        <TableCell/>
+                                        <TableCell />
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -262,8 +293,8 @@ export class Messages extends Component {
                                             </TableRow>
                                         ))
                                         :
-                                        < TableRow >
-                                            <TableCell key={0}>There are no messages</TableCell>
+                                        < TableRow key={1} >
+                                            <TableCell>There are no messages</TableCell>
                                         </TableRow>
                                     }
                                 </TableBody>
@@ -275,3 +306,5 @@ export class Messages extends Component {
         );
     }
 }
+
+export default withRouter(Messages);
