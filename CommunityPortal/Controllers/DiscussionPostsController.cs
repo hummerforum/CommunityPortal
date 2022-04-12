@@ -1,4 +1,5 @@
-﻿using CommunityPortal.Model.Services;
+﻿/*
+using CommunityPortal.Model.Services;
 using CommunityPortal.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -32,3 +33,4 @@ namespace CommunityPortal.Controllers
         #endregion
     }
 }
+*/
