@@ -109,6 +109,65 @@ namespace CommunityPortal.Data
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string> {UserId = accountId3, RoleId = adminRoleId});
 
+            // News  post and categories
+
+            Category ca1 = new Category() { CategoryId = 1, Description = "News covering all the world", Title = "World News" };
+            Category ca2 = new Category() { CategoryId = 2, Description = "New covering fishing", Title = "Fishing News" };
+            Category ca3 = new Category() { CategoryId = 3, Description = "The wors possible jokes in the world", Title = "Joke News" };
+
+            modelBuilder.Entity<Category>().HasData(ca1);
+            modelBuilder.Entity<Category>().HasData(ca2);
+            modelBuilder.Entity<Category>().HasData(ca3);
+
+
+
+            DateTime d = new DateTime(2000, 1, 30);
+            DateTime d2 = new DateTime(2010, 2, 15);
+            DateTime d3 = new DateTime(2020, 10, 1);
+
+
+            NewsPost np1 = new NewsPost()
+            {
+                NewsPostId = 1,
+                PostType = 1,
+                CategoryId = 1,
+                UserName = accountId,
+                CreatedDate = d,
+                UpdatedDate = DateTime.Now,
+                Tag = "Tag 1",
+                Description = "Biggest looser competition",
+                Heading = "Biggest looser",
+                Information = "info"
+            };
+
+            NewsPost np2 = new NewsPost()
+            {
+                NewsPostId = 2,
+                PostType = 1,
+                CategoryId = 2,
+                UserName = accountId2,
+                CreatedDate = d2,
+                UpdatedDate = d2,
+                Tag = "Tag 2",
+                Description = "To mäny pots baby",
+                Heading = "Pouching",
+                Information = "info2"
+            };
+
+            NewsPost np3 = new NewsPost()
+            {
+                NewsPostId = 3,
+                PostType = 1,
+                CategoryId = 3,
+                UserName = accountId3,
+                CreatedDate = d3,
+                UpdatedDate = d3,
+                Tag = "Tag 3",
+                Description = "what is grey and comes in pints?",
+                Heading = "Bad Joke1",
+                Information = "info2"
+            };
+
 
             // set up forum
             // fishing forum sections
