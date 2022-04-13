@@ -40,6 +40,10 @@ export class News extends Component {
     ReactDOM.render(<ListNewsPosts categoryId={id} />, document.getElementById('NewsPostView'));
   }
 
+  getRSSLink = (id) => {
+    return "/api/newspost/GetRSSByCategoryId/" + id;
+  }
+
   render() {
     const {isLoaded, categories} = this.state;
     if (!isLoaded) {
@@ -60,6 +64,7 @@ export class News extends Component {
                     <TableHead>
                       <TableRow>
                         <TableCell>Category</TableCell>
+                        <TableCell>RSS</TableCell>
                         <TableCell>View</TableCell>
                       </TableRow>
                     </TableHead>
@@ -67,6 +72,7 @@ export class News extends Component {
                       {categories.map((category) => (
                         <TableRow key={category.CategoryId}>
                           <TableCell>{category.Title}</TableCell>
+                          <TableCell><a href={this.getRSSLink(category.CategoryId)}>RSS</a></TableCell>
                           <TableCell>
                             <Button variant="contained" color="primary" value={category.CategoryId} onClick={e => this.clickCategory(e.target.value)}>
                               View

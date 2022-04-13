@@ -20,97 +20,101 @@ import Calender from "../Calender/Calender"
 
 
 export class ListNewsPosts extends Component {
-  static displayName = ListNewsPosts.name;
+    static displayName = ListNewsPosts.name;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      userRole: null,
-      isLoaded: false,
-      newsPosts: []
-    };
-  }
-
-  async authHeader() {
-    const currentUser = await authService.getUser();
-    if (currentUser && currentUser.access_token) {
-        return { "Authorization": `Bearer ${currentUser.access_token}` };
-    } else {
-        return {};
+    constructor(props) {
+        super(props);
+        this.state = {
+            userRole: null,
+            isLoaded: false,
+            newsPosts: []
+        };
     }
-  }
 
-  async getUserRole() {
-    this.setState({ userRole: await authService.getRole() });
-  }
-
-  componentDidMount() {
-    this.getUserRole();
-    this.listNewsPosts();
-  }
-
-  async listNewsPosts() {
-    let URL = "/api/newspost";
-    if (this.props.categoryId != null) {
-      URL += "/GetByCategoryId/" + this.props.categoryId;
+    async authHeader() {
+        const currentUser = await authService.getUser();
+        if (currentUser && currentUser.access_token) {
+            return { "Authorization": `Bearer ${currentUser.access_token}` };
+        } else {
+            return {};
+        }
     }
-    const response = await fetch(URL, { 
-      method: 'GET'
-    });
-    const newsPostData = await response.json();
-    this.setState({ newsPosts: newsPostData, isLoaded: true });
-  }
 
-  clickView = (id) => {
-    ReactDOM.unmountComponentAtNode(document.getElementById('NewsPostView'));
-    ReactDOM.render(<ShowNewsPost id={id} categoryId={this.props.categoryId} />, document.getElementById('NewsPostView'));
-  }
+    async getUserRole() {
+        this.setState({ userRole: await authService.getRole() });
+    }
 
-  clickAdd = () => {
-    ReactDOM.unmountComponentAtNode(document.getElementById('NewsPostView'));
-    ReactDOM.render(<NewsPostForm categoryId={this.props.categoryId} />, document.getElementById('NewsPostView'));
-  }
+    componentDidMount() {
+        this.getUserRole();
+        this.listNewsPosts();
+    }
 
-  clickEdit = (id) => {
-    ReactDOM.unmountComponentAtNode(document.getElementById('NewsPostView'));
-    ReactDOM.render(<NewsPostForm id={id} categoryId={this.props.categoryId} />, document.getElementById('NewsPostView'));
-  }
+    async listNewsPosts() {
+        let URL = "/api/newspost";
+        if (this.props.categoryId != null) {
+            URL += "/GetByCategoryId/" + this.props.categoryId;
+        }
+        const response = await fetch(URL, {
+            method: 'GET'
+        });
+        const newsPostData = await response.json();
+        this.setState({ newsPosts: newsPostData, isLoaded: true });
+    }
 
-  clickDelete = (id) => {
-    ReactDOM.unmountComponentAtNode(document.getElementById('NewsPostView'));
-    ReactDOM.render(<DeleteNewsPost id={id} categoryId={this.props.categoryId} />, document.getElementById('NewsPostView'));
-  }
+    clickView = (id) => {
+        ReactDOM.unmountComponentAtNode(document.getElementById('NewsPostView'));
+        ReactDOM.render(<ShowNewsPost id={id} categoryId={this.props.categoryId} />, document.getElementById('NewsPostView'));
+    }
 
-  render() {
-    const {userRole, isLoaded, newsPosts} = this.state;
-    if (!isLoaded) {
-      return <div>Loading news posts...</div>
-    } else {
-      const sortedNewsPosts = newsPosts.sort((a, b) => a.CreatedDate < b.CreatedDate ? 1 : -1);
-      newsPosts = sortedNewsPosts;
-      return [
-        <Container>
-          <Grid
-            container
-            direction="column"
-            justifyContent="space-evenly"
-            alignItems="center"
-          >
-            <Typography variant="h2" component="div" gutterBottom>
-              News posts
-            </Typography>
-            {(userRole === "Admin") || (userRole === "Moderator") ?
-              <Button variant="contained" color="primary" onClick={this.clickAdd()}>
-                Add news post
-              </Button>
-            :
-                      {}}
+    clickAdd = () => {
+        ReactDOM.unmountComponentAtNode(document.getElementById('NewsPostView'));
+        ReactDOM.render(<NewsPostForm categoryId={this.props.categoryId} />, document.getElementById('NewsPostView'));
+    }
 
+    clickEdit = (id) => {
+        ReactDOM.unmountComponentAtNode(document.getElementById('NewsPostView'));
+        ReactDOM.render(<NewsPostForm id={id} categoryId={this.props.categoryId} />, document.getElementById('NewsPostView'));
+    }
 
-            <Calender />
-            <TableContainer component={Paper}>
-              <Table className='table table-bordered'>
-                <TableHead>
+    clickDelete = (id) => {
+        ReactDOM.unmountComponentAtNode(document.getElementById('NewsPostView'));
+        ReactDOM.render(<DeleteNewsPost id={id} categoryId={this.props.categoryId} />, document.getElementById('NewsPostView'));
+    }
+
+    render() {
+        let { userRole, isLoaded, newsPosts } = this.state;
+        if (!isLoaded) {
+            return <div>Loading news posts...</div>
+        } else {
+            let sortedNewsPosts = newsPosts.sort((a, b) => a.CreatedDate < b.CreatedDate ? 1 : -1);
+            newsPosts = sortedNewsPosts;
+            return [
+                <Container>
+                    <Grid
+                        container
+                        direction="column"
+                        justifyContent="space-evenly"
+                        alignItems="center"
+                    >
+                        <Typography variant="h2" component="div" gutterBottom>
+                            News posts
+                        </Typography>
+                        {((userRole === "Admin") || (userRole === "Moderator")) ? (
+                            <Button variant="contained" color="primary" onClick={() => this.clickAdd()}>
+                                Add news post
+                            </Button>
+                        )
+                            :
+                            (
+                                null
+                            )}
+
+                        <Calender />
+           
+                        
+                  <TableContainer component={Paper}>
+                  <Table className='table table-bordered'>
+                  <TableHead>
                   <TableRow>
                     <TableCell>Header</TableCell>
                     <TableCell>Date</TableCell>
@@ -142,23 +146,22 @@ export class ListNewsPosts extends Component {
                               Delete
                             </Button>
                           </TableCell>
-                        ]
-                        : {}}
-                        </TableRow>
-                      ))
-                    :
-                      < TableRow>
-                        <TableCell>There are no news posts</TableCell>
+                        ]: {}}
                       </TableRow>
+                    ))
+                  :
+                    <TableRow>
+                      <TableCell>There are no news posts</TableCell>
+                    </TableRow>
                   }
                 </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
-        </Container>
-      ]
+                            </Table>
+                        </TableContainer>
+                    </Grid>
+                </Container>
+            ]
+        }
     }
-  }
 }
 
 export default ListNewsPosts;

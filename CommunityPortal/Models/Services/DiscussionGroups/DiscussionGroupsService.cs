@@ -1,4 +1,5 @@
-﻿using CommunityPortal.Data;
+﻿/*
+using CommunityPortal.Data;
 using CommunityPortal.Model.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -95,3 +96,4 @@ namespace CommunityPortal.Models.Services
         }
     }
 }
+*/

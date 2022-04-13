@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CommunityPortal.Data;
@@ -44,6 +45,17 @@ namespace CommunityPortal.Models.Services
             return newsPosts;
         }
 
+        public List<NewsPost> GetListByDate(DateTime date)
+        {
+            List<NewsPost> newsPosts = new List<NewsPost>();
+            foreach (var newsPost in _appDbContext.NewsPosts)
+            {
+                if (newsPost.CreatedDate.Date == date.Date)
+                    newsPosts.Add(newsPost);
+            }
+            return newsPosts;
+        }
+
         public string GetRSS()
         {
             string URL = "https://localhost:5001/";
@@ -62,6 +74,7 @@ namespace CommunityPortal.Models.Services
                 "    </image>\n";
             
             List<NewsPost> newsPosts = _appDbContext.NewsPosts.ToList();
+            int count = 0;
             foreach (var newsPost in newsPosts)
             {
                 RSSFeed += "      <item>\n" +
@@ -70,6 +83,43 @@ namespace CommunityPortal.Models.Services
                     $"        <quid>{URL}{newsPost.NewsPostId}</guid>\n" +
                     $"        <description>{newsPost.Description}</description>\n" +
                     "      </item>\n";
+                if (count++ >= 9) break;
+            }
+
+            RSSFeed += "  </channel>\n" +
+                "</rss>";
+            return RSSFeed;
+        }
+
+        public string GetRSSByCategoryId(int categoryId)
+        {
+            string URL = "https://localhost:5001/";
+            string RSSFeed = "<?xml version=\"1.0\"?>\n" +
+                "<rss version=\"0.91\">\n" +
+                "  <channel>\n" +
+                "    <title>Hummmer Forum</title>\n" +
+                $"    <link>{URL}</link>\n" +
+                "    <description></description>\n" +
+                "    <language>en-us</language>\n" +
+                "    <copyright>&copy; 2022, Hummer Forum. All Rights Reserved.</copyright>\n" +
+                "    <image>\n" +
+                "      <title>Hummer Forum</title>\n" +
+                $"      <url>{URL}static/media/lobster.98b40151450656d37be6.jpg</url>\n" +
+                $"      <link>{URL}</link>\n" +
+                "    </image>\n";
+            
+            List<NewsPost> newsPosts = _appDbContext.NewsPosts.ToList();
+            int count = 0;
+            foreach (var newsPost in newsPosts)
+            {
+                if (newsPost.CategoryId != categoryId) continue;
+                RSSFeed += "      <item>\n" +
+                    $"        <title>{newsPost.Heading}</title>\n" +
+                    $"        <link>{URL}{newsPost.NewsPostId}</link>\n" +
+                    $"        <quid>{URL}{newsPost.NewsPostId}</guid>\n" +
+                    $"        <description>{newsPost.Description}</description>\n" +
+                    "      </item>\n";
+                if (count++ >= 9) break;
             }
 
             RSSFeed += "  </channel>\n" +

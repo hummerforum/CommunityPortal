@@ -49,6 +49,7 @@ namespace CommunityPortal.Controllers
         }
 
         [HttpPost("GetRole")]
+        [AllowAnonymous]
         public string GetRole()
         {
             if (this.User.IsInRole("Admin"))
@@ -57,8 +58,11 @@ namespace CommunityPortal.Controllers
             else if (this.User.IsInRole("Moderator"))
                 return "Moderator";
 
-            else
+            else if (this.User.IsInRole("User"))
                 return "User";
+
+            else
+                return null;
         }
 
 

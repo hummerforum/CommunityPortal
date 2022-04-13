@@ -21,7 +21,7 @@ const CategoryHeaderStyle = styled.div`
 
 const CategoryListContainer = styled.div`
   display: grid;
-  grid-template-columns: 60% 20% 20%;
+  grid-template-columns: 20% 80%;
   background: #eff0f1;
   align-items: center;
   margin-bottom: 5px;
@@ -36,27 +36,11 @@ const CategoryListName = styled.div`
   padding-left: 5px;
 `;
 
-const CategoryListThreads = styled.div`
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-`;
-
-const CategoryListStats = styled.div`
-  text-align: center;
-  font-size: 19px;
-  margin-bottom: -5px;
-`;
-
-const CategoryListText = styled.div`
-  text-align: center;
+const CategoryListDescription = styled.div`
   font-size: 12px;
 `;
 
-const CategoryListReplies = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+
 
 function CategoryHeader(props) {
   return <CategoryHeaderStyle>{props.name}</CategoryHeaderStyle>;
@@ -66,7 +50,7 @@ function CategoryList(props) {
   return (
     <Link
       component={RouterLink}
-      to="/forum/f1"
+      to={`/forum/f${props.id}`}
       underline="none"
       sx={{
         color: "#000",
@@ -74,48 +58,90 @@ function CategoryList(props) {
     >
       <CategoryListContainer>
         <CategoryListName>{props.name}</CategoryListName>
-        <CategoryListThreads>
-          <CategoryListStats>{props.threads}</CategoryListStats>
-          <CategoryListText>Threads</CategoryListText>
-        </CategoryListThreads>
-        <CategoryListReplies>
-          <CategoryListStats>{props.replies}</CategoryListStats>
-          <CategoryListText>Replies</CategoryListText>
-        </CategoryListReplies>
+        <CategoryListDescription>{props.description}</CategoryListDescription>
       </CategoryListContainer>
     </Link>
   );
 }
 
-function ForumList(props) {
-  return (
-    <>
-      <Category>
-        <CategoryHeader name="Fishing" />
-        <CategoryList name="Lobster" threads={4} replies={45} />
-        <CategoryList name="Cod" threads={4} replies={45} />
-        <CategoryList name="Anchovy" threads={4} replies={45} />
-      </Category>
-      <Category>
-        <CategoryHeader name="Cars" />
-        <CategoryList name="Volvo" threads={4} replies={45} />
-        <CategoryList name="SAAB" threads={4} replies={45} />
-        <CategoryList name="BMW" threads={4} replies={45} />
-      </Category>
-      <Category>
-        <CategoryHeader name="Gaming" />
-        <CategoryList name="World of Warcraft" threads={4} replies={45} />
-        <CategoryList name="Super Mario 64" threads={4} replies={45} />
-        <CategoryList name="Counter-Strike" threads={4} replies={45} />
-      </Category>
-      <Category>
-        <CategoryHeader name="Beer" />
-        <CategoryList name="IPA" threads={4} replies={45} />
-        <CategoryList name="Gose" threads={4} replies={45} />
-        <CategoryList name="Stout" threads={4} replies={45} />
-      </Category>
-    </>
-  );
+class ForumList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { overview: null };
+  }
+
+  arrayIncludesInObj = (arr, key, valueToCheck) => {
+    return arr.some((value) => value[key] === valueToCheck);
+  };
+
+  getOverview = async () => {
+    try {
+      const response = await fetch("/api/DiscussionForum/Overview/", {
+        method: "GET",
+      });
+      const overviewData = await response.json();
+      const forumData = [];
+      // this could probably be done backend wise but let's just do it here for now
+      for (const x in overviewData) {
+        if (
+          !this.arrayIncludesInObj(
+            forumData,
+            "name",
+            overviewData[x].DiscussionCategory.Name
+          )
+        ) {
+          forumData.push({
+            name: overviewData[x].DiscussionCategory.Name,
+            id: overviewData[x].DiscussionCategory.DiscussionCategoryId,
+            forum: [],
+          });
+        }
+      }
+      for (const x in overviewData) {
+        for (const y in forumData) {
+          if (forumData[y].name === overviewData[x].DiscussionCategory.Name) {
+            forumData[y].forum.push({
+              name: overviewData[x].Name,
+              id: overviewData[x].DiscussionForumId,
+              description: overviewData[x].Description,
+            });
+          }
+        }
+      }
+      this.setState({ overview: forumData, isLoaded: true });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  componentDidMount() {
+    if (!this.state.overview) {
+      this.getOverview();
+    }
+  }
+
+  render() {
+    const { isLoaded, overview } = this.state;
+    if (!isLoaded) {
+      return <div>Loading forum...</div>;
+    } else {
+      return (
+        <>
+          {overview.map((overview) => (
+            <Category key={`category-${overview.id}`}>
+              <CategoryHeader
+                name={overview.name}
+                key={`category-${overview.id}`}
+              />
+              {overview.forum.map((forum) => (
+                <CategoryList name={forum.name} description={forum.description} key={forum.id} id={forum.id} />
+              ))}
+            </Category>
+          ))}
+        </>
+      );
+    }
+  }
 }
 
 export default ForumList;

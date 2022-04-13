@@ -21,16 +21,16 @@ export class NewsPostForm extends Component {
       isLoaded: false,
       newsPost: null,
       isCategoriesLoaded: false,
-      categories: []
+      categories: [],
     };
   }
 
   async authHeader() {
     const currentUser = await authService.getUser();
     if (currentUser && currentUser.access_token) {
-        return { "Authorization": `Bearer ${currentUser.access_token}` };
+      return { Authorization: `Bearer ${currentUser.access_token}` };
     } else {
-        return {};
+      return {};
     }
   }
 
@@ -51,46 +51,55 @@ export class NewsPostForm extends Component {
   async getNewsPost() {
     const header = await authService.getUser();
     const id = this.props.id;
-    const response = await fetch("/api/newspost/" + id, { 
-      method: 'GET',
-      headers: header
+    const response = await fetch("/api/newspost/" + id, {
+      method: "GET",
+      headers: header,
     });
     const newsPostData = await response.json();
     this.setState({ newsPost: newsPostData, isLoaded: true });
   }
 
   async getCategories() {
-    const response = await fetch("/api/category/GetParentList", { 
-      method: 'GET'
+    const response = await fetch("/api/category/GetParentList", {
+      method: "GET",
     });
     const categoryData = await response.json();
     this.setState({ categories: categoryData, isCategoriesLoaded: true });
   }
 
   changeField = (event) => {
-    this.setState({[event.target.name]: event.target.value});
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   submitForm = (event) => {
     event.preventDefault();
-    ReactDOM.unmountComponentAtNode(document.getElementById('NewsPostView'));
+    ReactDOM.unmountComponentAtNode(document.getElementById("NewsPostView"));
     if (this.newsPost == null) {
-      ReactDOM.render(<AddNewsPost data={this.state} categoryId={this.props.categoryId} />, document.getElementById('NewsPostView'));
+      ReactDOM.render(
+        <AddNewsPost data={this.state} categoryId={this.props.categoryId} />,
+        document.getElementById("NewsPostView")
+      );
     } else {
-      ReactDOM.render(<UpdateNewsPost data={this.state} categoryId={this.props.categoryId} />, document.getElementById('NewsPostView'));
+      ReactDOM.render(
+        <UpdateNewsPost data={this.state} categoryId={this.props.categoryId} />,
+        document.getElementById("NewsPostView")
+      );
     }
   };
 
   render() {
-    const {userRole, isLoaded, newsPost, isCategoriesLoaded, categories} = this.state;
+    const { userRole, isLoaded, newsPost, isCategoriesLoaded, categories } =
+      this.state;
     if (!isLoaded) {
-      return <div>Loading news post...</div>
+      return <div>Loading news post...</div>;
     } else if (!isCategoriesLoaded) {
-      return <div>Loading categories...</div>
+      return <div>Loading categories...</div>;
     } else {
       const mapCategories = categories.map((row, index) => {
         return (
-          <MenuItem key={index} value={row.CategoryId}>{row.Title}</MenuItem>
+          <MenuItem key={index} value={row.CategoryId}>
+            {row.Title}
+          </MenuItem>
         );
       });
       return (
@@ -102,7 +111,7 @@ export class NewsPostForm extends Component {
             alignItems="center"
           >
             <FormControl onSubmit={this.submitForm}>
-              {newsPost != null ?
+              {newsPost != null ? (
                 <TextField
                   id="NewsPostId"
                   style={{ width: "400px", margin: "5px" }}
@@ -111,7 +120,9 @@ export class NewsPostForm extends Component {
                   value={newsPost.NewsPostId}
                   onChange={this.changeField}
                 />
-              : {}}
+              ) : (
+                {}
+              )}
               <TextField
                 id="Heading"
                 style={{ width: "400px", margin: "5px" }}
@@ -140,7 +151,9 @@ export class NewsPostForm extends Component {
               <br />
               <Select
                 id="CategoryId"
-                value={this.props.categoryId != null ? this.props.categoryId : 0}
+                value={
+                  this.props.categoryId != null ? this.props.categoryId : 0
+                }
                 label="Category"
                 onChange={this.changeField}
               >
@@ -173,11 +186,13 @@ export class NewsPostForm extends Component {
                 onChange={this.changeField}
               />
               <br />
-              {(userRole === "Admin") || (userRole === "Moderator") ?
+              {userRole === "Admin" || userRole === "Moderator" ? (
                 <Button variant="contained" color="primary">
                   Save
                 </Button>
-              : {}}
+              ) : (
+                {}
+              )}
             </FormControl>
           </Grid>
         </Container>
