@@ -109,46 +109,51 @@ export class ListNewsPosts extends Component {
                         <TableContainer component={Paper}>
                             <Table className='table table-bordered'>
                                 <TableHead>
-                  <TableRow>
-                    <TableCell>Header</TableCell>
-                    <TableCell>Date</TableCell>
-                    {(userRole === "Admin") || (userRole === "Moderator") ? [
-                      <TableCell>Edit</TableCell>,
-                      <TableCell>Delete</TableCell>
-                    ]
-                    : {}}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {newsPosts.length > 0 ?
-                    newsPosts.map((newsPost) => (
-                      <TableRow key={newsPost.NewsPostId}>
-                        <TableCell><Link href="#" onClick={e => this.clickView(e.target.value)}>{newsPost.Heading}</Link></TableCell>
-                        <TableCell>{newsPost.CreatedDate}
-                        {newsPost.UpdatedDate != null ?
-                          <span>Updated: {newsPost.UpdatedDate}</span>
-                        :{}}
-                        </TableCell>
-                        {(userRole === "Admin") || (userRole === "Moderator") ? [
-                          <TableCell>
-                            <Button variant="contained" color="primary" value={newsPost.NewsPostId} onClick={e => this.clickEdit(e.target.value)}>,
-                              Edit
-                            </Button>
-                          </TableCell>,
-                          <TableCell>
-                            <Button variant="contained" color="primary" value={newsPost.NewsPostId} onClick={e => this.clickDelete(e.target.value)}>
-                              Delete
-                            </Button>
-                          </TableCell>
-                        ]: {}}
-                      </TableRow>
-                    ))
-                  :
-                    <TableRow>
-                      <TableCell>There are no news posts</TableCell>
-                    </TableRow>
-                  }
-                </TableBody>
+                                    <TableRow>
+                                        <TableCell>Header</TableCell>
+                                        <TableCell>Date</TableCell>
+                                        {(userRole === "Admin") || (userRole === "Moderator") ? (
+                                            <TableCell>Edit</TableCell>,
+                                            <TableCell>Delete</TableCell>
+                                        ) : (
+                                                null
+                                                )}
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {newsPosts.length > 0 ?
+                                        newsPosts.map((newsPost) => (
+                                            <TableRow key={newsPost.NewsPostId}>
+                                                <TableCell><Link href="#" onClick={e => this.clickView(e.target.value)}>{newsPost.Heading}</Link></TableCell>
+                                                <TableCell>{newsPost.CreatedDate}
+                                                    {newsPost.UpdatedDate != null ? (
+                                                        <span>Updated: {newsPost.UpdatedDate}</span>
+                                                    ) : (
+                                                        null
+                                                    )}
+                                                </TableCell>
+                                                {(userRole === "Admin") || (userRole === "Moderator") ? (
+                                                    <TableCell>
+                                                        <Button variant="contained" color="primary" value={newsPost.NewsPostId} onClick={e => this.clickEdit(e.target.value)}>,
+                                                            Edit
+                                                        </Button>
+                                                    </TableCell>,
+                                                    <TableCell>
+                                                        <Button variant="contained" color="primary" value={newsPost.NewsPostId} onClick={e => this.clickDelete(e.target.value)}>
+                                                            Delete
+                                                        </Button>
+                                                    </TableCell>
+                                                ) : (
+                                                    null
+                                                )}
+                                            </TableRow>
+                                        ))
+                                        :
+                                        <TableRow>
+                                            <TableCell>There are no news posts</TableCell>
+                                        </TableRow>
+                                    }
+                                </TableBody>
                             </Table>
                         </TableContainer>
                     </Grid>
