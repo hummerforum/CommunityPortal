@@ -15,7 +15,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import "./messages.css";
-import { withRouter } from "./withRouter";
+import { withRouter } from "../../withRouter";
 
 class Messages extends Component {
     constructor(props) {

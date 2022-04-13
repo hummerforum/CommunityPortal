@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import "./messages.css";
 import { Grid } from "@mui/material";
-import { withRouter } from "./withRouter";
+import { withRouter } from "../../withRouter";
 
 
 class ViewMessage extends Component {
