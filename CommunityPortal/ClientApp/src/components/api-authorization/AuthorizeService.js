@@ -24,8 +24,8 @@ export class AuthorizeService {
       { headers: header }
     );
     if (response.status === 200 && response.data !== null) {
-      return response.data;
-    } else return "Error finding role";
+        return response.data;
+    } else return null;
   }
 
   async getUser() {
