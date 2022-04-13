@@ -13,7 +13,8 @@ export class Layout extends Component {
           styles={{ ul: { margin: 0, padding: 0, listStyle: "none" } }}
         />
         <CssBaseline />
-        <NavMenu />
+            <NavMenu />
+
         {this.props.children}
       </div>
     );
