@@ -1,3 +1,4 @@
+using System;
 using CommunityPortal.Models;
 using CommunityPortal.Models.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -39,10 +40,23 @@ namespace CommunityPortal.Controllers
             return JsonConvert.SerializeObject(NewsPosts);
         }
 
-        [HttpGet("rss")]
+        [HttpGet("GetByDate/{date}")]
+        public string GetByDate(DateTime date)
+        {
+            List<NewsPost> NewsPosts = _newsPostService.GetListByDate(date);
+            return JsonConvert.SerializeObject(NewsPosts);
+        }
+
+        [HttpGet("RSS")]
         public string GetRSS()
         {
             return _newsPostService.GetRSS();
+        }
+
+        [HttpGet("GetRSSByCategoryId/{categoryId}")]
+        public string GetRSSByCategoryId(int categoryId)
+        {
+            return _newsPostService.GetRSSByCategoryId(categoryId);
         }
 
         [HttpPost]
