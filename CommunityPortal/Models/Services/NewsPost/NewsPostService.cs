@@ -50,8 +50,7 @@ namespace CommunityPortal.Models.Services
             List<NewsPost> newsPosts = new List<NewsPost>();
             foreach (var newsPost in _appDbContext.NewsPosts)
             {
-                DateTime currentDate = (newsPost.UpdatedDate == null) ? newsPost.CreatedDate : newsPost.UpdatedDate;
-                if (currentDate.Date == date.Date)
+                if (newsPost.CreatedDate.Date == date.Date)
                     newsPosts.Add(newsPost);
             }
             return newsPosts;
