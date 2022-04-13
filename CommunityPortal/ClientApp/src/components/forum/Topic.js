@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import React, { Component } from "react";
 import AddIcon from "@mui/icons-material/Add";
-import SendIcon from "@mui/icons-material/Send";
+import MessageIcon from '@mui/icons-material/Message';
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
+import Tooltip from "@mui/material/Tooltip";
+import { withRouter } from "../../withRouter";
+import authService from "../../components/api-authorization/AuthorizeService";
 
 const Category = styled.div`
   &:first-child {
@@ -63,125 +66,161 @@ const ReplyDate = styled.h1`
   font-size: 12px;
 `;
 
+function SendPm(navigate, authorId, date, content) {
+    let uri = `/messages/${authorId}/Reply%20to%20post%20posted%20at:%20${date}/Reply%20to%20message:%20${content.replace(/[/?.]/g, '')}%0A----------%0A`
+    navigate(uri);
+    //console.log(props);
+}
+
 function Reply(props) {
-  // we have userId in props.authorId for private message
-  return (
-    <ReplyContainer>
-      <AuthorContainer>
-        <AuthorName>{props.authorName}</AuthorName>
-        <Avatar
-          alt={props.authorName}
-          sx={{ bgcolor: "#95B2B8", color: "#FFF", width: 150, height: 150 }}
-        >
-          {props.authorName.charAt(0)}
-        </Avatar>
-        <IconButton
-          color="primary"
-          aria-label="send private message"
-          component="span"
-        >
-          <SendIcon />
-        </IconButton>
-        <ReplyDate>{props.date}</ReplyDate>
-      </AuthorContainer>
-      <ReplyContent>
-        <ReplyBody>{props.content}</ReplyBody>
-      </ReplyContent>
-    </ReplyContainer>
-  );
+    // we have userId in props.authorId for private message
+    return (
+        <ReplyContainer>
+            <AuthorContainer>
+                <AuthorName>{props.authorName}</AuthorName>
+                <Avatar
+                    alt={props.authorName}
+                    sx={{ bgcolor: "#95B2B8", color: "#FFF", width: 150, height: 150 }}
+                >
+                    {props.authorName.charAt(0)}
+                </Avatar>
+                {props.isAuthenticated ? (
+                    <Tooltip disableFocusListener title="Send PM">
+                        <IconButton
+                            color="primary"
+                            aria-label="send private message"
+                            component="span"
+                            onClick={() => { SendPm(props.navigate, props.authorId, props.date, props.content) }}
+                        >
+                            <MessageIcon />
+                        </IconButton>
+                    </Tooltip>
+                ) : (
+                    null
+                )}
+                <ReplyDate>{props.date}</ReplyDate>
+            </AuthorContainer>
+            <ReplyContent>
+                <ReplyBody>{props.content}</ReplyBody>
+            </ReplyContent>
+        </ReplyContainer>
+    );
 }
 
 class Topic extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { topic: null };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            isAuthenticated: false,
+            topic: null
+        };
+    }
 
-  getTopic = async () => {
-    try {
-      const params = window.location.pathname;
-      const pattern = /f(\d)\/t+(\d)/g;
-      const id = pattern.exec(params);
-      const response = await fetch(`/api/DiscussionForum/Forum/${id[1]}`, {
-        method: "GET",
-      });
-      const topicData = await response.json();
-      this.setState({ topicLoaded: true, topic: topicData[0] });
-      console.log(topicData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    getTopic = async () => {
+        try {
+            const params = window.location.pathname;
+            const pattern = /f(\d)\/t+(\d)/g;
+            const id = pattern.exec(params);
+            const response = await fetch(`/api/DiscussionForum/Forum/${id[1]}`, {
+                method: "GET",
+            });
+            const topicData = await response.json();
+            this.setState({ topicLoaded: true, topic: topicData[0] });
+            console.log(topicData);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-  getReplies = async () => {
-    try {
-      const params = window.location.pathname;
-      const pattern = /f(\d)\/t+(\d)/g;
-      const id = pattern.exec(params);
-      const response = await fetch(`/api/DiscussionForum/Topic/${id[2]}`, {
-        method: "GET",
-      });
-      const repliesData = await response.json();
-      console.log(repliesData);
-      this.setState({ repliesLoaded: true, replies: repliesData });
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    getReplies = async () => {
+        try {
+            const params = window.location.pathname;
+            const pattern = /f(\d)\/t+(\d)/g;
+            const id = pattern.exec(params);
+            const response = await fetch(`/api/DiscussionForum/Topic/${id[2]}`, {
+                method: "GET",
+            });
+            const repliesData = await response.json();
+            console.log(repliesData);
+            this.setState({ repliesLoaded: true, replies: repliesData });
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-  componentDidMount() {
-    if (!this.state.topic) {
-      this.getTopic();
-    }
-    if (!this.state.replies) {
-      this.getReplies();
-    }
-    if (this.state.replies && this.state.topic) {
-      this.setState({});
-    }
-  }
+    componentDidMount() {
+        this._subscription = authService.subscribe(() => this.populateState());
+        this.populateState();
 
-  render() {
-    const { topicLoaded, topic, replies } = this.state;
-    if (!topicLoaded) {
-      return <div>Loading forum...</div>;
-    } else {
-      return (
-        <>
-          <Category>
-            <CategoryHeaderContainer>
-              <CategoryTitle>{topic.Subject}</CategoryTitle>
-              <IconButton
-                aria-label="create thread"
-                sx={{
-                  color: "#FFF",
-                }}
-              >
-                <AddIcon />
-              </IconButton>
-            </CategoryHeaderContainer>
-          </Category>
-          <Reply
-            key="topic"
-            authorName={topic.Author.UserName}
-            authorId={topic.Author.Id}
-            content={topic.Content}
-            date={topic.Time}
-          />
-          {replies && replies.length > 0 &&
-            replies.map((reply) => (
-              <Reply
-                key={reply.DiscussionReplyId}
-                authorName={reply.Author.UserName}
-                authorId={reply.Author.Id}
-                content={reply.Content}
-                date={reply.Time}
-              />
-            ))}
-        </>
-      );
+        if (!this.state.topic) {
+            this.getTopic();
+        }
+        if (!this.state.replies) {
+            this.getReplies();
+        }
+        if (this.state.replies && this.state.topic) {
+            this.setState({});
+        }
     }
-  }
+
+    componentWillUnmount() {
+        authService.unsubscribe(this._subscription);
+    }
+
+    async populateState() {
+        const [isAuthenticated] = await Promise.all([
+            authService.isAuthenticated(),
+        ]);
+        this.setState({
+            isAuthenticated,
+        });
+    }
+
+    render() {
+        const { topicLoaded, topic, replies } = this.state;
+        if (!topicLoaded) {
+            return <div>Loading forum...</div>;
+        } else {
+            return (
+                <>
+                    <Category>
+                        <CategoryHeaderContainer>
+                            <CategoryTitle>{topic.Subject}</CategoryTitle>
+                            <IconButton
+                                aria-label="create thread"
+                                sx={{
+                                    color: "#FFF",
+                                }}
+                            >
+                                <AddIcon />
+                            </IconButton>
+                        </CategoryHeaderContainer>
+                    </Category>
+                    <Reply
+                        key="topic"
+                        authorName={topic.Author.UserName}
+                        authorId={topic.Author.Id}
+                        content={topic.Content}
+                        date={topic.Time}
+                        navigate={this.props.navigate}
+                        isAuthenticated={this.state.isAuthenticated}
+                    />
+                    {replies && replies.length > 0 &&
+                        replies.map((reply) => (
+                            <Reply
+                                key={reply.DiscussionReplyId}
+                                authorName={reply.Author.UserName}
+                                authorId={reply.Author.Id}
+                                content={reply.Content}
+                                date={reply.Time}
+                                navigate={this.props.navigate}
+                                isAuthenticated={this.state.isAuthenticated}
+                            />
+                        ))}
+                </>
+            );
+        }
+    }
 }
 
-export default Topic;
+export default withRouter(Topic);
