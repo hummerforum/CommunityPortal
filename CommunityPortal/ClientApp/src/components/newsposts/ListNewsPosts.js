@@ -106,6 +106,8 @@ export class ListNewsPosts extends Component {
                             (
                                 null
                             )}
+
+                        // Kalender kommer...
                         <TableContainer component={Paper}>
                             <Table className='table table-bordered'>
                                 <TableHead>
