@@ -16,6 +16,8 @@ import Button from "@mui/material/Button";
 import ShowNewsPost from "./ShowNewsPost";
 import NewsPostForm from "./NewsPostForm";
 import DeleteNewsPost from "./DeleteNewsPost";
+import Calender from "../Calender/Calender"
+
 
 export class ListNewsPosts extends Component {
   static displayName = ListNewsPosts.name;
@@ -102,7 +104,10 @@ export class ListNewsPosts extends Component {
                 Add news post
               </Button>
             :
-            {}}
+                      {}}
+
+
+            <Calender />
             <TableContainer component={Paper}>
               <Table className='table table-bordered'>
                 <TableHead>
