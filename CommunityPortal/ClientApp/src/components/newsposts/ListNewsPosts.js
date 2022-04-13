@@ -40,7 +40,6 @@ export class ListNewsPosts extends Component {
 
     async getUserRole() {
         this.setState({ userRole: await authService.getRole() });
-        console.log(this.state.userRole);
     }
 
     componentDidMount() {
@@ -96,7 +95,7 @@ export class ListNewsPosts extends Component {
                         alignItems="center"
                     >
                         <Typography variant="h2" component="div" gutterBottom>
-                            News posts{console.log("-----")}
+                            News posts
                         </Typography>
                         {((userRole === "Admin") || (userRole === "Moderator")) ? (
                             <Button variant="contained" color="primary" onClick={() => this.clickAdd()}>
