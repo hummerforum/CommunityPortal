@@ -10,14 +10,21 @@ import {
     MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 
+
+
+
+
 function Calender() {
     const [selectedDate, handleDateChange] = useState(new Date());
-
+    const [Dates, ChangeDates] = useState("");
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <DatePicker value={selectedDate} onChange={handleDateChange} />
-            <TimePicker value={selectedDate} onChange={handleDateChange} />
-            <DateTimePicker value={selectedDate} onChange={handleDateChange} />
+            <DatePicker
+                variant="static"
+                value={selectedDate}
+                onChange={handleDateChange}
+
+            />
         </MuiPickersUtilsProvider>
     );
 }
