@@ -6,6 +6,7 @@ import { withRouter } from "../../withRouter";
 import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
 import authService from "../../components/api-authorization/AuthorizeService";
+import { formatRelative } from 'date-fns'
 
 const Category = styled.div`
   &:first-child {
@@ -103,7 +104,7 @@ function Thread(props) {
           <ThreadName>{props.name}</ThreadName>
           <ThreadInfo>
             <ThreadAuthor>{props.author},</ThreadAuthor>
-            <ThreadDate>{props.date}</ThreadDate>
+            <ThreadDate>{formatRelative(Date.parse(props.date), Date.now())}</ThreadDate>
           </ThreadInfo>
         </ThreadData>
         <ThreadViews>
@@ -126,7 +127,7 @@ class TopicList extends Component {
       const params = window.location.pathname;
       const pattern = /(?<=\/forum\/f)(\d)/g;
       const id = params.match(pattern).toString();
-      const response = await fetch(`/api/DiscussionForum/Forum/${id}`, {
+      const response = await fetch(`/api/DiscussionForum/Topics/${id}`, {
         method: "GET",
       });
       const topicsData = await response.json();

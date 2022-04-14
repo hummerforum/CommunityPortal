@@ -8,6 +8,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { withRouter } from "../../withRouter";
 import authService from "../../components/api-authorization/AuthorizeService";
 import CreateReply from "./CreateReply";
+import { formatRelative } from 'date-fns'
 
 const Category = styled.div`
   &:first-child {
@@ -106,7 +107,7 @@ function Reply(props) {
             </IconButton>
           </Tooltip>
         ) : null}
-        <ReplyDate>{props.date}</ReplyDate>
+        <ReplyDate>{formatRelative(Date.parse(props.date), Date.now())}</ReplyDate>
       </AuthorContainer>
       <ReplyContent>
         <ReplyBody>{props.content}</ReplyBody>
@@ -124,16 +125,20 @@ class Topic extends Component {
     };
   }
 
+  isCorrect(topics, topic) {
+    return topics.DiscussionTopicId === topic;
+  }
+
   getTopic = async () => {
     try {
       const params = window.location.pathname;
       const pattern = /f(\d)\/t+(\d)/g;
       const id = pattern.exec(params);
-      const response = await fetch(`/api/DiscussionForum/Forum/${id[1]}`, {
+      const response = await fetch(`/api/DiscussionForum/Topic/${id[2]}`, {
         method: "GET",
       });
       const topicData = await response.json();
-      this.setState({ topicLoaded: true, topic: topicData[0] });
+      this.setState({ topicLoaded: true, topic: topicData[0]});
     } catch (error) {
       console.error(error);
     }
@@ -144,11 +149,10 @@ class Topic extends Component {
       const params = window.location.pathname;
       const pattern = /f(\d)\/t+(\d)/g;
       const id = pattern.exec(params);
-      const response = await fetch(`/api/DiscussionForum/Topic/${id[2]}`, {
+      const response = await fetch(`/api/DiscussionForum/Topics/${id[2]}`, {
         method: "GET",
       });
       const repliesData = await response.json();
-      console.log(repliesData);
       this.setState({ repliesLoaded: true, replies: repliesData });
     } catch (error) {
       console.error(error);
