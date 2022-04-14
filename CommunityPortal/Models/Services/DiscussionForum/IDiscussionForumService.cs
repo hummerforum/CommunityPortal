@@ -17,7 +17,7 @@ namespace CommunityPortal.Model.Services
         
         public string CreateTopic(string userId, int forumId, string subject, string content);
         
-        public string CreateReply(int id, string content);
+        public string CreateReply(string userId, int id, string content);
 
         public void UpdateDiscussionForum(DiscussionForum discussionForum);
 

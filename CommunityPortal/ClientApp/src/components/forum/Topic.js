@@ -132,7 +132,7 @@ class Topic extends Component {
   getTopic = async () => {
     try {
       const params = window.location.pathname;
-      const pattern = /f(\d)\/t+(\d)/g;
+      const pattern = /f(\d+)\/t+(\d+)/g;
       const id = pattern.exec(params);
       const response = await fetch(`/api/DiscussionForum/Topic/${id[2]}`, {
         method: "GET",
@@ -147,9 +147,9 @@ class Topic extends Component {
   getReplies = async () => {
     try {
       const params = window.location.pathname;
-      const pattern = /f(\d)\/t+(\d)/g;
+      const pattern = /f(\d+)\/t+(\d+)/g;
       const id = pattern.exec(params);
-      const response = await fetch(`/api/DiscussionForum/Topics/${id[2]}`, {
+      const response = await fetch(`/api/DiscussionForum/Replies/${id[2]}`, {
         method: "GET",
       });
       const repliesData = await response.json();

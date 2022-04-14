@@ -13,7 +13,7 @@ const Header = styled.div`
   font-size: 26px;
 `;
 
-const TopicContainer = styled.div`
+const TopicContainer = styled.form`
   display: flex;
   flex-direction: column;
   background: #eff0f1;
@@ -38,21 +38,60 @@ const TopicBody = styled.textarea`
 class CreateTopic extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      topic: null,
-    };
+    this.state = { subject: null, content: null };
   }
 
+  handleChange = async (event) => {
+    if (event.target.id === "subject") {
+      this.setState({ subject: event.target.value });
+    }
+    if (event.target.id === "content") {
+      this.setState({ content: event.target.value });
+    }
+  };
+
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    const params = window.location.pathname;
+    const pattern = /(?<=\/forum\/f)(\d)/g;
+    const id = params.match(pattern).toString();
+    let formData = new FormData()
+    formData.append("subject", this.state.subject);
+    formData.append("content", this.state.content)
+    const response = await fetch(`/api/DiscussionForum/TopicCreate/${id}`, {
+      method: "post",
+      body: formData
+    });
+    const result = await response.json();
+    const parsed = JSON.parse(result);
+    console.log(parsed.forumId);
+    console.log(parsed.topicId);
+    if (parsed.forumId && parsed.topicId) {
+        this.props.navigate(`/forum/f${parsed.forumId}/t${parsed.topicId}`);
+    }
+  };
+
   render() {
-      console.log(this.state)
-      console.log(this.props)
     return (
       <Container>
         <Header>Post a Topic</Header>
-        <TopicContainer>
-          <TopicSubject placeholder="Write your subject..."></TopicSubject>
-          <TopicBody placeholder="Write your content..."></TopicBody>
-          <Button id="postReply" variant="contained" endIcon={<SendIcon />}>
+        <TopicContainer onSubmit={this.handleSubmit}>
+          <TopicSubject
+            placeholder="Write your subject..."
+            id="subject"
+            onChange={this.handleChange}
+          ></TopicSubject>
+          <TopicBody
+            placeholder="Write your content..."
+            id="content"
+            onChange={this.handleChange}
+          ></TopicBody>
+          <Button
+            id="postReply"
+            variant="contained"
+            endIcon={<SendIcon />}
+            onClick={this.handleSubmit}
+          >
             Send
           </Button>
         </TopicContainer>

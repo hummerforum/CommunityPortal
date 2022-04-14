@@ -43,7 +43,7 @@ namespace CommunityPortal.Controllers
             var discussionTopic = discussionForumService.Topic(topicId);
             return JsonConvert.SerializeObject(discussionTopic);
         }
-        
+
         [HttpGet("Replies/{topicId:int}")]
         public string Replies(int topicId)
         {
@@ -57,6 +57,15 @@ namespace CommunityPortal.Controllers
             string userId = this.User.GetSubjectId();
             if (content == null && subject == null) return "500";
             string discussionTopic = discussionForumService.CreateTopic(userId, forumId, subject, content);
+            return JsonConvert.SerializeObject(discussionTopic);
+        }
+
+        [HttpPost("ReplyCreate/{topicId:int}")]
+        public string CreateReply(int topicId, [FromForm] string content)
+        {
+            string userId = this.User.GetSubjectId();
+            if (content == null) return "500";
+            string discussionTopic = discussionForumService.CreateReply(userId, topicId, content);
             return JsonConvert.SerializeObject(discussionTopic);
         }
     }

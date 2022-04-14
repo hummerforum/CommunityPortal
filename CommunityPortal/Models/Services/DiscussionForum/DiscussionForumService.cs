@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace CommunityPortal.Models.Services
 {
@@ -54,6 +55,12 @@ namespace CommunityPortal.Models.Services
             return db.DiscussionReplies.Include(r => r.Author).Where(r => r.TopicId == id).ToList();
         }
 
+        private class CreateResponse
+        {
+            public int forumId;
+            public int topicId;
+        }
+        
         public string CreateTopic(string userId, int forumId, string subject, string content)
         {
             DiscussionTopic topic = new()
@@ -66,12 +73,30 @@ namespace CommunityPortal.Models.Services
             };
             db.DiscussionTopics.Add(topic);
             int result = db.SaveChanges();
-            return result == 1 ? "200" : "500";
+            CreateResponse response = new()
+            {
+                forumId = topic.DiscussionForumId,
+                topicId = topic.DiscussionTopicId
+            };
+            return result == 1 ? JsonConvert.SerializeObject(response) : "500";
         }
 
-        public string CreateReply(int id, string content)
+        public string CreateReply(string userId, int id, string content)
         {
-            return "lol";
+            DiscussionReply reply = new()
+            {
+                TopicId = id,
+                AuthorId = userId,
+                Content = content,
+                Time = DateTime.Now
+            };
+            db.DiscussionReplies.Add(reply);
+            int result = db.SaveChanges();
+            CreateResponse response = new()
+            {
+                topicId = reply.TopicId
+            };
+            return result == 1 ? JsonConvert.SerializeObject(response) : "500";
         }
 
         public void UpdateDiscussionForum(DiscussionForum discussionForum)
