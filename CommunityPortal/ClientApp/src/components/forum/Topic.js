@@ -8,7 +8,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { withRouter } from "../../withRouter";
 import authService from "../../components/api-authorization/AuthorizeService";
 import CreateReply from "./CreateReply";
-import { formatRelative } from 'date-fns'
+import { formatRelative } from "date-fns";
 
 const Category = styled.div`
   &:first-child {
@@ -107,7 +107,9 @@ function Reply(props) {
             </IconButton>
           </Tooltip>
         ) : null}
-        <ReplyDate>{formatRelative(Date.parse(props.date), Date.now())}</ReplyDate>
+        <ReplyDate>
+          {formatRelative(Date.parse(props.date), Date.now())}
+        </ReplyDate>
       </AuthorContainer>
       <ReplyContent>
         <ReplyBody>{props.content}</ReplyBody>
@@ -138,7 +140,7 @@ class Topic extends Component {
         method: "GET",
       });
       const topicData = await response.json();
-      this.setState({ topicLoaded: true, topic: topicData[0]});
+      this.setState({ topicLoaded: true, topic: topicData[0] });
     } catch (error) {
       console.error(error);
     }
@@ -188,7 +190,7 @@ class Topic extends Component {
   }
 
   scrollToReply() {
-    const scrollingElement = (document.scrollingElement || document.body);
+    const scrollingElement = document.scrollingElement || document.body;
     scrollingElement.scrollTop = scrollingElement.scrollHeight;
   }
 

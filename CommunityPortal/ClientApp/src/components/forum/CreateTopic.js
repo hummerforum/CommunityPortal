@@ -55,19 +55,19 @@ class CreateTopic extends Component {
     const params = window.location.pathname;
     const pattern = /(?<=\/forum\/f)(\d)/g;
     const id = params.match(pattern).toString();
-    let formData = new FormData()
+    let formData = new FormData();
     formData.append("subject", this.state.subject);
-    formData.append("content", this.state.content)
+    formData.append("content", this.state.content);
     const response = await fetch(`/api/DiscussionForum/TopicCreate/${id}`, {
       method: "post",
-      body: formData
+      body: formData,
     });
     const result = await response.json();
     const parsed = JSON.parse(result);
     console.log(parsed.forumId);
     console.log(parsed.topicId);
     if (parsed.forumId && parsed.topicId) {
-        this.props.navigate(`/forum/f${parsed.forumId}/t${parsed.topicId}`);
+      this.props.navigate(`/forum/f${parsed.forumId}/t${parsed.topicId}`);
     }
   };
 

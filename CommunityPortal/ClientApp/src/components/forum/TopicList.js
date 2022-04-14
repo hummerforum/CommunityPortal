@@ -6,7 +6,7 @@ import { withRouter } from "../../withRouter";
 import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
 import authService from "../../components/api-authorization/AuthorizeService";
-import { formatRelative } from 'date-fns'
+import { formatRelative } from "date-fns";
 
 const Category = styled.div`
   &:first-child {
@@ -104,7 +104,9 @@ function Thread(props) {
           <ThreadName>{props.name}</ThreadName>
           <ThreadInfo>
             <ThreadAuthor>{props.author},</ThreadAuthor>
-            <ThreadDate>{formatRelative(Date.parse(props.date), Date.now())}</ThreadDate>
+            <ThreadDate>
+              {formatRelative(Date.parse(props.date), Date.now())}
+            </ThreadDate>
           </ThreadInfo>
         </ThreadData>
         <ThreadViews>
