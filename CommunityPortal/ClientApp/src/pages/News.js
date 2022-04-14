@@ -56,10 +56,11 @@ export class News extends Component {
             direction="column"
             justifyContent="space-evenly"
             alignItems="center"
-          >
-            <div id="NewsPostView">
-              {categories.length > 0 ?
-                <TableContainer component={Paper}>
+           >
+           <div id="NewsPostView">
+            {categories.length > 0 ?
+            (
+               <TableContainer sx={{ mt: 1.5 }} component={Paper}>
                   <Table className='table table-bordered'>
                     <TableHead>
                       <TableRow>
@@ -83,6 +84,7 @@ export class News extends Component {
                     </TableBody>
                   </Table>
                 </TableContainer>
+              )
               : 
                 <ListNewsPosts categoryId={null} />
               }
