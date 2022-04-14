@@ -81,6 +81,13 @@ const ThreadViews = styled.div`
   flex-direction: column;
 `;
 
+function getForumId() {
+  const params = window.location.pathname;
+  const pattern = /(?<=\/forum\/f)(\d)/g;
+  const id = params.match(pattern).toString();
+  return id;
+}
+
 function Thread(props) {
   return (
     <Link
@@ -163,14 +170,23 @@ class TopicList extends Component {
             <CategoryHeaderContainer>
               <CategoryTitle>Lobster</CategoryTitle>
               {this.state.isAuthenticated && (
-                <IconButton
-                  aria-label="create thread"
+                <Link
+                  component={RouterLink}
+                  to={`/forum/f${getForumId()}/create`}
+                  underline="none"
                   sx={{
-                    color: "#FFF",
+                    color: "#000",
                   }}
                 >
-                  <AddIcon />
-                </IconButton>
+                  <IconButton
+                    aria-label="create thread"
+                    sx={{
+                      color: "#FFF",
+                    }}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </Link>
               )}
             </CategoryHeaderContainer>
             {topics.length <= 0 && (
