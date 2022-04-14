@@ -40,8 +40,6 @@ const CategoryListDescription = styled.div`
   font-size: 12px;
 `;
 
-
-
 function CategoryHeader(props) {
   return <CategoryHeaderStyle>{props.name}</CategoryHeaderStyle>;
 }
@@ -134,7 +132,12 @@ class ForumList extends React.Component {
                 key={`category-${overview.id}`}
               />
               {overview.forum.map((forum) => (
-                <CategoryList name={forum.name} description={forum.description} key={forum.id} id={forum.id} />
+                <CategoryList
+                  name={forum.name}
+                  description={forum.description}
+                  key={forum.id}
+                  id={forum.id}
+                />
               ))}
             </Category>
           ))}

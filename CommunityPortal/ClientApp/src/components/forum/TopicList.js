@@ -2,8 +2,10 @@ import styled from "styled-components";
 import React, { Component } from "react";
 import Link from "@mui/material/Link";
 import { Link as RouterLink } from "react-router-dom";
+import { withRouter } from "../../withRouter";
 import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
+import authService from "../../components/api-authorization/AuthorizeService";
 
 const Category = styled.div`
   &:first-child {
@@ -79,11 +81,6 @@ const ThreadViews = styled.div`
   flex-direction: column;
 `;
 
-const ThreadReplies = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
 function Thread(props) {
   return (
     <Link
@@ -106,10 +103,6 @@ function Thread(props) {
           <CategoryListStats>{props.views}</CategoryListStats>
           <CategoryListText>Views</CategoryListText>
         </ThreadViews>
-        <ThreadReplies>
-          <CategoryListStats>{props.replies}</CategoryListStats>
-          <CategoryListText>Replies</CategoryListText>
-        </ThreadReplies>
       </ThreadContainer>
     </Link>
   );
@@ -118,7 +111,7 @@ function Thread(props) {
 class TopicList extends Component {
   constructor(props) {
     super(props);
-    this.state = { topics: null };
+    this.state = { topics: null, isAuthenticated: false };
   }
 
   getTopics = async () => {
@@ -138,9 +131,25 @@ class TopicList extends Component {
   };
 
   componentDidMount() {
+    this._subscription = authService.subscribe(() => this.populateState());
+    this.populateState();
+
     if (!this.state.topics) {
       this.getTopics();
     }
+  }
+
+  componentWillUnmount() {
+    authService.unsubscribe(this._subscription);
+  }
+
+  async populateState() {
+    const [isAuthenticated] = await Promise.all([
+      authService.isAuthenticated(),
+    ]);
+    this.setState({
+      isAuthenticated,
+    });
   }
 
   render() {
@@ -153,14 +162,16 @@ class TopicList extends Component {
           <Category>
             <CategoryHeaderContainer>
               <CategoryTitle>Lobster</CategoryTitle>
-              <IconButton
-                aria-label="create thread"
-                sx={{
-                  color: "#FFF",
-                }}
-              >
-                <AddIcon />
-              </IconButton>
+              {this.state.isAuthenticated && (
+                <IconButton
+                  aria-label="create thread"
+                  sx={{
+                    color: "#FFF",
+                  }}
+                >
+                  <AddIcon />
+                </IconButton>
+              )}
             </CategoryHeaderContainer>
             {topics.length <= 0 && (
               <h3>
@@ -186,4 +197,4 @@ class TopicList extends Component {
   }
 }
 
-export default TopicList;
+export default withRouter(TopicList);
