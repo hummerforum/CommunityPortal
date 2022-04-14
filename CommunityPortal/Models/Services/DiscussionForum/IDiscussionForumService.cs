@@ -7,7 +7,7 @@ namespace CommunityPortal.Model.Services
     {
         public int CreateDiscussionForum(DiscussionForum discussionForum);
 
-        public List<DiscussionForum> List();
+        public List<DiscussionForum> List(bool isAdmin);
         
         public List<DiscussionTopic> Forum(int Id);
         

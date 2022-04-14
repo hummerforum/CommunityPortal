@@ -22,7 +22,8 @@ namespace CommunityPortal.Controllers
         [HttpGet("Overview")]
         public string Overview()
         {
-            var discussionForums = discussionForumService.List();
+
+            var discussionForums = discussionForumService.List(this.User.IsInRole("Admin"));
             return JsonConvert.SerializeObject(discussionForums);
         }
         

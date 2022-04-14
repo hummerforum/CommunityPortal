@@ -1,5 +1,6 @@
 ﻿using CommunityPortal.Data;
 using CommunityPortal.Model.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,11 @@ namespace CommunityPortal.Models.Services
     public class DiscussionForumService : IDiscussionForumService
     {
         private readonly ApplicationDbContext db;
+        private UserManager<CommunityUser> userManager;
 
-        public DiscussionForumService(ApplicationDbContext db)
+        public DiscussionForumService(ApplicationDbContext db, UserManager<CommunityUser> _userManager)
         {
+            userManager = _userManager;
             this.db = db;
         }
 
@@ -21,10 +24,19 @@ namespace CommunityPortal.Models.Services
             throw new NotImplementedException();
         }
 
-        public List<DiscussionForum> List()
+        public List<DiscussionForum> List(bool isAdmin)
         {
-            return db.DiscussionForums.Include(df => df.DiscussionCategory).ToList();
+            List < DiscussionForum > dis = db.DiscussionForums.Include(df => df.DiscussionCategory).ToList();
+            if (!isAdmin)
+            {
+                DiscussionForum d = db.DiscussionForums.First(df => df.Name == "Secret");
+                dis.Remove(d);
+            }
+            return dis;
         }
+
+
+
 
         public List<DiscussionTopic> Forum(int id)
         {
