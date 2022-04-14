@@ -28,7 +28,7 @@ export class News extends Component {
   }
 
   async getCategories() {
-    const response = await fetch("/api/category/GetParentList", { 
+    const response = await fetch("/api/category", { 
       method: 'GET'
     });
     const categoryData = await response.json();
