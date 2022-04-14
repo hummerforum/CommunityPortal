@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using IdentityServer4.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace CommunityPortal.Controllers
@@ -51,6 +52,7 @@ namespace CommunityPortal.Controllers
             return JsonConvert.SerializeObject(discussionTopic);
         }
 
+        [Authorize]
         [HttpPost("TopicCreate/{forumId:int}")]
         public string CreateTopic(int forumId, [FromForm] string subject, [FromForm] string content)
         {
@@ -60,6 +62,7 @@ namespace CommunityPortal.Controllers
             return JsonConvert.SerializeObject(discussionTopic);
         }
 
+        [Authorize]
         [HttpPost("ReplyCreate/{topicId:int}")]
         public string CreateReply(int topicId, [FromForm] string content)
         {
