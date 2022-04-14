@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 import { withRouter } from "../../withRouter";
+import authService from "../../components/api-authorization/AuthorizeService";
 
 const Container = styled.div`
   margin-top: 25px;
@@ -50,8 +51,18 @@ class CreateTopic extends Component {
     }
   };
 
+  authHeader = async () => {
+    const currentUser = await authService.getUser();
+    if (currentUser && currentUser.access_token) {
+      return { Authorization: `Bearer ${currentUser.access_token}` };
+    } else {
+      return {};
+    }
+  };
+
   handleSubmit = async (event) => {
     event.preventDefault();
+    const header = await authService.getUser();
     const params = window.location.pathname;
     const pattern = /(?<=\/forum\/f)(\d)/g;
     const id = params.match(pattern).toString();
@@ -60,6 +71,7 @@ class CreateTopic extends Component {
     formData.append("content", this.state.content);
     const response = await fetch(`/api/DiscussionForum/TopicCreate/${id}`, {
       method: "post",
+      headers: header,
       body: formData,
     });
     const result = await response.json();
