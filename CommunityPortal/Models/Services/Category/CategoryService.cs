@@ -33,17 +33,6 @@ namespace CommunityPortal.Models.Services
             return _appDbContext.Categories.ToList();
         }
 
-        public List<Category> GetParentList()
-        {
-            List<Category> parentCategories = new List<Category>();
-            /*foreach (var parentCategory in _appDbContext.Categories)
-            {
-                if (parentCategory.ParentId == 0)
-                    parentCategories.Add(parentCategory);
-            }*/
-            return parentCategories;
-        }
-
         public Category Update(Category category)
         {
             int id = category.CategoryId;

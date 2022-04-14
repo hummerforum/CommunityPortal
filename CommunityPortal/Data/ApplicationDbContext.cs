@@ -109,6 +109,7 @@ namespace CommunityPortal.Data
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string> {UserId = accountId3, RoleId = adminRoleId});
 
+
             // News  post and categories
 
             Category ca1 = new Category() { CategoryId = 1, Description = "News covering all the world", Title = "World News" };
@@ -120,7 +121,6 @@ namespace CommunityPortal.Data
             modelBuilder.Entity<Category>().HasData(ca3);
 
 
-
             DateTime d = new DateTime(2000, 1, 30);
             DateTime d2 = new DateTime(2010, 2, 15);
             DateTime d3 = new DateTime(2020, 10, 1);
@@ -129,7 +129,7 @@ namespace CommunityPortal.Data
             NewsPost np1 = new NewsPost()
             {
                 NewsPostId = 1,
-                PostType = 1,
+                IsEvent = true,
                 CategoryId = 1,
                 UserName = accountId,
                 CreatedDate = d,
@@ -143,7 +143,7 @@ namespace CommunityPortal.Data
             NewsPost np2 = new NewsPost()
             {
                 NewsPostId = 2,
-                PostType = 1,
+                IsEvent = true,
                 CategoryId = 2,
                 UserName = accountId2,
                 CreatedDate = d2,
@@ -157,7 +157,7 @@ namespace CommunityPortal.Data
             NewsPost np3 = new NewsPost()
             {
                 NewsPostId = 3,
-                PostType = 1,
+                IsEvent = false,
                 CategoryId = 3,
                 UserName = accountId3,
                 CreatedDate = d3,
@@ -168,6 +168,9 @@ namespace CommunityPortal.Data
                 Information = "info2"
             };
 
+            modelBuilder.Entity<NewsPost>().HasData(np1);
+            modelBuilder.Entity<NewsPost>().HasData(np2);
+            modelBuilder.Entity<NewsPost>().HasData(np3);
 
             // set up forum
             // fishing forum sections

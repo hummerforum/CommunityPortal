@@ -32,13 +32,6 @@ namespace CommunityPortal.Controllers
             return JsonConvert.SerializeObject(category);
         }
 
-        [HttpGet("GetParentList")]
-        public string GetParentList()
-        {
-            List<Category> Categories = _categoryService.GetParentList();
-            return JsonConvert.SerializeObject(Categories);
-        }
-
         [HttpPost]
         public void Post([FromBody] Category category)
         {

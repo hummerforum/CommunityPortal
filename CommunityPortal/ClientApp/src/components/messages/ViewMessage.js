@@ -63,12 +63,16 @@ class ViewMessage extends Component {
                 <CardActions>
                     <Grid container >
                         <Grid item xs={6}>
-                            <Button
-                                size="small"
-                                onClick={(event) =>this.answerMessage(event, this.props.viewMessage)}
-                            >
-                                Answer Message
-                            </Button>
+                            {this.props.viewMessage.type === "received" ? (
+                                <Button
+                                    size="small"
+                                    onClick={(event) => this.answerMessage(event, this.props.viewMessage)}
+                                >
+                                    Answer Message
+                                </Button>
+                            ) : (
+                                null
+                            )}
                             <Button
                                 size="small"
                                 onClick={(event) => this.deleteMessage(event, this.props.viewMessage)}

@@ -60,7 +60,7 @@ export class NewsPostForm extends Component {
   }
 
   async getCategories() {
-    const response = await fetch("/api/category/GetParentList", {
+    const response = await fetch("/api/category", {
       method: "GET",
     });
     const categoryData = await response.json();
@@ -102,100 +102,110 @@ export class NewsPostForm extends Component {
           </MenuItem>
         );
       });
-      return (
-        <Container>
-          <Grid
-            container
-            direction="column"
-            justifyContent="space-evenly"
-            alignItems="center"
-          >
-            <FormControl onSubmit={this.submitForm}>
-              {newsPost != null ? (
-                <TextField
-                  id="NewsPostId"
-                  style={{ width: "400px", margin: "5px" }}
-                  type="text"
-                  hidden
-                  value={newsPost.NewsPostId}
-                  onChange={this.changeField}
-                />
-              ) : (
-                {}
-              )}
-              <TextField
-                id="Heading"
-                style={{ width: "400px", margin: "5px" }}
-                type="text"
-                required
-                label="Header"
-                value={this.state.value}
-                defaultValue={newsPost != null ? newsPost.Heading : {}}
-                variant="outlined"
-                onChange={this.changeField}
-              />
-              <br />
-              <TextField
-                id="Information"
-                style={{ width: "400px", margin: "5px" }}
-                type="text"
-                required
-                label="Information"
-                value={this.state.value}
-                defaultValue={newsPost != null ? newsPost.Information : {}}
-                variant="outlined"
-                multiline
-                rows={10}
-                onChange={this.changeField}
-              />
-              <br />
-              <Select
-                id="CategoryId"
-                value={
-                  this.props.categoryId != null ? this.props.categoryId : 0
-                }
-                label="Category"
-                onChange={this.changeField}
-              >
-                {mapCategories}
-              </Select>
-              <hr />
-              <TextField
-                id="Tag"
-                style={{ width: "400px", margin: "5px" }}
-                type="text"
-                required
-                label="Tag"
-                value={this.state.value}
-                defaultValue={newsPost != null ? newsPost.Tag : {}}
-                variant="outlined"
-                onChange={this.changeField}
-              />
-              <br />
-              <TextField
-                id="Description"
-                style={{ width: "400px", margin: "5px" }}
-                type="text"
-                required
-                label="RSS description"
-                value={this.state.value}
-                defaultValue={newsPost != null ? newsPost.Description : {}}
-                variant="outlined"
-                multiline
-                rows={5}
-                onChange={this.changeField}
-              />
-              <br />
-              {userRole === "Admin" || userRole === "Moderator" ? (
-                <Button variant="contained" color="primary">
-                  Save
-                </Button>
-              ) : (
-                {}
-              )}
-            </FormControl>
-          </Grid>
-        </Container>
+        return (
+            <Container>
+                <Grid
+                    container
+                    direction="column"
+                    justifyContent="space-evenly"
+                    alignItems="center"
+                >
+                    <form>
+                        {newsPost != null ?
+                            <FormControl>
+                                <TextField
+                                    id="NewsPostId"
+                                    style={{ width: "400px", margin: "5px" }}
+                                    type="text"
+                                    hidden
+                                    value={newsPost.NewsPostId}
+                                    onChange={this.changeField}
+                                />
+                            </FormControl>
+                        :
+                        ""}
+                        <FormControl>
+                            <TextField
+                                id="Heading"
+                                style={{ width: "400px", margin: "5px" }}
+                                type="text"
+                                required
+                                label="Header"
+                                value={this.state.value}
+                                defaultValue={newsPost != null ? newsPost.Heading : ("")}
+                                variant="outlined"
+                                onChange={this.changeField}
+                            />
+                        </FormControl>
+                        <br />
+                        <FormControl>
+                            <TextField
+                                id="Information"
+                                style={{ width: "400px", margin: "5px" }}
+                                type="text"
+                                required
+                                label="Information"
+                                value={this.state.value}
+                                defaultValue={newsPost != null ? newsPost.Information : ("")}
+                                variant="outlined"
+                                multiline
+                                rows={10}
+                                onChange={this.changeField}
+                            />
+                        </FormControl>
+                        <br />
+                        <FormControl>
+                            <Select
+                                id="CategoryId"
+                                value={this.state.value}
+                                defaultValue={
+                                    this.props.categoryId != null ? this.props.categoryId : ""
+                                }
+                                label="Category"
+                                onChange={this.changeField}
+                            >
+                                {mapCategories}
+                            </Select>
+                        </FormControl>
+                        <hr />
+                        <FormControl>
+                            <TextField
+                                id="Tag"
+                                style={{ width: "400px", margin: "5px" }}
+                                type="text"
+                                label="Tag"
+                                value={this.state.value}
+                                defaultValue={newsPost != null ? newsPost.Tag : ("")}
+                                variant="outlined"
+                                onChange={this.changeField}
+                            />
+                        </FormControl>
+                        <br />
+                        <FormControl>
+                            <TextField
+                                id="Description"
+                                style={{ width: "400px", margin: "5px" }}
+                                type="text"
+                                label="RSS description"
+                                value={this.state.value}
+                                defaultValue={newsPost != null ? newsPost.Description : ("")}
+                                variant="outlined"
+                                multiline
+                                rows={5}
+                                onChange={this.changeField}
+                            />
+                        </FormControl>
+                        <br />
+                        {userRole === "Admin" || userRole === "Moderator" ? (
+                            <Button variant="contained" color="primary" onClick={this.submitForm}>
+                                Save
+                            </Button>
+                        ) : (
+                            {}
+                        )}
+                    </form>
+                </Grid>
+            </Container>
       );
     }
   }

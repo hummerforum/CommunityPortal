@@ -10,7 +10,7 @@ namespace CommunityPortal.Models
         public int NewsPostId { get; set; }
 
         [Required]
-        public int PostType { get; set; }
+        public bool IsEvent { get; set; }
 
         public string Tag { get; set; }
         public string Description { get; set; }
