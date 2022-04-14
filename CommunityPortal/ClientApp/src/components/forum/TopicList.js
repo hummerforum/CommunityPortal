@@ -2,8 +2,11 @@ import styled from "styled-components";
 import React, { Component } from "react";
 import Link from "@mui/material/Link";
 import { Link as RouterLink } from "react-router-dom";
+import { withRouter } from "../../withRouter";
 import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
+import authService from "../../components/api-authorization/AuthorizeService";
+import { formatRelative } from 'date-fns'
 
 const Category = styled.div`
   &:first-child {
@@ -79,10 +82,12 @@ const ThreadViews = styled.div`
   flex-direction: column;
 `;
 
-const ThreadReplies = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+function getForumId() {
+  const params = window.location.pathname;
+  const pattern = /(?<=\/forum\/f)(\d)/g;
+  const id = params.match(pattern).toString();
+  return id;
+}
 
 function Thread(props) {
   return (
@@ -99,17 +104,13 @@ function Thread(props) {
           <ThreadName>{props.name}</ThreadName>
           <ThreadInfo>
             <ThreadAuthor>{props.author},</ThreadAuthor>
-            <ThreadDate>{props.date}</ThreadDate>
+            <ThreadDate>{formatRelative(Date.parse(props.date), Date.now())}</ThreadDate>
           </ThreadInfo>
         </ThreadData>
         <ThreadViews>
           <CategoryListStats>{props.views}</CategoryListStats>
           <CategoryListText>Views</CategoryListText>
         </ThreadViews>
-        <ThreadReplies>
-          <CategoryListStats>{props.replies}</CategoryListStats>
-          <CategoryListText>Replies</CategoryListText>
-        </ThreadReplies>
       </ThreadContainer>
     </Link>
   );
@@ -118,7 +119,7 @@ function Thread(props) {
 class TopicList extends Component {
   constructor(props) {
     super(props);
-    this.state = { topics: null };
+    this.state = { topics: null, isAuthenticated: false };
   }
 
   getTopics = async () => {
@@ -126,7 +127,7 @@ class TopicList extends Component {
       const params = window.location.pathname;
       const pattern = /(?<=\/forum\/f)(\d)/g;
       const id = params.match(pattern).toString();
-      const response = await fetch(`/api/DiscussionForum/Forum/${id}`, {
+      const response = await fetch(`/api/DiscussionForum/Topics/${id}`, {
         method: "GET",
       });
       const topicsData = await response.json();
@@ -138,9 +139,25 @@ class TopicList extends Component {
   };
 
   componentDidMount() {
+    this._subscription = authService.subscribe(() => this.populateState());
+    this.populateState();
+
     if (!this.state.topics) {
       this.getTopics();
     }
+  }
+
+  componentWillUnmount() {
+    authService.unsubscribe(this._subscription);
+  }
+
+  async populateState() {
+    const [isAuthenticated] = await Promise.all([
+      authService.isAuthenticated(),
+    ]);
+    this.setState({
+      isAuthenticated,
+    });
   }
 
   render() {
@@ -153,14 +170,25 @@ class TopicList extends Component {
           <Category>
             <CategoryHeaderContainer>
               <CategoryTitle>Lobster</CategoryTitle>
-              <IconButton
-                aria-label="create thread"
-                sx={{
-                  color: "#FFF",
-                }}
-              >
-                <AddIcon />
-              </IconButton>
+              {this.state.isAuthenticated && (
+                <Link
+                  component={RouterLink}
+                  to={`/forum/f${getForumId()}/create`}
+                  underline="none"
+                  sx={{
+                    color: "#000",
+                  }}
+                >
+                  <IconButton
+                    aria-label="create thread"
+                    sx={{
+                      color: "#FFF",
+                    }}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </Link>
+              )}
             </CategoryHeaderContainer>
             {topics.length <= 0 && (
               <h3>
@@ -186,4 +214,4 @@ class TopicList extends Component {
   }
 }
 
-export default TopicList;
+export default withRouter(TopicList);

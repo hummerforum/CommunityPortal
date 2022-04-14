@@ -5,7 +5,10 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using IdentityServer4.Extensions;
+using Microsoft.AspNetCore.Identity;
 
 namespace CommunityPortal.Controllers
 {
@@ -18,27 +21,51 @@ namespace CommunityPortal.Controllers
         {
             this.discussionForumService = discussionForumService;
         }
-        
+
         [HttpGet("Overview")]
         public string Overview()
         {
-
-            var discussionForums = discussionForumService.List(this.User.IsInRole("Admin"));
+            var discussionForums = discussionForumService.Overview(this.User.IsInRole("Admin"));
             return JsonConvert.SerializeObject(discussionForums);
         }
-        
-        
-        [HttpGet("Forum/{forumId:int}")]
-        public string Forum(int forumId)
+
+
+        [HttpGet("Topics/{forumId:int}")]
+        public string Topics(int forumId)
         {
-            var discussionTopics = discussionForumService.Forum(forumId);
+            var discussionTopics = discussionForumService.Topics(forumId);
             return JsonConvert.SerializeObject(discussionTopics);
         }
-        
+
         [HttpGet("Topic/{topicId:int}")]
         public string Topic(int topicId)
         {
             var discussionTopic = discussionForumService.Topic(topicId);
+            return JsonConvert.SerializeObject(discussionTopic);
+        }
+
+        [HttpGet("Replies/{topicId:int}")]
+        public string Replies(int topicId)
+        {
+            var discussionTopic = discussionForumService.Replies(topicId);
+            return JsonConvert.SerializeObject(discussionTopic);
+        }
+
+        [HttpPost("TopicCreate/{forumId:int}")]
+        public string CreateTopic(int forumId, [FromForm] string subject, [FromForm] string content)
+        {
+            string userId = this.User.GetSubjectId();
+            if (content == null && subject == null) return "500";
+            string discussionTopic = discussionForumService.CreateTopic(userId, forumId, subject, content);
+            return JsonConvert.SerializeObject(discussionTopic);
+        }
+
+        [HttpPost("ReplyCreate/{topicId:int}")]
+        public string CreateReply(int topicId, [FromForm] string content)
+        {
+            string userId = this.User.GetSubjectId();
+            if (content == null) return "500";
+            string discussionTopic = discussionForumService.CreateReply(userId, topicId, content);
             return JsonConvert.SerializeObject(discussionTopic);
         }
     }

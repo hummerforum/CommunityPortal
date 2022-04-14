@@ -7,11 +7,17 @@ namespace CommunityPortal.Model.Services
     {
         public int CreateDiscussionForum(DiscussionForum discussionForum);
 
-        public List<DiscussionForum> List(bool isAdmin);
+        public List<DiscussionForum> Overview(bool isAdmin);
         
-        public List<DiscussionTopic> Forum(int Id);
+        public List<DiscussionTopic> Topics(int Id);
         
-        public List<DiscussionReply> Topic(int Id);
+        public List<DiscussionTopic> Topic(int Id);
+        
+        public List<DiscussionReply> Replies(int Id);
+        
+        public string CreateTopic(string userId, int forumId, string subject, string content);
+        
+        public string CreateReply(string userId, int id, string content);
 
         public void UpdateDiscussionForum(DiscussionForum discussionForum);
 
