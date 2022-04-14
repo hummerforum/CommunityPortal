@@ -3,7 +3,10 @@ import ReactDOM from "react-dom";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
@@ -21,7 +24,7 @@ export class NewsPostForm extends Component {
       isLoaded: false,
       newsPost: null,
       isCategoriesLoaded: false,
-      categories: [],
+      categories: []
     };
   }
 
@@ -49,11 +52,9 @@ export class NewsPostForm extends Component {
   }
 
   async getNewsPost() {
-    const header = await authService.getUser();
     const id = this.props.id;
     const response = await fetch("/api/newspost/" + id, {
-      method: "GET",
-      headers: header,
+      method: "GET"
     });
     const newsPostData = await response.json();
     this.setState({ newsPost: newsPostData, isLoaded: true });
@@ -61,7 +62,7 @@ export class NewsPostForm extends Component {
 
   async getCategories() {
     const response = await fetch("/api/category", {
-      method: "GET",
+      method: "GET"
     });
     const categoryData = await response.json();
     this.setState({ categories: categoryData, isCategoriesLoaded: true });
@@ -110,21 +111,27 @@ export class NewsPostForm extends Component {
                     justifyContent="space-evenly"
                     alignItems="center"
                 >
-                    <form>
-                        {newsPost != null ?
-                            <FormControl>
-                                <TextField
-                                    id="NewsPostId"
-                                    style={{ width: "400px", margin: "5px" }}
-                                    type="text"
-                                    hidden
-                                    value={newsPost.NewsPostId}
-                                    onChange={this.changeField}
-                                />
-                            </FormControl>
-                        :
-                        ""}
-                        <FormControl>
+                    <form onSubmit={async event => { this.submitForm(event) }}>
+                        {newsPost != null ? [
+                            <FormControl sx= {{ mt: 1.5 }}>
+                            <TextField
+                              id="NewsPostId"
+                              style={{ width: "400px", margin: "5px" }}
+                              type="text"
+                              value={newsPost.NewsPostId}
+                              onChange={this.changeField}
+                             />
+                            </FormControl>,
+                          <br />
+                        ]:
+                        ("")}
+                        <FormControlLabel
+                            sx={{ mt: 1.5 }}
+                            id="IsEvent"
+                            control={<Checkbox />}
+                            label="Event" />
+                        <br />
+                        <FormControl sx={{ mt: 1.5 }}>
                             <TextField
                                 id="Heading"
                                 style={{ width: "400px", margin: "5px" }}
@@ -138,7 +145,7 @@ export class NewsPostForm extends Component {
                             />
                         </FormControl>
                         <br />
-                        <FormControl>
+                        <FormControl sx={{ mt: 1.5 }}>
                             <TextField
                                 id="Information"
                                 style={{ width: "400px", margin: "5px" }}
@@ -154,12 +161,14 @@ export class NewsPostForm extends Component {
                             />
                         </FormControl>
                         <br />
-                        <FormControl>
+                        <FormControl sx={{ mt: 1.5 }}>
+                            <InputLabel id="categoryLabel">Category</InputLabel>
                             <Select
                                 id="CategoryId"
+                                labelId="categoryLabel"
                                 value={this.state.value}
                                 defaultValue={
-                                    this.props.categoryId != null ? this.props.categoryId : ""
+                                    this.props.categoryId != null ? this.props.categoryId : ("")
                                 }
                                 label="Category"
                                 onChange={this.changeField}
@@ -167,8 +176,8 @@ export class NewsPostForm extends Component {
                                 {mapCategories}
                             </Select>
                         </FormControl>
-                        <hr />
-                        <FormControl>
+                        <br />
+                        <FormControl sx={{ mt: 1.5 }}>
                             <TextField
                                 id="Tag"
                                 style={{ width: "400px", margin: "5px" }}
@@ -181,7 +190,7 @@ export class NewsPostForm extends Component {
                             />
                         </FormControl>
                         <br />
-                        <FormControl>
+                        <FormControl sx={{ mt: 1.5 }}>
                             <TextField
                                 id="Description"
                                 style={{ width: "400px", margin: "5px" }}
@@ -197,12 +206,10 @@ export class NewsPostForm extends Component {
                         </FormControl>
                         <br />
                         {userRole === "Admin" || userRole === "Moderator" ? (
-                            <Button variant="contained" color="primary" onClick={this.submitForm}>
+                            <Button sx={{ mt: 1.5 }} variant="contained" color="primary" type="submit">
                                 Save
                             </Button>
-                        ) : (
-                            {}
-                        )}
+                        ) : ("")}
                     </form>
                 </Grid>
             </Container>

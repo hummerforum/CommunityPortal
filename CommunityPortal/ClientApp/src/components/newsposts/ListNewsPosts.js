@@ -9,7 +9,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Typography from "@mui/material/Typography";
 import authService from "../../components/api-authorization/AuthorizeService";
 import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
@@ -17,7 +16,6 @@ import ShowNewsPost from "./ShowNewsPost";
 import NewsPostForm from "./NewsPostForm";
 import DeleteNewsPost from "./DeleteNewsPost";
 import Calender from "../Calender/Calender"
-
 
 export class ListNewsPosts extends Component {
     static displayName = ListNewsPosts.name;
@@ -96,49 +94,37 @@ export class ListNewsPosts extends Component {
                         justifyContent="space-evenly"
                         alignItems="center"
                     >
-                        <Typography variant="h2" component="div" gutterBottom>
-                            News posts
-                        </Typography>
-                        {((userRole === "Admin") || (userRole === "Moderator")) ? (
-                            <Button variant="contained" color="primary" onClick={() => this.clickAdd()}>
+                        
+                        {((userRole === "Admin") || (userRole === "Moderator")) ? [
+                            <br />,
+
+                            <Button sx={{ mt: 1.5 }} variant="contained" color="primary" onClick={() => this.clickAdd()}>
                                 Add news post
                             </Button>
-                        )
-                            :
-                            (
-                                null
-                            )}
-<Calender />
+                        ] : ("")}
 
-                        <TableContainer component={Paper}>
+                        <br />
+                        <TableContainer sx={{ mt: 1.5 }} component={Paper}>
                             <Table className='table table-bordered'>
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Header</TableCell>
                                         <TableCell>Date</TableCell>
-                                        {(userRole === "Admin") || (userRole === "Moderator") ? (
+                                        {(userRole === "Admin") || (userRole === "Moderator") ? [
                                             <TableCell>Edit</TableCell>,
                                             <TableCell>Delete</TableCell>
-                                        ) : (
-                                                null
-                                                )}
+                                        ] : ("")}
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {newsPosts.length > 0 ?
                                         newsPosts.map((newsPost) => (
                                             <TableRow key={newsPost.NewsPostId}>
-                                                <TableCell><Link href="#" onClick={e => this.clickView(e.target.value)}>{newsPost.Heading}</Link></TableCell>
-                                                <TableCell>{newsPost.CreatedDate}
-                                                    {newsPost.UpdatedDate != null ? (
-                                                        <span>Updated: {newsPost.UpdatedDate}</span>
-                                                    ) : (
-                                                        null
-                                                    )}
-                                                </TableCell>
-                                                {(userRole === "Admin") || (userRole === "Moderator") ? (
+                                                <TableCell><Link href="#" onClick={e => this.clickView(newsPost.NewsPostId)}>{newsPost.Heading}</Link></TableCell>
+                                                <TableCell>{newsPost.CreatedDate}</TableCell>
+                                                {(userRole === "Admin") || (userRole === "Moderator") ? [
                                                     <TableCell>
-                                                        <Button variant="contained" color="primary" value={newsPost.NewsPostId} onClick={e => this.clickEdit(e.target.value)}>,
+                                                        <Button variant="contained" color="primary" value={newsPost.NewsPostId} onClick={e => this.clickEdit(e.target.value)}>
                                                             Edit
                                                         </Button>
                                                     </TableCell>,
@@ -147,9 +133,7 @@ export class ListNewsPosts extends Component {
                                                             Delete
                                                         </Button>
                                                     </TableCell>
-                                                ) : (
-                                                    null
-                                                )}
+                                                ] : ("")}
                                             </TableRow>
                                         ))
                                         :

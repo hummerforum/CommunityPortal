@@ -23,7 +23,7 @@ export class ShowNewsPost extends Component {
     this.state = {
       userRole: null,
       isLoaded: false,
-      newsPost: [],
+      newsPost: null,
     };
   }
 
@@ -42,13 +42,17 @@ export class ShowNewsPost extends Component {
 
   componentDidMount() {
     this.getUserRole();
-    this.getNewsPost();
+    if (this.props.id != null) {
+        this.getNewsPost();
+    } else {
+        this.setState({ isLoaded: true });
+    }
   }
 
   async getNewsPost() {
     const id = this.props.id;
     const response = await fetch("/api/newspost/" + id, {
-      method: "GET",
+        method: "GET"
     });
     const newsPostData = await response.json();
     this.setState({ newsPost: newsPostData, isLoaded: true });
@@ -87,7 +91,8 @@ export class ShowNewsPost extends Component {
               [
                 newsPost.map(
                   (post) => (
-                    (
+                  [
+                      <br />,
                       <TableContainer component={Paper} key={post.NewsPostId}>
                         <Table>
                           <TableHead>
@@ -112,44 +117,44 @@ export class ShowNewsPost extends Component {
                           </TableBody>
                         </Table>
                       </TableContainer>
-                    ),
+                    ],
                     (
                       <div>
                         {userRole === "Admin" || userRole === "Moderator"
                           ? [
-                              <TableCell>
+                              
                                 <Button
                                   variant="contained"
                                   color="primary"
                                   value={newsPost.NewsPostId}
                                   onClick={(e) =>
-                                    this.clickEdit(e.target.value)
+                                    this.clickEdit(post.NewsPostId)
                                   }
                                 >
-                                  , Edit
-                                </Button>
-                              </TableCell>,
-                              <TableCell>
+                                  Edit
+                                </Button>,
+                              
+                              
                                 <Button
                                   variant="contained"
                                   color="primary"
                                   value={newsPost.NewsPostId}
                                   onClick={(e) =>
-                                    this.clickDelete(e.target.value)
+                                    this.clickDelete(post.NewsPostId)
                                   }
                                 >
                                   Delete
                                 </Button>
-                              </TableCell>,
+                              ,
                             ]
-                          : {}}
+                          : ("")}
                       </div>
                     )
                   )
                 ),
               ]
             ) : (
-              <Typography variant="h2" component="div" gutterBottom>
+              <Typography variant="h5" component="div" gutterBottom>
                 <div>News post does not exist!</div>
               </Typography>
             )}

@@ -32,12 +32,13 @@ export class AddNewsPost extends Component {
 
   async addNewsPost() {
     const header = await authService.getUser();
-    const data = this.props.data;
+      const data = this.props.data;
+      alert(JSON.stringify(this.props.data));
     const response = await fetch("/api/newspost", {
       method: "POST",
       headers: header,
       body: JSON.stringify({
-        PostType: parseInt(data.PostType),
+        IsEvent: parseInt(data.IsEvent),
         Heading: data.Heading,
         Information: data.Information,
         CategoryId: data.CategoryId,
@@ -75,7 +76,7 @@ export class AddNewsPost extends Component {
                 ),
               ]
             ) : (
-              <Typography variant="h2" component="div" gutterBottom>
+              <Typography variant="h5" component="div" gutterBottom>
                 Failed to add news post!
               </Typography>
             )}

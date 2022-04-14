@@ -44,8 +44,8 @@ export class UpdateNewsPost extends Component {
         CategoryId: data.CategoryId,
         UserName: data.UserName, // ???
         UpdatedDate: data.Date, // to do: get current date and time
-        Tag: data.Tag,
-      }),
+        Tag: data.Tag
+      })
     });
     const newsPostData = await response.json();
     this.setState({ newsPost: newsPostData, isUpdated: true });
@@ -75,7 +75,7 @@ export class UpdateNewsPost extends Component {
                 ),
               ]
             ) : (
-              <Typography variant="h2" component="div" gutterBottom>
+              <Typography variant="h5" component="div" gutterBottom>
                 Failed to update news post!
               </Typography>
             )}
