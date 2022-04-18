@@ -32,7 +32,7 @@ class Messages extends Component {
         };
     }
 
-    setViewMessage(viewMessage) {
+    async setViewMessage(viewMessage) {
         if (this.state.viewMessage !== null) {
             if ((this.state.viewMessage.id !== viewMessage.id) ||
                 ((this.state.viewMessage.id === viewMessage.id) && (this.state.viewMessage.type !== viewMessage.type))) {
@@ -42,6 +42,9 @@ class Messages extends Component {
                 this.setState({
                     isViewMessageVisible: true
                 })
+
+                await this.setMessageAsRead(viewMessage);
+
                 this.setCreateMessage(false);
                 this.props.navigate(`/messages`);
             } else {
@@ -53,6 +56,9 @@ class Messages extends Component {
                     this.setState({
                         isViewMessageVisible: true
                     })
+
+                    await this.setMessageAsRead(viewMessage);
+
                     this.setCreateMessage(false);
                     this.props.navigate(`/messages`);
                 }
@@ -62,9 +68,28 @@ class Messages extends Component {
                 viewMessage: viewMessage
             })
             this.state.isViewMessageVisible = true;
+
+            await this.setMessageAsRead(viewMessage);
+
             this.setCreateMessage(false);
             this.props.navigate(`/messages`);
         }
+    }
+
+    async setMessageAsRead(message) {
+        if (message.type == "received") {
+            if (!message.isread) {
+                const header = await authService.getUser();
+                const response = await axios.get(
+                    `https://localhost:5001/api/PrivateMessages/SetReceivedPrivateMessageAsRead/${message.id}`,
+                    {
+                        headers: header
+                    }
+                );
+            }
+        }
+
+        await this.readReceivedMessages();
     }
 
     setCreateMessage(isCreateMessageVisible) {
@@ -241,9 +266,27 @@ class Messages extends Component {
                                     {this.state.receivedMessages.length > 0 ?
                                         this.state.receivedMessages.map((message) => (
                                             <TableRow key={message.privatemessageid} onClick={() => this.setViewMessage(message)}>
-                                                <TableCell>{message.subject}</TableCell>
-                                                <TableCell>{message.senderusername}</TableCell>
-                                                <TableCell>{message.timesent}</TableCell>
+                                                <TableCell>
+                                                    {message.isread ? (
+                                                        message.subject
+                                                    ) : (
+                                                        <strong>{message.subject}</strong>
+                                                    )}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {message.isread ? (
+                                                        message.senderusername
+                                                    ) : (
+                                                        <strong>{message.senderusername}</strong>
+                                                    )}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {message.isread ? (
+                                                        message.timesent
+                                                    ) : (
+                                                        <strong>{message.timesent}</strong>
+                                                    )}
+                                                </TableCell>
                                                 <TableCell>
                                                     <Button
                                                         variant="outlined"

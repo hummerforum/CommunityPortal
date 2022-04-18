@@ -11,6 +11,7 @@ namespace CommunityPortal.Models.Services
         public SentPrivateMessage GetSentPrivateMessageById(int sentPrivateMessageId);
         public List<ReceivedPrivateMessage> GetReceivedPrivateMessages(string communityUserId);
         public List<SentPrivateMessage> GetSentPrivateMessages(string communityUserId);
+        public bool UpdateReceivedPrivateMessage(ReceivedPrivateMessage receivedPrivateMessageToUpdate);
         public bool DeleteReceivedPrivateMessage(int receivedPrivateMessageId);
         public bool DeleteSentPrivateMessage(int sentPrivateMessageId);
     }

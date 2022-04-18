@@ -22,5 +22,7 @@ namespace CommunityPortal.Models.React
         public string SenderUserName { get; set; }
 
         public string TimeSent { get; set; }
+
+        public bool IsRead { get; set; }
     }
 }

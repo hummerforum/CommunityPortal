@@ -31,6 +31,9 @@ namespace CommunityPortal.Models
 
         [Required]
         public DateTime TimeReceived { get; set; }
+
+        [Required]
+        public bool IsRead { get; set; }
     }
 
 }
