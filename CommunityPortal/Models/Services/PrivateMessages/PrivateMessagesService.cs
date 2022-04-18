@@ -53,6 +53,16 @@ namespace CommunityPortal.Models.Services
                 .ToList();
         }
 
+        public bool UpdateReceivedPrivateMessage(ReceivedPrivateMessage receivedPrivateMessageToUpdate)
+        {
+            if (GetReceivedPrivateMessageById(receivedPrivateMessageToUpdate.Id) == null)
+                return false;
+
+            this.appDbContext.ReceivedPrivateMessages.Update(receivedPrivateMessageToUpdate);
+            this.appDbContext.SaveChanges();
+            return true;
+        }
+
         public bool DeleteReceivedPrivateMessage(int receivedPrivateMessageId)
         {
             ReceivedPrivateMessage receivedPrivateMessageToDelete = GetReceivedPrivateMessageById(receivedPrivateMessageId);

@@ -65,7 +65,8 @@ namespace CommunityPortal.Controllers
                 ReceiverUserName = createPrivateMessage.ReceiverUserName,
                 SenderId = createPrivateMessage.SenderId,
                 SenderUserName = createPrivateMessage.SenderUserName,
-                TimeReceived = DateTime.Now
+                TimeReceived = DateTime.Now,
+                IsRead = false
             };
 
             this.privateMessagesService.CreateReceivedPrivateMessage(receivedPrivateMessage);
@@ -110,7 +111,8 @@ namespace CommunityPortal.Controllers
                         ReceiverUserName = receivedPrivateMessage.ReceiverUserName,
                         SenderId = receivedPrivateMessage.SenderId,
                         SenderUserName = receivedPrivateMessage.SenderUserName,
-                        TimeSent = receivedPrivateMessage.TimeReceived.ToString("yyyy-MM-dd HH:mm")
+                        TimeSent = receivedPrivateMessage.TimeReceived.ToString("yyyy-MM-dd HH:mm"),
+                        IsRead = receivedPrivateMessage.IsRead
                     }
                     );
             }
@@ -166,6 +168,34 @@ namespace CommunityPortal.Controllers
 
 
             return JsonConvert.SerializeObject(usersToReturn);
+        }
+
+        #endregion
+
+        #region update
+
+        [HttpGet("SetReceivedPrivateMessageAsRead/{receivedPrivateMessageId}")]
+        public IActionResult SetReceivedPrivateMessageAsRead(int receivedPrivateMessageId)
+        {
+            ReceivedPrivateMessage receivedPrivateMessage = this.privateMessagesService.GetReceivedPrivateMessageById(receivedPrivateMessageId);
+
+            if (receivedPrivateMessage == null)
+            {
+                return StatusCode(400);
+            }
+
+            receivedPrivateMessage.IsRead = true;
+
+            bool wasReceivedPrivateMessageUpdated = this.privateMessagesService.UpdateReceivedPrivateMessage(receivedPrivateMessage);
+
+            if (wasReceivedPrivateMessageUpdated)
+            {
+                return StatusCode(204);
+            }
+            else
+            {
+                return StatusCode(400);
+            }
         }
 
         #endregion
