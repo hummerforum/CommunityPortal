@@ -23,7 +23,7 @@ export class ShowNewsPost extends Component {
     this.state = {
       userRole: null,
       isLoaded: false,
-      newsPost: null,
+      newsPost: null
     };
   }
 
@@ -42,8 +42,10 @@ export class ShowNewsPost extends Component {
 
   componentDidMount() {
     this.getUserRole();
-    if (this.props.id != null) {
-        this.getNewsPost();
+      if (this.props.id != null) {
+          alert("x");
+          this.getNewsPost();
+          alert("y");
     } else {
         this.setState({ isLoaded: true });
     }
@@ -54,7 +56,7 @@ export class ShowNewsPost extends Component {
     const response = await fetch("/api/newspost/" + id, {
         method: "GET"
     });
-    const newsPostData = await response.json();
+    const newsPostData = await response.json();  
     this.setState({ newsPost: newsPostData, isLoaded: true });
   }
 
@@ -87,13 +89,10 @@ export class ShowNewsPost extends Component {
             justifyContent="space-evenly"
             alignItems="center"
           >
-            {newsPost.length > 0 ? (
-              [
-                newsPost.map(
-                  (post) => (
-                  [
-                      <br />,
-                      <TableContainer component={Paper} key={post.NewsPostId}>
+            {newsPost != null ? (
+                newsPost.map((post) => (
+
+                     <TableContainer sx={{ mt: 1.5 }} component={Paper} key={post.NewsPostId}>
                         <Table>
                           <TableHead>
                             <TableRow>
@@ -116,9 +115,8 @@ export class ShowNewsPost extends Component {
                             </TableRow>
                           </TableBody>
                         </Table>
-                      </TableContainer>
-                    ],
-                    (
+                      </TableContainer>,
+
                       <div>
                         {userRole === "Admin" || userRole === "Moderator"
                           ? [
@@ -127,32 +125,23 @@ export class ShowNewsPost extends Component {
                                   variant="contained"
                                   color="primary"
                                   value={newsPost.NewsPostId}
-                                  onClick={(e) =>
-                                    this.clickEdit(post.NewsPostId)
-                                  }
+                                  onClick={(e) => this.clickEdit(e.target.value)}
                                 >
                                   Edit
-                                </Button>,
-                              
-                              
+                                </Button>,  
                                 <Button
                                   variant="contained"
                                   color="primary"
                                   value={newsPost.NewsPostId}
-                                  onClick={(e) =>
-                                    this.clickDelete(post.NewsPostId)
-                                  }
+                                  onClick={(e) => this.clickDelete(e.target.value)}
                                 >
                                   Delete
                                 </Button>
-                              ,
                             ]
                           : ("")}
                       </div>
                     )
                   )
-                ),
-              ]
             ) : (
               <Typography variant="h5" component="div" gutterBottom>
                 <div>News post does not exist!</div>
