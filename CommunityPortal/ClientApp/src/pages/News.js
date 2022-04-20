@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,87 +12,94 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ListNewsPosts from "../components/newsposts/ListNewsPosts";
 import Button from "@mui/material/Button";
+import Calender from "../components/Calender/Calender"
 
 export class News extends Component {
-  static displayName = News.name;
+    static displayName = News.name;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoaded: false,
-      categories: []
-    };
-  }
-
-  componentDidMount() {
-    this.getCategories();
-  }
-
-  async getCategories() {
-    const response = await fetch("/api/category", { 
-      method: 'GET'
-    });
-    const categoryData = await response.json();
-    this.setState({ categories: categoryData, isLoaded: true });
-  }
-
-  clickCategory = (id) => {
-    ReactDOM.unmountComponentAtNode(document.getElementById('NewsPostView'));
-    ReactDOM.render(<ListNewsPosts categoryId={id} />, document.getElementById('NewsPostView'));
-  }
-
-  getRSSLink = (id) => {
-    return "/api/newspost/GetRSSByCategoryId/" + id;
-  }
-
-  render() {
-    const {isLoaded, categories} = this.state;
-    if (!isLoaded) {
-      return <div>Loading categories...</div>
-    } else {
-      return (
-        <Container>
-          <Grid
-            container
-            direction="column"
-            justifyContent="space-evenly"
-            alignItems="center"
-           >
-           <div id="NewsPostView">
-            {categories.length > 0 ?
-            (
-               <TableContainer sx={{ mt: 1.5 }} component={Paper}>
-                  <Table className='table table-bordered'>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Category</TableCell>
-                        <TableCell>RSS</TableCell>
-                        <TableCell>View</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {categories.map((category) => (
-                        <TableRow key={category.CategoryId}>
-                          <TableCell>{category.Title}</TableCell>
-                          <TableCell><a href={this.getRSSLink(category.CategoryId)}>RSS</a></TableCell>
-                          <TableCell>
-                            <Button variant="contained" color="primary" value={category.CategoryId} onClick={e => this.clickCategory(e.target.value)}>
-                              View
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              )
-              : 
-                <ListNewsPosts categoryId={null} />
-              }
-            </div>
-          </Grid>
-        </Container>
-      );
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoaded: false,
+            categories: []
+        };
     }
-  }
+
+    componentDidMount() {
+        this.getCategories();
+    }
+
+    async getCategories() {
+        const response = await fetch("/api/category", {
+            method: 'GET'
+        });
+        const categoryData = await response.json();
+        this.setState({ categories: categoryData, isLoaded: true });
+    }
+
+    clickCategory = (id) => {
+        ReactDOM.unmountComponentAtNode(document.getElementById('NewsPostView'));
+        ReactDOM.render(<ListNewsPosts categoryId={id} />, document.getElementById('NewsPostView'));
+    }
+
+    getRSSLink = (id) => {
+        return "/api/newspost/GetRSSByCategoryId/" + id;
+    }
+
+    render() {
+        const { isLoaded, categories } = this.state;
+        if (!isLoaded) {
+            return <div>Loading categories...</div>
+        } else {
+            return (
+                <Container>
+                    <div id="NewsPostView">
+                        <Grid container>
+                            <Grid item xs={12} md={6}>
+                                <Calender />
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+
+                                {categories.length > 0 ?
+                                    (
+                                        <TableContainer sx={{ mt: 1.5 }} component={Paper}>
+                                            <Table className='table table-bordered'>
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell>Category</TableCell>
+                                                        <TableCell>RSS</TableCell>
+                                                        <TableCell>View</TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    {categories.map((category) => (
+                                                        <TableRow key={category.CategoryId}>
+                                                            <TableCell>{category.Title}</TableCell>
+                                                            <TableCell><a href={this.getRSSLink(category.CategoryId)}>RSS</a></TableCell>
+                                                            <TableCell>
+                                                                <Button variant="contained" color="primary" value={category.CategoryId} onClick={e => this.clickCategory(e.target.value)}>
+                                                                    View
+                                                                </Button>
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    )
+                                    :
+                                    <ListNewsPosts categoryId={null} />
+                                }
+
+                            </Grid>
+                        </Grid>
+                    </div>
+
+                </Container>
+
+            );
+        }
+    }
 }
+
+export default News;
