@@ -168,7 +168,7 @@ export class NewsPostForm extends Component {
     changeField = (event) => {
         switch (event.target.id) {
             case "FormHeading":
-                this.setState({ Heading: event.target.value});
+                this.setState({ Heading: event.target.value });
                 break;
 
             case "FormInformation":
@@ -217,91 +217,90 @@ export class NewsPostForm extends Component {
                         justifyContent="space-evenly"
                         alignItems="center"
                     >
-                        <Grid item>
-                            <Typography variant="h2" component="div" gutterBottom>
-                                {NewsPostId == 0 ? ("Add news post") : ("Edit news post")}
-                            </Typography>
 
-                            <Button size="small" color="primary" onClick={() => this.clickBackToList()}>
-                                Back to news list
-                            </Button>
+                        <Typography variant="h2" component="div" gutterBottom>
+                            {NewsPostId == 0 ? ("Add news post") : ("Edit news post")}
+                        </Typography>
 
-                            <form sx={{ mt: 1.0 }} onSubmit={async event => { this.submitForm(event) }}>
-                                {category != null ? (
-                                    <Typography sx={{ mt: 2.75 }} variant="h5" component="div" gutterBottom>Category: {category.Title}</Typography>
-                                ) : ("")}
-                                <FormControlLabel
-                                    sx={{ mt: 1.5 }}
-                                    id="FormIsEvent"
-                                    control={<Checkbox defaultChecked={IsEvent} />}
-                                    label="Event"
-                                    onChange={e => this.changeField(e)} />
-                                <br />
-                                <FormControl sx={{ mt: 1.5 }}>
-                                    <TextField
-                                        id="FormHeading"
-                                        style={{ width: "400px", margin: "5px" }}
-                                        type="text"
-                                        required
-                                        label="Header"
-                                        value={this.state.value}
-                                        defaultValue={Heading}
-                                        variant="outlined"
-                                        onChange={e => this.changeField(e)}
-                                    />
-                                </FormControl>
-                                <br />
-                                <FormControl sx={{ mt: 1.5 }}>
-                                    <TextField
-                                        id="FormInformation"
-                                        style={{ width: "400px", margin: "5px" }}
-                                        type="text"
-                                        required
-                                        label="Information"
-                                        value={this.state.value}
-                                        defaultValue={Information}
-                                        variant="outlined"
-                                        multiline
-                                        rows={10}
-                                        onChange={e => this.changeField(e)}
-                                    />
-                                </FormControl>
-                                <br />
-                                <FormControl sx={{ mt: 1.5 }}>
-                                    <TextField
-                                        id="FormTag"
-                                        style={{ width: "400px", margin: "5px" }}
-                                        type="text"
-                                        label="Tag"
-                                        value={this.state.value}
-                                        defaultValue={Tag}
-                                        variant="outlined"
-                                        onChange={e => this.changeField(e)}
-                                    />
-                                </FormControl>
-                                <br />
-                                <FormControl sx={{ mt: 1.5 }}>
-                                    <TextField
-                                        id="FormDescription"
-                                        style={{ width: "400px", margin: "5px" }}
-                                        type="text"
-                                        label="RSS description"
-                                        value={this.state.value}
-                                        defaultValue={Description}
-                                        variant="outlined"
-                                        multiline
-                                        rows={5}
-                                        onChange={e => this.changeField(e)}
-                                    />
-                                </FormControl>
-                                <br />
-                                {userRole === "Admin" || userRole === "Moderator" ? (
-                                    <Button sx={{ mt: 1.5 }} variant="contained" color="primary" type="submit">
-                                        Save
-                                    </Button>
-                                ) : ("")}
-                            </form>
-                        </Grid>
+                        <Button size="small" color="primary" onClick={() => this.clickBackToList()}>
+                            Back to news list
+                        </Button>
+
+                        <form sx={{ mt: 1.0 }} onSubmit={async event => { this.submitForm(event) }}>
+                            {category != null ? (
+                                <Typography sx={{ mt: 2.75 }} variant="h5" component="div" gutterBottom>Category: {category.Title}</Typography>
+                            ) : ("")}
+                            <FormControlLabel
+                                sx={{ mt: 1.5 }}
+                                id="FormIsEvent"
+                                control={<Checkbox defaultChecked={IsEvent} />}
+                                label="Event"
+                                onChange={e => this.changeField(e)} />
+                            <br />
+                            <FormControl sx={{ mt: 1.5 }}>
+                                <TextField
+                                    id="FormHeading"
+                                    style={{ width: "400px", margin: "5px" }}
+                                    type="text"
+                                    required
+                                    label="Header"
+                                    value={this.state.value}
+                                    defaultValue={Heading}
+                                    variant="outlined"
+                                    onChange={e => this.changeField(e)}
+                                />
+                            </FormControl>
+                            <br />
+                            <FormControl sx={{ mt: 1.5 }}>
+                                <TextField
+                                    id="FormInformation"
+                                    style={{ width: "400px", margin: "5px" }}
+                                    type="text"
+                                    required
+                                    label="Information"
+                                    value={this.state.value}
+                                    defaultValue={Information}
+                                    variant="outlined"
+                                    multiline
+                                    rows={10}
+                                    onChange={e => this.changeField(e)}
+                                />
+                            </FormControl>
+                            <br />
+                            <FormControl sx={{ mt: 1.5 }}>
+                                <TextField
+                                    id="FormTag"
+                                    style={{ width: "400px", margin: "5px" }}
+                                    type="text"
+                                    label="Tag"
+                                    value={this.state.value}
+                                    defaultValue={Tag}
+                                    variant="outlined"
+                                    onChange={e => this.changeField(e)}
+                                />
+                            </FormControl>
+                            <br />
+                            <FormControl sx={{ mt: 1.5 }}>
+                                <TextField
+                                    id="FormDescription"
+                                    style={{ width: "400px", margin: "5px" }}
+                                    type="text"
+                                    label="RSS description"
+                                    value={this.state.value}
+                                    defaultValue={Description}
+                                    variant="outlined"
+                                    multiline
+                                    rows={5}
+                                    onChange={e => this.changeField(e)}
+                                />
+                            </FormControl>
+                            <br />
+                            {userRole === "Admin" || userRole === "Moderator" ? (
+                                <Button sx={{ mt: 1.5 }} variant="contained" color="primary" type="submit">
+                                    Save
+                                </Button>
+                            ) : ("")}
+                        </form>
                     </Grid>
                 </Container>
             );

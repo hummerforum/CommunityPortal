@@ -122,10 +122,10 @@ export class ListNewsPosts extends Component {
                         </Typography>
 
                         <Button size="small" color="primary" onClick={() => this.clickCategories()}>
-                            Select another category
+                            {category != null ? ("Select another category") : ("Select a category")}
                         </Button>
 
-                        {((userRole === "Admin") || (userRole === "Moderator")) ? [
+                        {(((userRole === "Admin") || (userRole === "Moderator")) && (category != null)) ? [
                             (" "),
                             <Button sx={{ mt: 2.5 }} variant="contained" color="primary" onClick={() => this.clickAdd()}>
                                 Add news post
