@@ -28,7 +28,8 @@ class Messages extends Component {
             isCreateMessageVisible: false,
             isCreateMessageButtonVisible: true,
             userId: null,
-            senderUserName: null
+            senderUserName: null,
+            state: null
         };
     }
 
@@ -46,7 +47,6 @@ class Messages extends Component {
                 await this.setMessageAsRead(viewMessage);
 
                 this.setCreateMessage(false);
-                this.props.navigate(`/messages`);
             } else {
                 if (this.state.isViewMessageVisible) {
                     this.setState({
@@ -60,7 +60,6 @@ class Messages extends Component {
                     await this.setMessageAsRead(viewMessage);
 
                     this.setCreateMessage(false);
-                    this.props.navigate(`/messages`);
                 }
             }
         } else {
@@ -72,7 +71,6 @@ class Messages extends Component {
             await this.setMessageAsRead(viewMessage);
 
             this.setCreateMessage(false);
-            this.props.navigate(`/messages`);
         }
     }
 
@@ -195,11 +193,18 @@ class Messages extends Component {
         }
     }
 
+    setStateState(state) {
+        this.setState({
+            state: state
+        });
+    }
+
     componentDidMount() {
         this.readReceivedMessages();
         this.readSentMessages();
 
-        if (this.props.match && this.props.match.params) {
+        if (this.props.state) {
+            this.setStateState(this.props.state);
             this.setCreateMessage(true);
         }
     }
@@ -227,6 +232,7 @@ class Messages extends Component {
                                 deleteReceivedMessage={this.deleteReceivedMessage.bind(this)}
                                 deleteSentMessage={this.deleteSentMessage.bind(this)}
                                 setCreateMessage={this.setCreateMessage.bind(this)}
+                                setStateState={this.setStateState.bind(this)}
                             />
                         ) : (
                             null
@@ -238,7 +244,7 @@ class Messages extends Component {
                                 setCreateMessage={this.setCreateMessage.bind(this)}
                                 readReceivedMessages={this.readReceivedMessages.bind(this)}
                                 readSentMessages={this.readSentMessages.bind(this)}
-                                match={this.props.match}
+                                state={this.state.state}
                             />
                         ) : (
                             null

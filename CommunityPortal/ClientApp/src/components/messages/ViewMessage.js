@@ -24,8 +24,14 @@ class ViewMessage extends Component {
     }
 
     answerMessage(event, viewMessage) {
-        let uri = `/messages/${viewMessage.senderid}/Reply%20to%20subject:%20${viewMessage.subject.replace(/[/?.]/g, '')}/Reply%20to%20message:%20${viewMessage.message.replace(/[/?.]/g, '')}%0A----------%0A`
-        this.props.navigate(uri);
+        const state = {
+                receiverid: viewMessage.senderid,
+                subject: `Answer to subject: "${viewMessage.subject}"`,
+                message: `Reply to message: "${viewMessage.message}"\n\n`
+        }
+
+        this.props.setStateState(state);
+        this.props.setCreateMessage(true);
     }
 
     render() {
