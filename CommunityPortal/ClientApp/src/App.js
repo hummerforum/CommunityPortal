@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Route, Routes } from "react-router";
-import { useParams } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { Home } from "./pages/Home";
 import { Forum } from "./pages/Forum";
@@ -22,8 +21,7 @@ export default class App extends Component {
 
   render() {
     const MessagesWrapper = (props) => {
-      const params = useParams();
-      return <Messages {...{ ...props, match: { params } }} />;
+      return <Messages {...{ ...props }} />;
     };
     return (
       <Layout>
@@ -31,11 +29,7 @@ export default class App extends Component {
           <Route exact path="/" element={<Home />} />
           <Route path="/forum/*" element={<Forum />} />
           <Route path="/news" element={<News />} />
-          <Route path="/messages/" element={<Messages />} />
-          <Route
-            path="/messages/:receiverid/:subject/:message"
-            element={<MessagesWrapper />}
-          />
+          <Route path="/messages/" element={<MessagesWrapper />} />
           <Route path="/community-users" element={<CommunityUsers />} />
           {/* This is how you do a privileged route path is the url component is the react component that loads */}
           <Route

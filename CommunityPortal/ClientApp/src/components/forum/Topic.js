@@ -82,11 +82,14 @@ function getColour(string) {
 }
 
 function SendPm(navigate, authorId, date, content) {
-  let uri = `/messages/${authorId}/Reply%20to%20post%20posted%20at:%20${date}/Reply%20to%20message:%20${content.replace(
-    /[/?.]/g,
-    ""
-  )}%0A----------%0A`;
-  navigate(uri);
+    let uri = `/messages`
+    navigate(uri, {
+        state: {
+            receiverid: authorId,
+            subject: `Reply to post on: ${new Date(date).toISOString().split('T')[0]}`,
+            message: `Posted message: "${content}"\n\n`
+        }
+    });
 }
 
 function Reply(props) {

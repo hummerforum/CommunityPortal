@@ -31,10 +31,10 @@ export default class ReceiversDropdown extends Component {
             selectOptions: options
         });
 
-        if (this.props.match) {
-            if (this.props.match.params.receiverid) {
+        if (this.props.state) {
+            if (this.props.state.receiverid) {
                 this.state.selectOptions.forEach((option) => {
-                    if (option.userid === this.props.match.params.receiverid) {
+                    if (option.userid === this.props.state.receiverid) {
                         this.setState({
                             selectedValue: option
                         });

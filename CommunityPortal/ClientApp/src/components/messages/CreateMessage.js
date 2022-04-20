@@ -125,12 +125,12 @@ class CreateMessage extends Component {
     }
 
     componentDidMount() {
-        if (this.props.match) {
-            if (this.props.match.params.subject) {
-                this.setState({ subject: this.props.match.params.subject });
+        if (this.props.state) {
+            if (this.props.state.subject) {
+                this.setState({ subject: this.props.state.subject });
             }
-            if (this.props.match.params.message) {
-                this.setState({ message: this.props.match.params.message });
+            if (this.props.state.message) {
+                this.setState({ message: this.props.state.message });
             }
         }
     }
@@ -146,7 +146,7 @@ class CreateMessage extends Component {
                         <ReceiversDropdown
                             getReceiverData={this.getReceiverData.bind(this)}
                             validationToggle={this.state.validationToggle}
-                            match={this.props.match}
+                            state={this.props.state}
                         />
                         <FormControl fullWidth sx={{ mb: 1.5 }}>
                             <TextField
