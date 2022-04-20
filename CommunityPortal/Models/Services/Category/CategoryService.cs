@@ -40,8 +40,9 @@ namespace CommunityPortal.Models.Services
             if (categoryToUpdate == null)
                 return null;
 
-            categoryToUpdate = category;
             categoryToUpdate.CategoryId = id;
+            categoryToUpdate.Title = category.Title;
+            categoryToUpdate.Description = category.Description;
             _appDbContext.Categories.Update(categoryToUpdate);
             _appDbContext.SaveChanges();
             return categoryToUpdate;
