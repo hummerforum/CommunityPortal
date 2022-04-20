@@ -134,8 +134,15 @@ namespace CommunityPortal.Models.Services
             if (newsPostToUpdate == null)
                 return null;
 
-            newsPostToUpdate = newsPost;
             newsPostToUpdate.NewsPostId = id;
+            newsPostToUpdate.IsEvent = newsPost.IsEvent;
+            newsPostToUpdate.Heading = newsPost.Heading;
+            newsPostToUpdate.Information = newsPost.Information;
+            newsPostToUpdate.CategoryId = newsPost.CategoryId;
+            newsPostToUpdate.Tag = newsPost.Tag;
+            newsPostToUpdate.CreatedDate = newsPost.CreatedDate;
+            newsPostToUpdate.UpdatedDate = newsPost.UpdatedDate;
+            newsPostToUpdate.UserName = newsPost.UserName;
             _appDbContext.NewsPosts.Update(newsPostToUpdate);
             _appDbContext.SaveChanges();
             return newsPostToUpdate;
