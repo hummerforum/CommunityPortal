@@ -140,6 +140,7 @@ namespace CommunityPortal.Models.Services
             newsPostToUpdate.Information = newsPost.Information;
             newsPostToUpdate.CategoryId = newsPost.CategoryId;
             newsPostToUpdate.Tag = newsPost.Tag;
+            newsPostToUpdate.Description = newsPost.Description;
             newsPostToUpdate.CreatedDate = newsPost.CreatedDate;
             newsPostToUpdate.UpdatedDate = newsPost.UpdatedDate;
             newsPostToUpdate.UserName = newsPost.UserName;
