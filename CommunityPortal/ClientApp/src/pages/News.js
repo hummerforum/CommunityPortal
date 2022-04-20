@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -52,8 +51,9 @@ export class News extends Component {
             return <div>Loading categories...</div>
         } else {
             return (
-                <Container>
-                    <div id="NewsPostView">
+                <div id="NewsPostView">
+                    <Container>
+
                         <Grid container>
                             <Grid item xs={12} md={6}>
                                 <Calender />
@@ -90,13 +90,10 @@ export class News extends Component {
                                     :
                                     <ListNewsPosts categoryId={null} />
                                 }
-
                             </Grid>
                         </Grid>
-                    </div>
-
-                </Container>
-
+                    </Container>
+                </div>
             );
         }
     }
