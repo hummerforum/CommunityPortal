@@ -30,13 +30,13 @@ const materialTheme = createMuiTheme({
     overrides: {
         MuiPickersToolbar: {
             toolbar: {
-                backgroundColor: "#5D4037",
+                backgroundColor: "white", //#5D4037
             },
         },
         MuiPickersCalendarHeader: {
             switchHeader: {
-                backgroundColor: "white",
-                color: "#1b5e20",
+                backgroundColor: "#70163C", // white
+                color: "white", // #1b5e20
             },
         },
     },
@@ -100,7 +100,7 @@ function Calender() {
 
 
     function accept(val) {
-
+        
         handleDateChange(val);
         //ReactDOM.unmountComponentAtNode(document.getElementById("NewsPostView"));
         //ReactDOM.render(<ListNewsPosts categoryId={ null} SelectedDate={val} />, document.getElementById("NewsPostView"));
