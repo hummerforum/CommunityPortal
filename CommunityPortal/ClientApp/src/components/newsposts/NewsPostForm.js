@@ -10,6 +10,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import ListNewsPosts from "./ListNewsPosts";
 import authService from "../../components/api-authorization/AuthorizeService";
+import Paper from '@mui/material/Paper';
 
 export class NewsPostForm extends Component {
     static displayName = NewsPostForm.name;
@@ -216,6 +217,8 @@ export class NewsPostForm extends Component {
                         direction="column"
                         justifyContent="space-evenly"
                         alignItems="center"
+                        component={Paper}
+                        sx={{ mt: 2.5, mb: 1.5 }}
                     >
 
                         <Typography variant="h2" component="div" gutterBottom>
@@ -296,9 +299,11 @@ export class NewsPostForm extends Component {
                             </FormControl>
                             <br />
                             {userRole === "Admin" || userRole === "Moderator" ? (
-                                <Button sx={{ mt: 1.5 }} variant="contained" color="primary" type="submit">
-                                    Save
-                                </Button>
+                                <FormControl sx={{ mt: 1.5, mb: 1.5 }}>
+                                    <Button variant="contained" color="primary" type="submit">
+                                        Save
+                                    </Button>
+                                </FormControl>
                             ) : ("")}
                         </form>
                     </Grid>

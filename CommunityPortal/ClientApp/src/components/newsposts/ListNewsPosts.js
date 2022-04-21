@@ -145,13 +145,14 @@ export class ListNewsPosts extends Component {
                             </Button>
                         ] : ("")}
 
-                        <TableContainer sx={{ mt: 1.5 }} component={Paper}>
+                        <TableContainer sx={{ mt: 1.5, mb: 1.5 }} component={Paper}>
                             <Table className='table table-bordered'>
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Header</TableCell>
                                         <TableCell>Event?</TableCell>
-                                        <TableCell>Date</TableCell>
+                                        <TableCell>Created</TableCell>
+                                        <TableCell>Updated</TableCell>
                                         <TableCell>View</TableCell>
                                         {(userRole === "Admin") || (userRole === "Moderator") ? [
                                             <TableCell>Edit</TableCell>,
@@ -165,7 +166,8 @@ export class ListNewsPosts extends Component {
                                             <TableRow key={newsPost.NewsPostId}>
                                                 <TableCell>{newsPost.Heading}</TableCell>
                                                 <TableCell>{newsPost.IsEvent ? ("Yes") : ("No")}</TableCell>
-                                                <TableCell>{newsPost.UpdatedDate != null ? (formatRelative(Date.parse(newsPost.UpdatedDate), Date.now())) : (formatRelative(Date.parse(newsPost.CreatedDate), Date.now()))}</TableCell>
+                                                <TableCell>{formatRelative(Date.parse(newsPost.CreatedDate), Date.now())}</TableCell>
+                                                <TableCell>{newsPost.UpdatedDate != null ? (formatRelative(Date.parse(newsPost.UpdatedDate), Date.now())) : ("")}</TableCell>
                                                 <TableCell>
                                                     <Button variant="contained" color="primary" value={newsPost.NewsPostId} onClick={e => this.clickView(e.target.value)}>
                                                         View

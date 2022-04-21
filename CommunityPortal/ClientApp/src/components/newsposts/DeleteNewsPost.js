@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 import authService from "../../components/api-authorization/AuthorizeService";
 import Button from "@mui/material/Button";
 import ListNewsPosts from "./ListNewsPosts";
+import Paper from '@mui/material/Paper';
+import FormControl from "@mui/material/FormControl";
 
 export class DeleteNewsPost extends Component {
     static displayName = DeleteNewsPost.name;
@@ -58,29 +60,35 @@ export class DeleteNewsPost extends Component {
                     direction="column"
                     justifyContent="space-evenly"
                     alignItems="center"
+                    component={Paper}
+                    sx={{ mt: 2.5, mb: 1.5 }}
                 >
                     <Typography variant="h5" component="div" gutterBottom>
                         Do you want to delete the news post?
                     </Typography>
                     <div>
                         {((userRole === "Admin") || (userRole === "Moderator"))
-                            ? [
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={e => this.deleteNewsPost()}
-                                >
-                                    Yes
-                                </Button>,
-                                (" "),
-                                <Button
-                                    variant="outlined"
-                                    color="primary"
-                                    onClick={e => this.showNewsPostList()}
-                                >
-                                    No
-                                </Button>
-                            ]
+                            ? (
+                                <FormControl sx={{ mt: 1.0, mb: 1.5 }}>
+                                    <div>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={e => this.deleteNewsPost()}
+                                        >
+                                            Yes
+                                        </Button>
+                                        {" "}
+                                        <Button
+                                            variant="outlined"
+                                            color="primary"
+                                            onClick={e => this.showNewsPostList()}
+                                        >
+                                            No
+                                        </Button>
+                                    </div>
+                                </FormControl>
+                            )
                             : ("")}
                     </div>
                 </Grid>
