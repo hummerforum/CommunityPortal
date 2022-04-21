@@ -51,6 +51,7 @@ function Calender() {
     const [newsposts, ChangeNewsposts] = useState([]);
     const [showList, SetShowList] = useState(false);
     const mounted = useRef(false);
+    const [counter, setCounter] = useState(0);
 
 
     useEffect(() => {
@@ -99,15 +100,17 @@ function Calender() {
 
 
 
-
     function accept(val) {
 
-        handleDateChange(val);
-        ReactDOM.unmountComponentAtNode(document.getElementById("NewsPostView"));
-        ReactDOM.render(<ListNewsPosts categoryId={null} selectedDate={val} />, document.getElementById("NewsPostView"));
+        setCounter(counter + 1);
+
+        if (counter > 0) {
+            handleDateChange(val);
+            ReactDOM.unmountComponentAtNode(document.getElementById("NewsPostView"));
+            ReactDOM.render(<ListNewsPosts categoryId={null} selectedDate={val} />, document.getElementById("NewsPostView"));
+        }
 
     }
-
 
     const disableDates = (date) => {
         var date2 = date.toISOString().substring(0, 10);
