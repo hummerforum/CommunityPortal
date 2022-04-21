@@ -71,8 +71,21 @@ export class ListNewsPosts extends Component {
         const response = await fetch(URL, {
             method: 'GET'
         });
-        const newsPostData = await response.json();
-        this.setState({ newsPosts: newsPostData, isLoaded: true });
+        let newsPostData = await response.json();
+        if (this.props.selectedDate != null) {
+            var selectedPosts = new Array();
+            for (var i = 0; i < newsPostData.length; i++) {
+                var selectedDate = this.props.selectedDate.toISOString().substring(0, 10);
+                var newsPostDate = newsPostData[i].CreatedDate.substring(0, 10);
+                if (newsPostDate === selectedDate) {
+                    selectedPosts.push(newsPostData[i]);
+                }
+            }
+            this.setState({ newsPosts: selectedPosts, isLoaded: true });
+            
+        } else {
+            this.setState({ newsPosts: newsPostData, isLoaded: true });
+        }
     }
 
     clickCategories = () => {
@@ -101,7 +114,7 @@ export class ListNewsPosts extends Component {
     }
 
     render() {
-        let { userRole, isLoaded, newsPosts, isCategoryLoaded, category } = this.state;
+        let { userRole, isLoaded, newsPosts, isCategoryLoaded, category, selectedDate } = this.state;
         if (!isLoaded) {
             return <div>Loading news post...</div>;
         } else if (!isCategoryLoaded) {

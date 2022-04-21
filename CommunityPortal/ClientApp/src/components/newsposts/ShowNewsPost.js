@@ -111,7 +111,7 @@ export class ShowNewsPost extends Component {
                                     <TableHead>
                                         <TableRow>
                                             <TableCell style={{ width: "25%" }}>{newsPost.UpdatedDate != null ? (formatRelative(Date.parse(newsPost.UpdatedDate), Date.now())) : (formatRelative(Date.parse(newsPost.CreatedDate), Date.now()))}</TableCell>
-                                            <TableCell>{newsPost.IsEvent ? ("[EVENT]: ") : ("")} {newsPost.Heading}</TableCell>
+                                            <TableCell>{newsPost.IsEvent ? ("( * * * EVENT * * * )") : ("")} {newsPost.Heading}</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
