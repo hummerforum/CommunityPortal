@@ -1,4 +1,4 @@
-﻿// npm i @material-ui / pickers@3.2.10 --save
+// npm i @material-ui / pickers@3.2.10 --save
 // npm install date - fns@2.16.1 --save
 // npm install @date-io / date - fns@1.3.13 --save
 // npm install @material-ui / styles
@@ -14,6 +14,7 @@ import {
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import ReactDOM from "react-dom";
+import ListNewsPosts from "../newsposts/ListNewsPosts";
 //import Container from "@mui/material/Container";
 //import Table from "@mui/material/Table";
 //import TableBody from "@mui/material/TableBody";
@@ -26,30 +27,13 @@ import ReactDOM from "react-dom";
 //import { Button } from "@mui/material";
 
 
-const materialTheme = createMuiTheme({
-    overrides: {
-        MuiPickersToolbar: {
-            toolbar: {
-                backgroundColor: "white", //#5D4037
-            },
-        },
-        MuiPickersCalendarHeader: {
-            switchHeader: {
-                backgroundColor: "#70163C", // white
-                color: "white", // #1b5e20
-            },
-        },
-    },
-});
-
-
 function Calender() {
-
 
     const [selectedDate, handleDateChange] = useState(new Date());
     const [newsposts, ChangeNewsposts] = useState([]);
     const [showList, SetShowList] = useState(false);
     const mounted = useRef(false);
+    const [counter, setCounter] = useState(0);
 
 
     useEffect(() => {
@@ -96,17 +80,19 @@ function Calender() {
     //}
 
 
-    
 
 
     function accept(val) {
-        
-        handleDateChange(val);
-        //ReactDOM.unmountComponentAtNode(document.getElementById("NewsPostView"));
-        //ReactDOM.render(<ListNewsPosts categoryId={ null} SelectedDate={val} />, document.getElementById("NewsPostView"));
+
+        setCounter(counter + 1);
+
+        if (counter > 0) {
+            handleDateChange(val);
+            ReactDOM.unmountComponentAtNode(document.getElementById("NewsPostView"));
+            ReactDOM.render(<ListNewsPosts categoryId={null} selectedDate={val} />, document.getElementById("NewsPostView"));
+        }
 
     }
-
 
     const disableDates = (date) => {
         var date2 = date.toISOString().substring(0, 10);
@@ -136,7 +122,7 @@ function Calender() {
         //        >
 
         //            <Button onClick={closeList}   > View Calender</Button>
-                    
+
         //            <TableContainer>
         //                <Table aria-label="simple table">
         //                <TableHead> News Post 
@@ -158,20 +144,20 @@ function Calender() {
         //    }
 
         //    {!showList &&
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <ThemeProvider theme={materialTheme}>
-                        <DatePicker
-                            label="New Post Days"
-                            variant="static"
-                            value={selectedDate}
-                            onChange={accept}
-                            maxDate={Date.now()}
-                            color="secondary"
-                            emptyLabel="Empty"
-                            shouldDisableDate={disableDates}
-                        />
-                    </ThemeProvider>
-                </MuiPickersUtilsProvider>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <ThemeProvider theme={materialTheme}>
+                <DatePicker
+                    label="New Post Days"
+                    variant="static"
+                    value={selectedDate}
+                    onChange={accept}
+                    maxDate={Date.now()}
+                    color="secondary"
+                    emptyLabel="Empty"
+                    shouldDisableDate={disableDates}
+                />
+            </ThemeProvider>
+        </MuiPickersUtilsProvider>
         //    }
         //</Container>
     );

@@ -73,16 +73,13 @@ export class ListNewsPosts extends Component {
         });
         let newsPostData = await response.json();
         if (this.props.selectedDate != null) {
-            var selectedPosts = new Array();
             for (var i = 0; i < newsPostData.length; i++) {
-                var selectedDate = this.props.selectedDate.toISOString().substring(0, 10);
-                var newsPostDate = newsPostData[i].CreatedDate.substring(0, 10);
-                if (newsPostDate === selectedDate) {
+                var selectedPosts = new Array();
+                if (newsPostData[i].CreatedDate.substring(0, 10) === this.props.selectedDate) {
                     selectedPosts.push(newsPostData[i]);
                 }
             }
             this.setState({ newsPosts: selectedPosts, isLoaded: true });
-            
         } else {
             this.setState({ newsPosts: newsPostData, isLoaded: true });
         }
