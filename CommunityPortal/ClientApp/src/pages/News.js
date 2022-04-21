@@ -52,13 +52,14 @@ export class News extends Component {
         } else {
             return (
                 <div id="NewsPostView">
-                    <Container>
+                    <Container component={Paper} sx={{ mt: 2.5, mb: 1.5 }}>
 
                         <Grid container>
-                            <Grid item xs={12} md={6}>
+                            <Grid item xs={12} md={4}>
                                 <Calender />
                             </Grid>
-                            <Grid item xs={12} md={6}>
+                            <Grid item xs={12} md={1}></Grid>
+                            <Grid item xs={12} md={7}>
 
                                 {categories.length > 0 ?
                                     (
