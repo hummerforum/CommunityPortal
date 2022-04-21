@@ -15,6 +15,8 @@ import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import ReactDOM from "react-dom";
 import ListNewsPosts from "../newsposts/ListNewsPosts";
+
+
 //import Container from "@mui/material/Container";
 //import Table from "@mui/material/Table";
 //import TableBody from "@mui/material/TableBody";
@@ -25,6 +27,23 @@ import ListNewsPosts from "../newsposts/ListNewsPosts";
 //import Typography from "@mui/material/Typography";
 //import Grid from "@mui/material/Grid";
 //import { Button } from "@mui/material";
+
+const materialTheme = createMuiTheme({
+    overrides: {
+        MuiPickersToolbar: {
+            toolbar: {
+                backgroundColor: "#5D4037",
+            },
+        },
+        MuiPickersCalendarHeader: {
+            switchHeader: {
+                backgroundColor: "white",
+                color: "#1b5e20",
+            },
+        },
+    },
+});
+
 
 
 function Calender() {
