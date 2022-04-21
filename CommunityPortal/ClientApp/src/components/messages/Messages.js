@@ -171,7 +171,9 @@ class Messages extends Component {
         this.readReceivedMessages();
         if (this.state.viewMessage) {
             if ((this.state.viewMessage.id === receivedPrivateMessage.id) && (this.state.viewMessage.type === receivedPrivateMessage.type)) {
-                this.setViewMessage(receivedPrivateMessage);
+                this.setState({
+                    isViewMessageVisible: false
+                });
             }
         }
     }
