@@ -52,6 +52,8 @@ namespace CommunityPortal.Data
             string accountId = Guid.NewGuid().ToString();
             string accountId2 = Guid.NewGuid().ToString();
             string accountId3 = Guid.NewGuid().ToString();
+            string accountId4 = Guid.NewGuid().ToString();
+            string accountId5 = Guid.NewGuid().ToString();
 
 
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
@@ -97,7 +99,33 @@ namespace CommunityPortal.Data
                 PasswordHash = passwordHasher.HashPassword(null, "123456"),
             };
 
+
             modelBuilder.Entity<CommunityUser>().HasData(cu3);
+
+            CommunityUser cu4 = new CommunityUser
+            {
+                Id = accountId4,
+                Email = "tobias@b.com",
+                NormalizedEmail = "TOBIAS@B.COM",
+                UserName = "tobias@b.com",
+                NormalizedUserName = "TOBIAS@B.COM",
+                PasswordHash = passwordHasher.HashPassword(null, "123456"),
+            };
+
+            modelBuilder.Entity<CommunityUser>().HasData(cu4);
+
+
+            CommunityUser cu5 = new CommunityUser
+            {
+                Id = accountId5,
+                Email = "peter@b.com",
+                NormalizedEmail = "PETER@B.COM",
+                UserName = "peter@b.com",
+                NormalizedUserName = "PETER@B.COM",
+                PasswordHash = passwordHasher.HashPassword(null, "123456"),
+            };
+            modelBuilder.Entity<CommunityUser>().HasData(cu5);
+
 
             // ROLES
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
@@ -121,9 +149,9 @@ namespace CommunityPortal.Data
             modelBuilder.Entity<Category>().HasData(ca3);
 
 
-            DateTime d = new DateTime(2000, 1, 30);
-            DateTime d2 = new DateTime(2010, 2, 15);
-            DateTime d3 = new DateTime(2020, 10, 1);
+            DateTime d = new DateTime(2022, 4, 19);
+            DateTime d2 = new DateTime(2022, 4, 20);
+            DateTime d3 = new DateTime(2022, 4, 18);
 
 
             NewsPost np1 = new NewsPost()
@@ -168,9 +196,43 @@ namespace CommunityPortal.Data
                 Information = "info2"
             };
 
+            NewsPost np4 = new NewsPost()
+            {
+                NewsPostId = 4,
+                IsEvent = false,
+                CategoryId = 3,
+                UserName = accountId,
+                CreatedDate = d3,
+                UpdatedDate = d3,
+                Tag = "Tag 3",
+                Description = "What is the most common swedish name in russian uboats? Tor-Peder",
+                Heading = "Bad Joke2",
+                Information = "info2"
+            };
+
+            NewsPost np5 = new NewsPost()
+            {
+                NewsPostId = 5,
+                IsEvent = false,
+                CategoryId = 3,
+                UserName = accountId,
+                CreatedDate = d3,
+                UpdatedDate = d3,
+                Tag = "Tag 3",
+                Description = "Can a dog jump higher than a house? Well, duh. Houses can’t jump.? ",
+                Heading = "Bad Joke3",
+                Information = "info2"
+            };
+
+
+
+
             modelBuilder.Entity<NewsPost>().HasData(np1);
             modelBuilder.Entity<NewsPost>().HasData(np2);
             modelBuilder.Entity<NewsPost>().HasData(np3);
+            modelBuilder.Entity<NewsPost>().HasData(np4);
+            modelBuilder.Entity<NewsPost>().HasData(np5);
+
 
             // set up forum
             // fishing forum sections
