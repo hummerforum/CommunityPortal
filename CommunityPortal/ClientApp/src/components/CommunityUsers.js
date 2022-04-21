@@ -75,15 +75,11 @@ export class CommunityUsers extends Component {
             { headers: header }
         );
         if (response.data) {
-            //console.log( id);
-            //console.log(this.state.messages);
-            //this.state.messages.map(m => alert(m.UserName));
 
-            //var i = this.state.messages.findIndex(m => m.UserName == id);
-            //let x = this.state.messages;
-            //alert("i" + i + "X" + x);
-            //x.splice(i+1, 1);
-            //this.setState({ messages: x });
+            var i = this.state.messages.findIndex(m => m.UserId == id);
+            let x = this.state.messages;
+            x.splice(i, 1);
+            this.setState({ messages: x });
         }
         else
             alert("Cant delete User. Make sure user not logged in or have posts to delete first");
