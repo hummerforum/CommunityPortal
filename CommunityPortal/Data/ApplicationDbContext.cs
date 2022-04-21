@@ -38,7 +38,6 @@ namespace CommunityPortal.Data
                 .HasOne(e => e.SenderCommunityUser)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
-
             modelBuilder.Entity<PrivateMessage>()
                .HasOne(e => e.ReceiverCommunityUser)
                .WithMany()
@@ -57,11 +56,11 @@ namespace CommunityPortal.Data
 
 
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
-                {Id = adminRoleId, Name = "Admin", NormalizedName = "ADMIN"});
+            { Id = adminRoleId, Name = "Admin", NormalizedName = "ADMIN" });
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
-                {Id = moderatorRoleId, Name = "Moderator", NormalizedName = "MODERATOR"});
+            { Id = moderatorRoleId, Name = "Moderator", NormalizedName = "MODERATOR" });
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
-                {Id = userRoleId, Name = "User", NormalizedName = "USER"});
+            { Id = userRoleId, Name = "User", NormalizedName = "USER" });
 
             PasswordHasher<CommunityUser> passwordHasher = new PasswordHasher<CommunityUser>();
 
@@ -129,13 +128,13 @@ namespace CommunityPortal.Data
 
             // ROLES
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
-                new IdentityUserRole<string> {UserId = accountId, RoleId = userRoleId});
+                new IdentityUserRole<string> { UserId = accountId, RoleId = userRoleId });
 
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
-                new IdentityUserRole<string> {UserId = accountId2, RoleId = moderatorRoleId});
+                new IdentityUserRole<string> { UserId = accountId2, RoleId = moderatorRoleId });
 
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
-                new IdentityUserRole<string> {UserId = accountId3, RoleId = adminRoleId});
+                new IdentityUserRole<string> { UserId = accountId3, RoleId = adminRoleId });
 
 
             // News  post and categories
@@ -159,7 +158,7 @@ namespace CommunityPortal.Data
                 NewsPostId = 1,
                 IsEvent = true,
                 CategoryId = 1,
-                UserName = accountId,
+                UserName = cu.UserName,
                 CreatedDate = d,
                 UpdatedDate = DateTime.Now,
                 Tag = "Tag 1",
@@ -173,7 +172,7 @@ namespace CommunityPortal.Data
                 NewsPostId = 2,
                 IsEvent = true,
                 CategoryId = 2,
-                UserName = accountId2,
+                UserName = cu.UserName,
                 CreatedDate = d2,
                 UpdatedDate = d2,
                 Tag = "Tag 2",
@@ -187,7 +186,7 @@ namespace CommunityPortal.Data
                 NewsPostId = 3,
                 IsEvent = false,
                 CategoryId = 3,
-                UserName = accountId3,
+                UserName = cu.UserName,
                 CreatedDate = d3,
                 UpdatedDate = d3,
                 Tag = "Tag 3",
@@ -201,7 +200,7 @@ namespace CommunityPortal.Data
                 NewsPostId = 4,
                 IsEvent = false,
                 CategoryId = 3,
-                UserName = accountId,
+                UserName = cu.UserName,
                 CreatedDate = d3,
                 UpdatedDate = d3,
                 Tag = "Tag 3",
@@ -215,7 +214,7 @@ namespace CommunityPortal.Data
                 NewsPostId = 5,
                 IsEvent = false,
                 CategoryId = 3,
-                UserName = accountId,
+                UserName = cu.UserName,
                 CreatedDate = d3,
                 UpdatedDate = d3,
                 Tag = "Tag 3",
@@ -237,41 +236,49 @@ namespace CommunityPortal.Data
             // set up forum
             // fishing forum sections
             DiscussionCategory c = new()
-                {DiscussionCategoryId = 1, Name = "Fishing", Description = "A forum for fishing."};
+            { DiscussionCategoryId = 1, Name = "Fishing", Description = "A forum for fishing." };
             modelBuilder.Entity<DiscussionCategory>().HasData(c);
             DiscussionForum dgF1 = new()
             {
-                Name = "Lobster", DiscussionForumId = 1, DiscussionCategoryId = 1,
+                Name = "Lobster",
+                DiscussionForumId = 1,
+                DiscussionCategoryId = 1,
                 Description = "Everything about lobsters."
             };
             modelBuilder.Entity<DiscussionForum>().HasData(dgF1);
             DiscussionForum dgF2 = new()
             {
-                Name = "Cod", DiscussionForumId = 2, DiscussionCategoryId = 1,
+                Name = "Cod",
+                DiscussionForumId = 2,
+                DiscussionCategoryId = 1,
                 Description = "Everyone's favourite white fish."
             };
             modelBuilder.Entity<DiscussionForum>().HasData(dgF2);
             DiscussionForum dgF3 = new()
             {
-                Name = "Anchovy", DiscussionForumId = 3, DiscussionCategoryId = 1,
+                Name = "Anchovy",
+                DiscussionForumId = 3,
+                DiscussionCategoryId = 1,
                 Description = "A must on the christmas table."
             };
             modelBuilder.Entity<DiscussionForum>().HasData(dgF3);
 
             // cars forum sections
-            DiscussionCategory c2 = new() {DiscussionCategoryId = 2, Name = "Cars", Description = "A forum for cars."};
+            DiscussionCategory c2 = new() { DiscussionCategoryId = 2, Name = "Cars", Description = "A forum for cars." };
             modelBuilder.Entity<DiscussionCategory>().HasData(c2);
             DiscussionForum dgC1 = new()
-                {Name = "Volvo", DiscussionForumId = 4, DiscussionCategoryId = 2, Description = "I roll."};
+            { Name = "Volvo", DiscussionForumId = 4, DiscussionCategoryId = 2, Description = "I roll." };
             modelBuilder.Entity<DiscussionForum>().HasData(dgC1);
             DiscussionForum dgC2 = new()
             {
-                Name = "SAAB", DiscussionForumId = 5, DiscussionCategoryId = 2,
+                Name = "SAAB",
+                DiscussionForumId = 5,
+                DiscussionCategoryId = 2,
                 Description = "They also make military aircrafts."
             };
             modelBuilder.Entity<DiscussionForum>().HasData(dgC2);
             DiscussionForum dgC3 = new()
-                {Name = "BMW", DiscussionForumId = 6, DiscussionCategoryId = 2, Description = "German Engineering."};
+            { Name = "BMW", DiscussionForumId = 6, DiscussionCategoryId = 2, Description = "German Engineering." };
             modelBuilder.Entity<DiscussionForum>().HasData(dgC3);
 
             // create an example topic to the Lobster forum in the Fishing category.
@@ -309,11 +316,13 @@ namespace CommunityPortal.Data
 
             // create secret category only meant for people in a group
             DiscussionCategory c3 = new()
-                {DiscussionCategoryId = 3, Name = "Secret forum", Description = "A secret forum"};
+            { DiscussionCategoryId = 3, Name = "Secret forum", Description = "A secret forum" };
             modelBuilder.Entity<DiscussionCategory>().HasData(c3);
             DiscussionForum dgS1 = new()
             {
-                Name = "Secret", DiscussionForumId = 7, DiscussionCategoryId = 3,
+                Name = "Secret",
+                DiscussionForumId = 7,
+                DiscussionCategoryId = 3,
                 Description = "If you see this, you're cool."
             };
             modelBuilder.Entity<DiscussionForum>().HasData(dgS1);
@@ -349,7 +358,7 @@ namespace CommunityPortal.Data
 
             // link the group to the category
             modelBuilder.Entity<DiscussionGroupCategory>()
-                .HasKey(x => new {x.DiscussionGroupId, x.DiscussionCategoryId});
+                .HasKey(x => new { x.DiscussionGroupId, x.DiscussionCategoryId });
             DiscussionGroupCategory dgc1 = new()
             {
                 DiscussionGroupCategoryId = 1,
@@ -359,7 +368,7 @@ namespace CommunityPortal.Data
             modelBuilder.Entity<DiscussionGroupCategory>().HasData(dgc1);
             // add user to group
             modelBuilder.Entity<DiscussionGroupMembership>()
-                .HasKey(t => new {t.CommunityUserId, t.DiscussionGroupId});
+                .HasKey(t => new { t.CommunityUserId, t.DiscussionGroupId });
 
             modelBuilder.Entity<DiscussionGroupMembership>()
                 .HasOne(pt => pt.CommunityUser)
