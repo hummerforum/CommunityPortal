@@ -136,6 +136,12 @@ namespace CommunityPortal.Data
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string> { UserId = accountId3, RoleId = adminRoleId });
 
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string> { UserId = accountId4, RoleId = userRoleId });
+
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string> { UserId = accountId5, RoleId = userRoleId });
+
 
             // News  post and categories
 

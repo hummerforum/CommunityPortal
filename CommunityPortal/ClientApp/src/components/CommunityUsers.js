@@ -75,13 +75,18 @@ export class CommunityUsers extends Component {
             { headers: header }
         );
         if (response.data) {
-            var i = this.state.messages.findIndex(m => m.UserName == id);
-            let x = this.state.messages;
-            x.splice(i, 1);
-            this.setState({ messages: x });
+            //console.log( id);
+            //console.log(this.state.messages);
+            //this.state.messages.map(m => alert(m.UserName));
+
+            //var i = this.state.messages.findIndex(m => m.UserName == id);
+            //let x = this.state.messages;
+            //alert("i" + i + "X" + x);
+            //x.splice(i+1, 1);
+            //this.setState({ messages: x });
         }
         else
-            alert("Cant delete logged in user");
+            alert("Cant delete User. Make sure user not logged in or have posts to delete first");
             
     }
 
@@ -94,7 +99,6 @@ export class CommunityUsers extends Component {
         x[i].RoleName = event.target.value;
         this.setState({ messages: x });
     }
-
 
     componentDidMount() {
         this.readMessages();
