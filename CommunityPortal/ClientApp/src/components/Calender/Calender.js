@@ -14,6 +14,7 @@ import {
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import ReactDOM from "react-dom";
+import ListNewsPosts from "../newsposts/ListNewsPosts";
 //import Container from "@mui/material/Container";
 //import Table from "@mui/material/Table";
 //import TableBody from "@mui/material/TableBody";
@@ -96,14 +97,14 @@ function Calender() {
     //}
 
 
-    
+
 
 
     function accept(val) {
 
         handleDateChange(val);
-        //ReactDOM.unmountComponentAtNode(document.getElementById("NewsPostView"));
-        //ReactDOM.render(<ListNewsPosts categoryId={ null} SelectedDate={val} />, document.getElementById("NewsPostView"));
+        ReactDOM.unmountComponentAtNode(document.getElementById("NewsPostView"));
+        ReactDOM.render(<ListNewsPosts categoryId={null} selectedDate={val} />, document.getElementById("NewsPostView"));
 
     }
 
@@ -136,7 +137,7 @@ function Calender() {
         //        >
 
         //            <Button onClick={closeList}   > View Calender</Button>
-                    
+
         //            <TableContainer>
         //                <Table aria-label="simple table">
         //                <TableHead> News Post 
@@ -158,20 +159,20 @@ function Calender() {
         //    }
 
         //    {!showList &&
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <ThemeProvider theme={materialTheme}>
-                        <DatePicker
-                            label="New Post Days"
-                            variant="static"
-                            value={selectedDate}
-                            onChange={accept}
-                            maxDate={Date.now()}
-                            color="secondary"
-                            emptyLabel="Empty"
-                            shouldDisableDate={disableDates}
-                        />
-                    </ThemeProvider>
-                </MuiPickersUtilsProvider>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <ThemeProvider theme={materialTheme}>
+                <DatePicker
+                    label="New Post Days"
+                    variant="static"
+                    value={selectedDate}
+                    onChange={accept}
+                    maxDate={Date.now()}
+                    color="secondary"
+                    emptyLabel="Empty"
+                    shouldDisableDate={disableDates}
+                />
+            </ThemeProvider>
+        </MuiPickersUtilsProvider>
         //    }
         //</Container>
     );
@@ -180,4 +181,3 @@ function Calender() {
 
 
 export default Calender;
-
