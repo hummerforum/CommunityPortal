@@ -1,4 +1,4 @@
-﻿// npm i @material-ui / pickers@3.2.10 --save
+// npm i @material-ui / pickers@3.2.10 --save
 // npm install date - fns@2.16.1 --save
 // npm install @date-io / date - fns@1.3.13 --save
 // npm install @material-ui / styles
@@ -27,25 +27,7 @@ import ListNewsPosts from "../newsposts/ListNewsPosts";
 //import { Button } from "@mui/material";
 
 
-const materialTheme = createMuiTheme({
-    overrides: {
-        MuiPickersToolbar: {
-            toolbar: {
-                backgroundColor: "#5D4037",
-            },
-        },
-        MuiPickersCalendarHeader: {
-            switchHeader: {
-                backgroundColor: "white",
-                color: "#1b5e20",
-            },
-        },
-    },
-});
-
-
 function Calender() {
-
 
     const [selectedDate, handleDateChange] = useState(new Date());
     const [newsposts, ChangeNewsposts] = useState([]);
@@ -184,3 +166,4 @@ function Calender() {
 
 
 export default Calender;
+
