@@ -32,13 +32,13 @@ const materialTheme = createMuiTheme({
     overrides: {
         MuiPickersToolbar: {
             toolbar: {
-                backgroundColor: "#5D4037",
+                backgroundColor: "white",
             },
         },
         MuiPickersCalendarHeader: {
             switchHeader: {
-                backgroundColor: "white",
-                color: "#1b5e20",
+                backgroundColor: "#70163C",
+                color: "white",
             },
         },
     },
