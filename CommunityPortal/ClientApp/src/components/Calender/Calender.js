@@ -11,8 +11,8 @@ import {
     MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 
-import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
+import theme from "../../components/theme";
 import ReactDOM from "react-dom";
 import ListNewsPosts from "../newsposts/ListNewsPosts";
 
@@ -27,24 +27,6 @@ import ListNewsPosts from "../newsposts/ListNewsPosts";
 //import Typography from "@mui/material/Typography";
 //import Grid from "@mui/material/Grid";
 //import { Button } from "@mui/material";
-
-const materialTheme = createMuiTheme({
-    overrides: {
-        MuiPickersToolbar: {
-            toolbar: {
-                backgroundColor: "white",
-            },
-        },
-        MuiPickersCalendarHeader: {
-            switchHeader: {
-                backgroundColor: "#70163C",
-                color: "white",
-            },
-        },
-    },
-});
-
-
 
 function Calender() {
 
@@ -164,7 +146,7 @@ function Calender() {
 
         //    {!showList &&
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <ThemeProvider theme={materialTheme}>
+            <ThemeProvider theme={theme}>
                 <DatePicker
                     label="New Post Days"
                     variant="static"

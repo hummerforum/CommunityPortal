@@ -1,0 +1,22 @@
+.MuiButton-textPrimary {
+    color: #FFF !important;
+    margin-top: 16px !important;
+    margin-bottom: 16px !important;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+#root > div > header > div > div > a.MuiTypography-root.MuiTypography-inherit.MuiLink-root.MuiLink-underlineNone.css-1oaaite-MuiTypography-root-MuiLink-root > div {
+    padding-right: 16px;
+    margin-right: 16px;
+}
+
+#root > div > header > div > div > a.MuiButton-root.MuiButton-outline.MuiButton-outlinePrimary.MuiButton-sizeMedium.MuiButton-outlineSizeMedium.MuiButtonBase-root.css-ccnqyd-MuiButtonBase-root-MuiButton-root {
+    color: #FFF !important;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+#root > div > header > div > div > a.MuiButton-root.MuiButton-outline.MuiButton-outlinePrimary.MuiButton-sizeMedium.MuiButton-outlineSizeMedium.MuiButtonBase-root.css-1w1rijm-MuiButtonBase-root-MuiButton-root {
+    color: #FFF !important;
+}

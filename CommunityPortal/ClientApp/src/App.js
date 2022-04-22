@@ -15,6 +15,7 @@ import {
 import { Login } from "./components/api-authorization/Login";
 import { Logout } from "./components/api-authorization/Logout";
 import { CommunityUsers } from "./components/CommunityUsers";
+import styles from './App.css';
 
 export default class App extends Component {
   static displayName = App.name;

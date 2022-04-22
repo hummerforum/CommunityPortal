@@ -10,7 +10,9 @@ import { MessagesLink } from "../components/messages/MessagesLink";
 import Link from "@mui/material/Link";
 import { Link as RouterLink } from "react-router-dom";
 import authService from "../components/api-authorization/AuthorizeService";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { ThemeProvider } from "@material-ui/styles";
+import theme from "./theme";
 
 const NavMenu = () => {
   const CheckRole = async () => {
@@ -26,6 +28,7 @@ const NavMenu = () => {
   CheckRole();
 
   return (
+    <ThemeProvider theme={theme}>
     <AppBar
       position="static"
       sx={{
@@ -89,6 +92,7 @@ const NavMenu = () => {
         </Toolbar>
       </Container>
     </AppBar>
+    </ThemeProvider>
   );
 };
 
