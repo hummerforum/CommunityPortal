@@ -20,3 +20,9 @@
 #root > div > header > div > div > a.MuiButton-root.MuiButton-outline.MuiButton-outlinePrimary.MuiButton-sizeMedium.MuiButton-outlineSizeMedium.MuiButtonBase-root.css-1w1rijm-MuiButtonBase-root-MuiButton-root {
     color: #FFF !important;
 }
+
+#root > div > header > div > div > div > a:nth-child(1) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
