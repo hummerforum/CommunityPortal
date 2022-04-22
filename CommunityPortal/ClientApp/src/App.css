@@ -1,4 +1,4 @@
-.MuiButton-textPrimary {
+#root > div > header > div > div > div > a {
     color: #FFF !important;
     margin-top: 16px !important;
     margin-bottom: 16px !important;
