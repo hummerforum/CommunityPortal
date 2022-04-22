@@ -6,6 +6,10 @@
     padding-right: 8px;
 }
 
+#root > div > header > div > div > a.MuiButton-root.MuiButton-text.MuiButton-textPrimary.MuiButton-sizeMedium.MuiButton-textSizeMedium.MuiButtonBase-root.css-1q39md6-MuiButtonBase-root-MuiButton-root {
+    color: #FFF !important;
+}
+
 #root > div > header > div > div > a.MuiTypography-root.MuiTypography-inherit.MuiLink-root.MuiLink-underlineNone.css-1oaaite-MuiTypography-root-MuiLink-root > div {
     padding-right: 16px;
     margin-right: 16px;
